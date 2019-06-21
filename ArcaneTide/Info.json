@@ -1,0 +1,11 @@
+{
+  "Id": "ArcaneTide",
+  "DisplayName": "ArcaneTide",
+  "Author": "SnowyJune",
+  "Version": "1.0.0",
+  "ManagerVersion": "0.16.1",
+  "Requirements": [],
+  "AssemblyName": "Arcanist.dll",
+  "EntryMethod": "ArcaneTide.Main.Load"
+}
+

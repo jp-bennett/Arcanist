@@ -1,0 +1,37 @@
+{
+  "id": "1",
+  "strings": [
+    {
+      "Key": "ArcanistClass.ClassName",
+      "Value": "奥能师"
+    },
+    {
+      "Key": "ArcanistClass.ClassDesc",
+      "Value": "奥能师职业的描述"
+    },
+    {
+      "Key": "ArcanistClass.ProgressionName",
+      "Value": "奥能师progression名称"
+    },
+    {
+      "Key": "ArcanistClass.ProgressionDesc",
+      "Value": "奥能师progression的描述"
+    },
+    {
+      "Key": "ArcanistClass.Cantrip.Name",
+      "Value": "戏法"
+    },
+    {
+      "Key": "ArcanistClass.Cantrip.Desc",
+      "Value": "奥能师戏法描述"
+    },
+    {
+      "Key": "ArcanistClass.Profiencies.Name",
+      "Value": "奥能师武器熟练"
+    },
+    {
+      "Key": "ArcanistClass.Profiencies.Desc",
+      "Value": "奥能师武器熟练内容"
+    }
+  ]
+}
