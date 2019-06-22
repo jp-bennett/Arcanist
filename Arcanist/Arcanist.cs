@@ -32,7 +32,7 @@ using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.UnitLogic.Mechanics;
 using ArcaneTide.Utils;
 using Kingmaker.ElementsSystem;
-
+using Kingmaker.UnitLogic.Commands.Base;
 namespace ArcaneTide.Arcanist {
     static class ArcanistClass {
         static LibraryScriptableObject library => Main.library;
@@ -147,8 +147,10 @@ namespace ArcaneTide.Arcanist {
             entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateReservoir()));
 
             ArcaneExploits.Load();
-            entries.Add(Helpers.LevelEntry(1, PotentMagic.exploit));
+            entries.Add(Helpers.LevelEntry(1, ArcaneExploits.exploitSelection));
+
             entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateAddDCCLFeature()));
+            entries.Add(Helpers.LevelEntry(1, ConsumeSpells.Create()));
             progression.LevelEntries = entries.ToArray<LevelEntry>();
 
 
@@ -379,6 +381,90 @@ namespace ArcaneTide.Arcanist {
                 );
             feat.SetName(Helpers.CreateString("ArcanistClass.Reservoir.AddDCCLFeat.Name"));
             feat.SetDescription(Helpers.CreateString("ArcanistClass.Reservoir.AddDCCLFeat.Desc"));
+            return feat;
+        }
+    }
+
+    static class ConsumeSpells {
+        static internal BlueprintCharacterClass arcanist => ArcanistClass.arcanist;
+        static internal LibraryScriptableObject library => Main.library;
+        static public BlueprintFeature feat;
+        static public BlueprintAbilityResource consume_resource;
+        static public BlueprintFeature Create() {
+            if (ArcaneReservoir.resource == null) {
+                UnityModManagerNet.UnityModManager.Logger.Log("[Arcanist ConsumeSpell]Arcane Reservoir Pool must be created before ConsumeSpells::Create()");
+                return null;
+            }
+            if (library.BlueprintsByAssetId.ContainsKey("6e48c034817eabd99df991e0435025ed")) {
+                return library.Get<BlueprintFeature>("6e48c034817eabd99df991e0435025ed");
+            }
+            consume_resource = Helpers.CreateAbilityResource("ArcanistClassConsumeSpellAblResource", "", "",
+                "56e3d1e34251f5c628ae08e78dbf0360",//MD5-32[ArcanistClass.ConsumeSpell.AblResource]
+                IconSet.vanish_icon);
+            consume_resource.SetIncreasedByStat(3, StatType.Charisma);
+
+            var variants = new List<BlueprintAbility>();
+            for(int i = 1; i <= 9; i++) {
+                int least_arcanist_level = (i == 1) ? 1 : 2 * i;
+                AbilityRequirementClassSpellLevel comp_pre = Helpers.Create<AbilityRequirementClassSpellLevel>();
+                comp_pre.characterClass = arcanist;
+                comp_pre.RequiredSpellLevel = i;
+
+                AbilityResourceLogic comp_res = Helpers.Create<AbilityResourceLogic>();
+                comp_res.Amount = 1;
+                comp_res.IsSpendResource = true;
+                comp_res.RequiredResource = consume_resource;
+                comp_res.CostIsCustom = false;
+
+                AbilityEffectRunAction comp_act = Helpers.Create<AbilityEffectRunAction>();
+                ConsumeSpellForReservoirAction act = Helpers.Create<ConsumeSpellForReservoirAction>();
+                act.resource = ArcaneReservoir.resource;
+                act.spellLevel = i;
+                act.blueprintSpellbook = arcanist.Spellbook;
+                comp_act.Actions = new ActionList {
+                    Actions = new GameAction[] { act }
+                };
+
+                BlueprintAbility abl_i = Helpers.CreateAbility($"ArcanistClassConsumeSpellLevel{i}Abl", "", "",
+                    Guid.NewGuid().ToString("N"), IconSet.spell_strike_icon, AbilityType.Supernatural,
+                    UnitCommand.CommandType.Move, AbilityRange.Personal,
+                    "", "", comp_pre, comp_res, comp_act);
+                abl_i.SetName(Helpers.CreateString($"ArcanistClass.ConsumeSpell.Level{i}.Abl.Name"));
+                abl_i.SetDescription(Helpers.CreateString($"ArcanistClass.ConsumeSpell.Level{i}.Abl.Desc"));
+                abl_i.LocalizedDuration = Helpers.CreateString("ArcaneTide.Instant");
+                abl_i.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.NoSave");
+                variants.Add(abl_i);
+            }
+
+            AbilityResourceLogic comp_res0 = Helpers.Create<AbilityResourceLogic>();
+            comp_res0.Amount = 1;
+            comp_res0.IsSpendResource = true;
+            comp_res0.RequiredResource = consume_resource;
+            comp_res0.CostIsCustom = false;
+
+            BlueprintAbility abl = Helpers.CreateAbility("ArcanistClassConsumeSpellAbl", "", "",
+                "33bec6603df0f7cfe904525e9a44432e",//MD5-32[ArcanistClass.ConsumeSpells.Abl]
+                IconSet.vanish_icon,
+                AbilityType.Supernatural,
+                UnitCommand.CommandType.Move,
+                AbilityRange.Personal,
+                "",
+                "",
+                comp_res0);
+            abl.SetName(Helpers.CreateString("ArcanistClass.ConsumeSpells.Abl.Name"));
+            abl.SetDescription(Helpers.CreateString("ArcanistClass.ConsumeSpells.Abl.Desc"));
+            abl.LocalizedDuration = Helpers.CreateString("ArcaneTide.Instant");
+            abl.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.NoSave");
+            abl.AddComponent(abl.CreateAbilityVariants(variants.ToArray<BlueprintAbility>()));
+
+            feat = Helpers.CreateFeature("ArcanistClassConsumeSpellsFeat", "", "",
+                "6e48c034817eabd99df991e0435025ed",//MD5-32[ArcanistClass.ConsumeSpells.Feat]
+                IconSet.vanish_icon,
+                FeatureGroup.None,
+                Helpers.Create<AddAbilityResources>(a => a.Resource = consume_resource),
+                Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { abl }));
+            feat.SetName(Helpers.CreateString("ArcanistClass.ConsumeSpells.Name"));
+            feat.SetDescription(Helpers.CreateString("ArcanistClass.ConsumeSpells.Desc"));
             return feat;
         }
     }

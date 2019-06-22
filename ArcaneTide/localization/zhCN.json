@@ -6,8 +6,16 @@
       "Value": "3轮"
     },
     {
+      "Key": "ArcaneTide.Instant",
+      "Value": "立即"
+    },
+    {
       "Key": "ArcaneTide.WillSave.CanAbandon",
       "Value": "意志（无害）"
+    },
+    {
+      "Key": "ArcaneTide.NoSave",
+      "Value": "无豁免"
     },
     {
       "Key": "ArcanistClass.ClassName",
@@ -90,12 +98,112 @@
       "Value": ""
     },
     {
+      "Key": "ArcanistClass.ConsumeSpells.Name",
+      "Value": "转耗法术"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpells.Desc",
+      "Value": "奥能师可以以一个移动动作消耗1个可用的奥能师法术位，使其当天无法再用，如同用其施放了法术一般。这样做会为奥能师的【奥能源泉】增加等同于所消耗法术位环级的点数。每日使用次数等于3+魅力调整值（最低1）。她无法用这种方式消耗戏法（0环法术）。超过奥能源泉最大值的点数将流失。"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpells.Abl.Name",
+      "Value": "转耗法术"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpells.Abl.Desc",
+      "Value": "奥能师可以以一个移动动作消耗1个可用的奥能师法术位，使其当天无法再用，如同用其施放了法术一般。这样做会为奥能师的【奥能源泉】增加等同于所消耗法术位环级的点数。每日使用次数等于3+魅力调整值（最低1）。她无法用这种方式消耗戏法（0环法术）。超过奥能源泉最大值的点数将流失。"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level1.Abl.Name",
+      "Value": "转耗法术-1环"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level1.Abl.Desc",
+      "Value": "1"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level2.Abl.Name",
+      "Value": "转耗法术-2环"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level2.Abl.Desc",
+      "Value": "2"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level3.Abl.Name",
+      "Value": "转耗法术-3环"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level3.Abl.Desc",
+      "Value": "3"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level4.Abl.Name",
+      "Value": "转耗法术-4环"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level4.Abl.Desc",
+      "Value": "4"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level5.Abl.Name",
+      "Value": "转耗法术-5环"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level5.Abl.Desc",
+      "Value": "5"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level6.Abl.Name",
+      "Value": "转耗法术-6环"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level6.Abl.Desc",
+      "Value": "6"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level7.Abl.Name",
+      "Value": "转耗法术-7环"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level7.Abl.Desc",
+      "Value": "7"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level8.Abl.Name",
+      "Value": "转耗法术-8环"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level8.Abl.Desc",
+      "Value": "8"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level9.Abl.Name",
+      "Value": "转耗法术-9环"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level9.Abl.Desc",
+      "Value": "9"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FeatureSelection.Name",
+      "Value": "奥能技艺"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FeatureSelection.Desc",
+      "Value": "奥能技艺的说明"
+    },
+    {
       "Key": "ArcanistClass.Exploit.PotentMagic.Name",
       "Value": "强化魔法"
     },
     {
       "Key": "ArcanistClass.Exploit.PotentMagic.Desc",
       "Value": ""
+    },
+    {
+      "Key": "ArcaneTide.AbilityRequirementClassSpellLevel.Reason",
+      "Value": "需要释放{0}环法术的能力"
     }
   ]
 }

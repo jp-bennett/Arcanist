@@ -809,8 +809,12 @@ namespace ArcaneTide
             return new FastInvoke(Harmony12.MethodInvoker.GetHandler(Harmony12.AccessTools.Method(type, name, args, typeArgs)));
         }
         internal static LocalizedString CreateString(string key) {
+            if (textToLocalizedString.ContainsKey(key)) {
+                return textToLocalizedString[key];
+            }
             LocalizedString ans = new LocalizedString();
             localizedString_m_Key(ans, key);
+            textToLocalizedString[key] = ans;
             return ans;
         }
         internal static LocalizedString CreateString(string key, string value)

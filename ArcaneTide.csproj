@@ -88,6 +88,7 @@
     <Compile Include="Arcanist\ArcaneExploits.cs" />
     <Compile Include="Arcanist\Arcanist.cs" />
     <Compile Include="Components\AddCLDCOnNextSpell.cs" />
+    <Compile Include="Components\ConsumeSpellForReservoir.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HelpersNeu.cs" />
     <Compile Include="LocalizationPatch.cs" />
