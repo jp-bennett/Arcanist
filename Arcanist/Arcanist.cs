@@ -66,8 +66,8 @@ namespace ArcaneTide.Arcanist {
             library.AddAsset(spellbook, "c05d9a49349f602d114a69dac8143408");//MD5-32[ArcanistClass.Spellbook]
             spellbook.name = "ArcanistClassSpellbook";
             spellbook.Name = arcanist.LocalizedName;
-            spellbook.SpellsPerDay = wizard.Spellbook.SpellsPerDay;
-            spellbook.SpellsKnown = sorcerer.Spellbook.SpellsKnown;
+            spellbook.SpellsPerDay = CreateArcanistPerDay();
+            spellbook.SpellsKnown = CreateArcanistMemorize();
             spellbook.SpellList = wizard.Spellbook.SpellList;
             spellbook.Spontaneous = true;
             spellbook.IsArcane = true;
@@ -149,19 +149,58 @@ namespace ArcaneTide.Arcanist {
             arcanist.Progression = progression;
             arcanist.RegisterClass();
         }
+        static internal BlueprintSpellsTable CreateArcanistMemorize() {
+            if (library.BlueprintsByAssetId.ContainsKey("70a540f04461bcd29da08e9a25b5c566")) {
+                return library.Get<BlueprintSpellsTable>("70a540f04461bcd29da08e9a25b5c566");
+            }
+            BlueprintSpellsTable memorize = Helpers.Create<BlueprintSpellsTable>();
+            const int MAX_KNOWN = 255;
+            memorize.Levels = new SpellsLevelEntry[41];
+            memorize.Levels[0] = new SpellsLevelEntry {
+                Count = new int[] { 0, 0 }
+            };
+            for (int i = 1; i <= 20; i++) {
+                int maxTier = (i < 4) ? 1 : Math.Min(9, i / 2);
+                memorize.Levels[i] = new SpellsLevelEntry {
+                    Count = new int[maxTier + 1]
+                };
+                memorize.Levels[i].Count[0] = 0;
+                for (int j = 1; j <= maxTier; j++) {
+                    //Arcanist is a spontaneous caster but also get two new spells every time she levels up, just like a wizard.
+                    //On choosing new spells of each level up(say level i -> level i+1), the game will check whether \
+                    //number of chosen spells of each spell tier j is greater than known(i+1,j)-known(i,j)
+                    //if j<known(i+1,j)-known(i,j) then the spell choosing part is not finished.
+                    //So an easy way to fix this is to set an arcanist's known spell of level 1-20 to 1.
+                    //(On level 1 you can only choose tier 1 spell so set it to 1 won't cause a bug on character creation(level 0->1).
+                    //And data of level 21-40 of known spell table contains number of arcanist's every day memorized spells.
+                    memorize.Levels[i].Count[j] = 1;
+                }
 
+                memorize.Levels[i + 20] = sorcerer.Spellbook.SpellsKnown.Levels[i];
+            }
+            library.AddAsset(memorize, "70a540f04461bcd29da08e9a25b5c566");//MD5-32[ArcanistClass.SpellMemorizeTable]
+            return memorize;
+        }
         static internal BlueprintSpellsTable CreateArcanistPerDay() {
             if (library.BlueprintsByAssetId.ContainsKey("7de5c1dbbbc57d9dea0f7280a229d6db")) {
                 return library.Get<BlueprintSpellsTable>("7de5c1dbbbc57d9dea0f7280a229d6db");
             }
+            //UnityModManagerNet.UnityModManager.Logger.Log("RUA RUA RUA 000");
             BlueprintSpellsTable perday = Helpers.Create<BlueprintSpellsTable>();
             perday.Levels = new SpellsLevelEntry[21];
-            perday.Levels[0].Count = new int[] { 0, 0 };
-            for(int i = 1; i <= 20; i++) {
+            //UnityModManagerNet.UnityModManager.Logger.Log("RUA RUA RUA 001");
+            perday.Levels[0] = new SpellsLevelEntry {
+                Count = new int[] { 0, 0 }
+            };
+            //UnityModManagerNet.UnityModManager.Logger.Log("RUA RUA RUA 002");
+            for (int i = 1; i <= 20; i++) {
                 int maxTier = (i < 4) ? 1 : Math.Min(9, i / 2); // max spell tier on level i
-                perday.Levels[i].Count = new int[maxTier + 1];
+                perday.Levels[i] = new SpellsLevelEntry {
+                    Count = new int[maxTier + 1]
+                };
                 perday.Levels[i].Count[0] = 0;
-                for(int j = 1; j <= 9; j++) {
+                for(int j = 1; j <= maxTier; j++) {
+                    UnityModManagerNet.UnityModManager.Logger.Log($"{i}, {j}");
                     perday.Levels[i].Count[j] = (j == 1) ? Math.Min(4, i + 1) : Math.Min(4, i - j * 2 + 2);
                 }
             }

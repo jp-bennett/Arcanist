@@ -21,8 +21,12 @@ using Kingmaker.Blueprints.Root;
 using TMPro;
 using UnityEngine.UI;
 using Kingmaker.Utility;
+using Kingmaker.Blueprints.Items.Equipment;
+using Kingmaker.UnitLogic.Commands.Base;
+using Kingmaker.UnitLogic.Parts;
 
 namespace ArcaneTide.Patches {
+    
     static class ArcanistPatch_Helpers {
         static public int getArcanistMemorizeSlotCnt(int spellLevel) {
             Spellbook spellBook = Game.Instance.UI.SpellBookController.CurrentSpellbook;
@@ -31,7 +35,7 @@ namespace ArcaneTide.Patches {
             if (castingStat == null) return 0;
             if (castingStat < 10 + spellLevel) return 0;
             if (spellLevel < 0 || spellLevel > spellBook.MaxSpellLevel) return 0;
-            return spellBookBlueprint.SpellsKnown.GetCount(spellBook.CasterLevel, spellLevel).Value;
+            return spellBookBlueprint.SpellsKnown.GetCount(spellBook.CasterLevel+20, spellLevel).Value;
         }
     }
     /*
@@ -55,6 +59,33 @@ namespace ArcaneTide.Patches {
         }
     }
     */
+    
+    //Fix metamagiced-spells' casting time.
+    [HarmonyPatch(typeof(AbilityData), "RequireFullRoundAction", MethodType.Getter)]
+    class AbilityData_RequireFullRoundAction_Getter_Patch {
+        static public bool Prefix(AbilityData __instance, bool __result) {
+            bool result;
+            if (__instance.ActionType == UnitCommand.CommandType.Standard) {
+                Spellbook spellbook = __instance.Spellbook;
+                bool? flag = (spellbook != null) ? new bool?(spellbook.Blueprint.Spontaneous && spellbook.Blueprint.CharacterClass != Main.arcanist) : null;
+                if (flag != null && flag.Value) {
+                    MetamagicData metamagicData = __instance.MetamagicData;
+                    bool? flag2 = (metamagicData != null) ? new bool?(metamagicData.NotEmpty) : null;
+                    if (flag2 != null && flag2.Value) {
+                        __result = true;
+                        return false;
+                    }
+                }
+                __result = __instance.Blueprint.IsFullRoundAction;
+                return false;
+            }
+            else {
+                __result = false;
+                return false;
+            }
+        }
+    }
+    
     [HarmonyPatch(typeof(Spellbook), "Rest", new Type[] { })]
     class Spellbook_Rest_Patch {
         static public bool Prefix(Spellbook __instance, ref int[] ___m_SpontaneousSlots, ref List<SpellSlot>[] ___m_MemorizedSpells) {
