@@ -20,6 +20,7 @@ using Kingmaker.Utility;
 using UnityEngine;
 using UnityModManagerNet;
 using ArcaneTide.Arcanist;
+using ArcaneTide.Utils;
 namespace ArcaneTide {
     public class Main {
         internal static LibraryScriptableObject library;
@@ -40,6 +41,7 @@ namespace ArcaneTide {
                 //use sorcerer to temporarily simulate arcanist
                 
                 SafeLoad(Helpers.Load, "Helpers");
+                SafeLoad(IconSet.Load, "Icons");
                 SafeLoad(ArcanistClass.Load, "Arcanist");
                 Main.arcanist = ArcanistClass.arcanist;
             }

@@ -85,6 +85,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arcanist\ArcaneExploits.cs" />
     <Compile Include="Arcanist\Arcanist.cs" />
     <Compile Include="Components\AddCLDCOnNextSpell.cs" />
     <Compile Include="Helpers.cs" />
