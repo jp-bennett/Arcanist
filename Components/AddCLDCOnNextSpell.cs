@@ -1,4 +1,5 @@
-﻿using Kingmaker.PubSubSystem;
+﻿using Kingmaker.Blueprints.Classes;
+using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules.Abilities;
 using Kingmaker.UnitLogic.Buffs.Components;
 using System;
@@ -6,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Kingmaker.UnitLogic;
 namespace ArcaneTide.Components {
-    public class AddCLDCOnNextSpell : BuffLogic, IInitiatorRulebookHandler<RuleCalculateAbilityParams>, IRulebookHandler<RuleCalculateAbilityParams>, IInitiatorRulebookSubscriber {
+    public class AddCLDCOnNextSpell_AR : BuffLogic, IInitiatorRulebookHandler<RuleCalculateAbilityParams>, IRulebookHandler<RuleCalculateAbilityParams>, IInitiatorRulebookSubscriber {
         public override void OnTurnOn() {
         }
 
@@ -16,13 +17,15 @@ namespace ArcaneTide.Components {
         public override void OnTurnOff() {
         }
         public void OnEventAboutToTrigger(RuleCalculateAbilityParams evt) {
-            evt.AddBonusCasterLevel(valueCL);
-            evt.AddBonusDC(valueDC);
+            int scale = (base.Owner.HasFact(PotentMagic)) ? 2 : 1;
+            evt.AddBonusCasterLevel(valueCL*scale);
+            evt.AddBonusDC(valueDC*scale);
         }
         public void OnEventDidTrigger(RuleCalculateAbilityParams evt) {
 
         }
 
+        public BlueprintFeature PotentMagic;
         public int valueCL, valueDC;
     }
 }
