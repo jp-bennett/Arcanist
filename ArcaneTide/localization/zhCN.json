@@ -88,14 +88,6 @@
     {
       "Key": "ArcanistClass.Reservoir.AddDCCLFeat.Desc",
       "Value": ""
-    },
-    {
-      "Key": "ArcanistClass.Exploit.PotentMagic.Name",
-      "Value": "强化魔法"
-    },
-    {
-      "Key": "ArcanistClass.Exploit.PotentMagic.Desc",
-      "Value": ""
     }
   ]
 }

@@ -145,9 +145,6 @@ namespace ArcaneTide.Arcanist {
                 arcanistCantrip, 
                 arcanistProfiency, rayCalcFeat, touchCalcFeat, Caster9, detectMagic));
             entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateReservoir()));
-
-            ArcaneExploits.Load();
-            entries.Add(Helpers.LevelEntry(1, PotentMagic.exploit));
             entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateAddDCCLFeature()));
             progression.LevelEntries = entries.ToArray<LevelEntry>();
 
@@ -260,10 +257,9 @@ namespace ArcaneTide.Arcanist {
         }
 
         static internal BlueprintAbility CreateAddCLAbl() {
-            AddCLDCOnNextSpell_AR component = Helpers.Create<AddCLDCOnNextSpell_AR>();
+            AddCLDCOnNextSpell component = Helpers.Create<AddCLDCOnNextSpell>();
             component.valueCL = 1;
             component.valueDC = 0;
-            component.PotentMagic = PotentMagic.exploit;
             Sprite icon = Helpers.GetIcon("f001c73999fb5a543a199f890108d936");//vanish
             BlueprintBuff buff = Helpers.CreateBuff("ArcanistClassReservoirAddCLBuff", "", "",
                 "798949f3385934097022de98a28a4e3e",//MD5-32[ArcanistClass.Reservoir.AddCLBuff]
@@ -310,10 +306,9 @@ namespace ArcaneTide.Arcanist {
         }
 
         static internal BlueprintAbility CreateAddDCAbl() {
-            AddCLDCOnNextSpell_AR component = Helpers.Create<AddCLDCOnNextSpell_AR>();
+            AddCLDCOnNextSpell component = Helpers.Create<AddCLDCOnNextSpell>();
             component.valueCL = 0;
             component.valueDC = 1;
-            component.PotentMagic = PotentMagic.exploit;
             Sprite icon = Helpers.GetIcon("f001c73999fb5a543a199f890108d936");//vanish
             BlueprintBuff buff = Helpers.CreateBuff("ArcanistClassReservoirAddDCBuff", "", "",
                 "85143f03db31082e776c095f3518a505",//MD5-32[ArcanistClass.Reservoir.AddDCBuff]
@@ -362,10 +357,6 @@ namespace ArcaneTide.Arcanist {
         static public BlueprintFeature CreateAddDCCLFeature() {
             if (library.BlueprintsByAssetId.ContainsKey("930d62a76ccde4a698d396b4bb932d6a")) {
                 return library.Get<BlueprintFeature>("930d62a76ccde4a698d396b4bb932d6a");
-            }
-            if (!ArcaneExploits.loaded) {
-                UnityModManagerNet.UnityModManager.Logger.Log("[Error]Arcanist: you should initiate exploits before calling ArcaneReservoir::CreateAndDCCLFeature()");
-                return null;
             }
             var icon = Helpers.GetIcon("f001c73999fb5a543a199f890108d936");//vanish
             BlueprintFeature feat = Helpers.CreateFeature(
