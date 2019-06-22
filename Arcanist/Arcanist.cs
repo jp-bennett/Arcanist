@@ -26,6 +26,7 @@ using Newtonsoft.Json;
 using ArcaneTide;
 using UnityEngine;
 using Kingmaker.Localization;
+using Kingmaker.UnitLogic.Buffs.Blueprints;
 
 namespace ArcaneTide.Arcanist {
     static class ArcanistClass {
@@ -138,7 +139,7 @@ namespace ArcaneTide.Arcanist {
             entries.Add(Helpers.LevelEntry(1,
                 arcanistCantrip, 
                 arcanistProfiency, rayCalcFeat, touchCalcFeat, Caster9, detectMagic));
-            entries.Add(Helpers.LevelEntry(1, CreateReservoir()));
+            entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateReservoir()));
             progression.LevelEntries = entries.ToArray<LevelEntry>();
 
 
@@ -207,6 +208,17 @@ namespace ArcaneTide.Arcanist {
             library.AddAsset(perday, "7de5c1dbbbc57d9dea0f7280a229d6db");//MD5-32[ArcanistClass.SpellsPerDayTable]
             return perday;
         }
+        
+    }
+
+    static class ArcaneReservoir {
+        static internal BlueprintCharacterClass arcanist => ArcanistClass.arcanist;
+        static internal LibraryScriptableObject library => Main.library;
+
+        static public BlueprintBuff AR_AddCLBuff, AR_AddDCBuff;
+        static public BlueprintAbility AR_AddCLAbl, AR_AddDCAbl;
+        static public BlueprintAbilityResource resource;
+
         static internal BlueprintFeature CreateReservoir() {
             if (library.BlueprintsByAssetId.ContainsKey("46c10437728d31d5b7611eb34f6cb011")) {
                 // has created arcane reservoir already.
@@ -231,6 +243,10 @@ namespace ArcaneTide.Arcanist {
             reservoir.SetName(reservoir_name);
             reservoir.SetDescription(reservoir_desc);
             return reservoir;
+        }
+
+        static internal BlueprintFeature CreateAddCLFeature() {
+
         }
     }
 }

@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arcanist\Arcanist.cs" />
+    <Compile Include="Components\AddCLDCOnNextSpell.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HelpersNeu.cs" />
     <Compile Include="LocalizationPatch.cs" />
