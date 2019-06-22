@@ -225,7 +225,7 @@ namespace ArcaneTide.Arcanist {
         static public BlueprintAbility AR_AddCLAbl, AR_AddDCAbl;
         static public BlueprintAbilityResource resource;
 
-        static internal BlueprintFeature CreateReservoir() {
+        static public BlueprintFeature CreateReservoir() {
             if (library.BlueprintsByAssetId.ContainsKey("46c10437728d31d5b7611eb34f6cb011")) {
                 // has created arcane reservoir already.
                 return library.Get<BlueprintFeature>("46c10437728d31d5b7611eb34f6cb011");
@@ -241,12 +241,16 @@ namespace ArcaneTide.Arcanist {
             reservoir_resource.LocalizedName = reservoir_name;
             reservoir_resource.LocalizedDescription = reservoir_desc;
             resource = reservoir_resource;
+            resource.SetIncreasedByLevel(3, 1, new BlueprintCharacterClass[] { arcanist });
 
+            var comp1 = Helpers.Create<AddAbilityResources>(a => a.Resource = resource);
+            comp1.RestoreAmount = false;
+            comp1.Amount = 3;
             BlueprintFeature reservoir = Helpers.CreateFeature("ArcanistClassArcaneReservoir",
                 "", "", "46c10437728d31d5b7611eb34f6cb011",//MD5-32[ArcanistClass.ArcaneReservoir]
                 icon_AR,
                 FeatureGroup.None,
-                Helpers.Create<AddAbilityResources>(a => a.Resource = reservoir_resource));
+                comp1);
             reservoir.SetName(reservoir_name);
             reservoir.SetDescription(reservoir_desc);
             return reservoir;

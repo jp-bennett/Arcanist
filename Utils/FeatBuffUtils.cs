@@ -1,4 +1,6 @@
-﻿using Kingmaker.RuleSystem;
+﻿using Kingmaker.Blueprints;
+using Kingmaker.RuleSystem;
+using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Mechanics;
 using System;
 using System.Collections.Generic;
@@ -21,5 +23,14 @@ namespace ArcaneTide.Utils {
                 Value = 3
             }
         };
+    }
+
+    static class ResourceManagement {
+        static public void RestoreResource(UnitDescriptor unit, BlueprintAbilityResource blueprint, int amount) {
+            unit.Resources.Restore(blueprint, amount);
+        }
+        static public void SpendResource(UnitDescriptor unit, BlueprintAbilityResource blueprint, int amount) {
+            unit.Resources.Spend(blueprint, amount);
+        }
     }
 }
