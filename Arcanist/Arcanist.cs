@@ -147,16 +147,27 @@ namespace ArcaneTide.Arcanist {
             entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateReservoir()));
 
             ArcaneExploits.Load();
-            entries.Add(Helpers.LevelEntry(1, ArcaneExploits.exploitSelection));
+            for (int i = 1; i <= 20; i += 2) {
+                entries.Add(Helpers.LevelEntry(i, ArcaneExploits.exploitSelection));
+            }
 
             entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateAddDCCLFeature()));
             entries.Add(Helpers.LevelEntry(1, ConsumeSpells.Create()));
+            entries.Add(Helpers.LevelEntry(11, GreaterExploits.Create()));
             progression.LevelEntries = entries.ToArray<LevelEntry>();
 
 
             progression.UIDeterminatorsGroup = new BlueprintFeatureBase[] {
                 arcanistCantrip,
                 arcanistProfiency, rayCalcFeat, touchCalcFeat, Caster9, detectMagic
+            };
+
+            var exploit = ArcaneExploits.exploitSelection;
+            progression.UIGroups = new UIGroup[] {
+                new UIGroup {
+                    Features = (new BlueprintFeature[]{exploit, exploit, exploit, exploit, exploit, exploit, exploit,
+                    exploit, exploit, exploit}).ToList<BlueprintFeatureBase>()
+                }
             };
             arcanist.Progression = progression;
             arcanist.RegisterClass();
@@ -465,6 +476,24 @@ namespace ArcaneTide.Arcanist {
                 Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { abl }));
             feat.SetName(Helpers.CreateString("ArcanistClass.ConsumeSpells.Name"));
             feat.SetDescription(Helpers.CreateString("ArcanistClass.ConsumeSpells.Desc"));
+            return feat;
+        }
+    }
+
+    static class GreaterExploits {
+        static internal BlueprintCharacterClass arcanist => Main.arcanist;
+        static internal LibraryScriptableObject library => Main.library;
+        static public BlueprintFeature feat;
+        static public BlueprintFeature Create() {
+            if (library.BlueprintsByAssetId.ContainsKey("2bfed724fae781a0a427c598f9620a8f")) {
+                return library.Get<BlueprintFeature>("2bfed724fae781a0a427c598f9620a8f");
+            }
+            feat = Helpers.CreateFeature("", "", "",
+                "2bfed724fae781a0a427c598f9620a8f",//MD5-32[ArcanistClass.GreaterExploits.Feat]
+                IconSet.vanish_icon,
+                FeatureGroup.None);
+            feat.SetName(Helpers.CreateString("ArcanistClass.GreaterExploits.Feat.Name"));
+            feat.SetDescription(Helpers.CreateString("ArcanistClass.GreaterExploits.Feat.Desc"));
             return feat;
         }
     }

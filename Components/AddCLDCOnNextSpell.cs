@@ -20,6 +20,7 @@ namespace ArcaneTide.Components {
             int scale = (base.Owner.HasFact(PotentMagic)) ? 2 : 1;
             evt.AddBonusCasterLevel(valueCL*scale);
             evt.AddBonusDC(valueDC*scale);
+            base.Buff.Remove();
         }
         public void OnEventDidTrigger(RuleCalculateAbilityParams evt) {
 
