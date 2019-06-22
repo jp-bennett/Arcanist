@@ -27,6 +27,11 @@ using ArcaneTide;
 using UnityEngine;
 using Kingmaker.Localization;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
+using ArcaneTide.Components;
+using Kingmaker.UnitLogic.Mechanics.Actions;
+using Kingmaker.UnitLogic.Mechanics;
+using ArcaneTide.Utils;
+using Kingmaker.ElementsSystem;
 
 namespace ArcaneTide.Arcanist {
     static class ArcanistClass {
@@ -140,6 +145,7 @@ namespace ArcaneTide.Arcanist {
                 arcanistCantrip, 
                 arcanistProfiency, rayCalcFeat, touchCalcFeat, Caster9, detectMagic));
             entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateReservoir()));
+            entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateAddDCCLFeature()));
             progression.LevelEntries = entries.ToArray<LevelEntry>();
 
 
@@ -225,8 +231,8 @@ namespace ArcaneTide.Arcanist {
                 return library.Get<BlueprintFeature>("46c10437728d31d5b7611eb34f6cb011");
             }
             Sprite icon_AR = library.Get<BlueprintFeature>("55edf82380a1c8540af6c6037d34f322").Icon;//use icon of Elven Magic(elf race feature)
-            LocalizedString reservoir_name = Helpers.CreateString("ArcanistClass.ArcaneReservoir.Name");
-            LocalizedString reservoir_desc = Helpers.CreateString("ArcanistClass.ArcaneReservoir.Desc");
+            LocalizedString reservoir_name = Helpers.CreateString("ArcanistClass.Reservoir.Name");
+            LocalizedString reservoir_desc = Helpers.CreateString("ArcanistClass.Reservoir.Desc");
 
             BlueprintAbilityResource reservoir_resource = Helpers.CreateAbilityResource("ArcanistArcaneReservoirResource",
                 "", "",
@@ -234,6 +240,7 @@ namespace ArcaneTide.Arcanist {
                 icon_AR);
             reservoir_resource.LocalizedName = reservoir_name;
             reservoir_resource.LocalizedDescription = reservoir_desc;
+            resource = reservoir_resource;
 
             BlueprintFeature reservoir = Helpers.CreateFeature("ArcanistClassArcaneReservoir",
                 "", "", "46c10437728d31d5b7611eb34f6cb011",//MD5-32[ArcanistClass.ArcaneReservoir]
@@ -245,8 +252,121 @@ namespace ArcaneTide.Arcanist {
             return reservoir;
         }
 
-        static internal BlueprintFeature CreateAddCLFeature() {
+        static internal BlueprintAbility CreateAddCLAbl() {
+            AddCLDCOnNextSpell component = Helpers.Create<AddCLDCOnNextSpell>();
+            component.valueCL = 1;
+            component.valueDC = 0;
+            Sprite icon = Helpers.GetIcon("f001c73999fb5a543a199f890108d936");//vanish
+            BlueprintBuff buff = Helpers.CreateBuff("ArcanistClassReservoirAddCLBuff", "", "",
+                "798949f3385934097022de98a28a4e3e",//MD5-32[ArcanistClass.Reservoir.AddCLBuff]
+                icon,
+                null,
+                component);
+            buff.SetName(Helpers.CreateString("ArcanistClass.Reservoir.AddCLBuff.Name"));
+            buff.SetDescription(Helpers.CreateString("ArcanistClass.Reservoir.AddCLBuff.Desc"));
 
+            var ablResourceLogicComp = Helpers.Create<AbilityResourceLogic>();
+            ablResourceLogicComp.RequiredResource = resource;
+            ablResourceLogicComp.IsSpendResource = true;
+            ablResourceLogicComp.CostIsCustom = false;
+            ablResourceLogicComp.Amount = 1;
+
+            var ablEffectComp = Helpers.Create<AbilityEffectRunAction>();
+            var ablEffectCompAction = Helpers.Create<ContextActionApplyBuff>();
+            ablEffectCompAction.Buff = buff;
+            ablEffectCompAction.Permanent = false;
+            ablEffectCompAction.DurationValue = PresetDurations.threeRounds;
+            ablEffectCompAction.IsFromSpell = false;
+            ablEffectCompAction.IsNotDispelable = false;
+            ablEffectCompAction.ToCaster = false;
+            ablEffectCompAction.AsChild = true;
+            ablEffectComp.Actions = new ActionList {
+                Actions = new GameAction[] { null, ablEffectCompAction }
+            };
+
+            BlueprintAbility abl = Helpers.CreateAbility("ArcanistClassReservoirAddCLAbl", "", "",
+                "d7947d5dd590717d19b9537f70dd7dd7",//MD5-32[ArcanistClass.Reservoir.AddCLAbl]
+                icon,
+                AbilityType.Supernatural,
+                Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType.Free,
+                AbilityRange.Personal,
+                "",
+                "",
+                ablResourceLogicComp,
+                ablEffectComp);
+            abl.SetName(Helpers.CreateString("ArcanistClass.Reservoir.AddCLAbl.Name"));
+            abl.SetDescription(Helpers.CreateString("ArcanistClass.Reservoir.AddCLAbl.Desc"));
+            abl.LocalizedDuration = Helpers.CreateString("ArcaneTide.ThreeRounds");
+            abl.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.WillSave.CanAbandon");
+            return abl;
+        }
+
+        static internal BlueprintAbility CreateAddDCAbl() {
+            AddCLDCOnNextSpell component = Helpers.Create<AddCLDCOnNextSpell>();
+            component.valueCL = 0;
+            component.valueDC = 1;
+            Sprite icon = Helpers.GetIcon("f001c73999fb5a543a199f890108d936");//vanish
+            BlueprintBuff buff = Helpers.CreateBuff("ArcanistClassReservoirAddDCBuff", "", "",
+                "85143f03db31082e776c095f3518a505",//MD5-32[ArcanistClass.Reservoir.AddDCBuff]
+                icon,
+                null,
+                component);
+            buff.SetName(Helpers.CreateString("ArcanistClass.Reservoir.AddDCBuff.Name"));
+            buff.SetDescription(Helpers.CreateString("ArcanistClass.Reservoir.AddDCBuff.Desc"));
+
+            var ablResourceLogicComp = Helpers.Create<AbilityResourceLogic>();
+            ablResourceLogicComp.RequiredResource = resource;
+            ablResourceLogicComp.IsSpendResource = true;
+            ablResourceLogicComp.CostIsCustom = false;
+            ablResourceLogicComp.Amount = 1;
+
+            var ablEffectComp = Helpers.Create<AbilityEffectRunAction>();
+            var ablEffectCompAction = Helpers.Create<ContextActionApplyBuff>();
+            ablEffectCompAction.Buff = buff;
+            ablEffectCompAction.Permanent = false;
+            ablEffectCompAction.DurationValue = PresetDurations.threeRounds;
+            ablEffectCompAction.IsFromSpell = false;
+            ablEffectCompAction.IsNotDispelable = false;
+            ablEffectCompAction.ToCaster = false;
+            ablEffectCompAction.AsChild = true;
+            ablEffectComp.Actions = new ActionList {
+                Actions = new GameAction[] { null, ablEffectCompAction }
+            };
+
+            BlueprintAbility abl = Helpers.CreateAbility("ArcanistClassReservoirAddDCAbl", "", "",
+                "a572d2412acba81b25cb7ca77c129010",//MD5-32[ArcanistClass.Reservoir.AddDCAbl]
+                icon,
+                AbilityType.Supernatural,
+                Kingmaker.UnitLogic.Commands.Base.UnitCommand.CommandType.Free,
+                AbilityRange.Personal,
+                "",
+                "",
+                ablResourceLogicComp,
+                ablEffectComp);
+            abl.SetName(Helpers.CreateString("ArcanistClass.Reservoir.AddDCAbl.Name"));
+            abl.SetDescription(Helpers.CreateString("ArcanistClass.Reservoir.AddDCAbl.Desc"));
+            abl.LocalizedDuration = Helpers.CreateString("ArcaneTide.ThreeRounds");
+            abl.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.WillSave.CanAbandon");
+            return abl;
+        }
+
+        static public BlueprintFeature CreateAddDCCLFeature() {
+            if (library.BlueprintsByAssetId.ContainsKey("930d62a76ccde4a698d396b4bb932d6a")) {
+                return library.Get<BlueprintFeature>("930d62a76ccde4a698d396b4bb932d6a");
+            }
+            var icon = Helpers.GetIcon("f001c73999fb5a543a199f890108d936");//vanish
+            BlueprintFeature feat = Helpers.CreateFeature(
+                "ArcanistClassReservoirAddDCCLFeat",
+                "",
+                "",
+                "930d62a76ccde4a698d396b4bb932d6a",//MD5-32[ArcanistClass.Reservoir.AddDCCLFeat]
+                icon,
+                FeatureGroup.None,
+                Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { CreateAddCLAbl(), CreateAddDCAbl() })
+                );
+            feat.SetName(Helpers.CreateString("ArcanistClass.Reservoir.AddDCCLFeat.Name"));
+            feat.SetDescription(Helpers.CreateString("ArcanistClass.Reservoir.AddDCCLFeat.Desc"));
+            return feat;
         }
     }
 }

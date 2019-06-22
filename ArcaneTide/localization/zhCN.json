@@ -2,6 +2,14 @@
   "id": "1",
   "strings": [
     {
+      "Key": "ArcaneTide.ThreeRounds",
+      "Value": "3轮"
+    },
+    {
+      "Key": "ArcaneTide.WillSave.CanAbandon",
+      "Value": "意志（无害）"
+    },
+    {
       "Key": "ArcanistClass.ClassName",
       "Value": "奥能师"
     },
@@ -32,6 +40,54 @@
     {
       "Key": "ArcanistClass.Profiencies.Desc",
       "Value": "奥能师武器熟练内容"
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.Name",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddCLBuff.Name",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddCLBuff.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddCLAbl.Name",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddCLAbl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCBuff.Name",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCBuff.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCAbl.Name",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCAbl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCCLFeat.Name",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCCLFeat.Desc",
+      "Value": ""
     }
   ]
 }

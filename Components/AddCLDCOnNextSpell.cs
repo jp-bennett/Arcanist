@@ -16,13 +16,13 @@ namespace ArcaneTide.Components {
         public override void OnTurnOff() {
         }
         public void OnEventAboutToTrigger(RuleCalculateAbilityParams evt) {
-            evt.AddBonusCasterLevel(value);
-            evt.AddBonusDC(value);
+            evt.AddBonusCasterLevel(valueCL);
+            evt.AddBonusDC(valueDC);
         }
         public void OnEventDidTrigger(RuleCalculateAbilityParams evt) {
 
         }
 
-        public int value;
+        public int valueCL, valueDC;
     }
 }
