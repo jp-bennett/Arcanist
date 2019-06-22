@@ -33,6 +33,8 @@ using Kingmaker.UnitLogic.Mechanics;
 using ArcaneTide.Utils;
 using Kingmaker.ElementsSystem;
 using Kingmaker.UnitLogic.Commands.Base;
+using Kingmaker.ResourceLinks;
+
 namespace ArcaneTide.Arcanist {
     static class ArcanistClass {
         static LibraryScriptableObject library => Main.library;
@@ -154,6 +156,7 @@ namespace ArcaneTide.Arcanist {
             entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateAddDCCLFeature()));
             entries.Add(Helpers.LevelEntry(1, ConsumeSpells.Create()));
             entries.Add(Helpers.LevelEntry(11, GreaterExploits.Create()));
+            entries.Add(Helpers.LevelEntry(20, Supremancy.Create()));
             progression.LevelEntries = entries.ToArray<LevelEntry>();
 
 
@@ -314,7 +317,8 @@ namespace ArcaneTide.Arcanist {
                 "",
                 "",
                 ablResourceLogicComp,
-                ablEffectComp);
+                ablEffectComp,
+                Helpers.Create<AbilityRequirementNoSupremancy>());
             abl.SetName(Helpers.CreateString("ArcanistClass.Reservoir.AddCLAbl.Name"));
             abl.SetDescription(Helpers.CreateString("ArcanistClass.Reservoir.AddCLAbl.Desc"));
             abl.LocalizedDuration = Helpers.CreateString("ArcaneTide.ThreeRounds");
@@ -364,7 +368,8 @@ namespace ArcaneTide.Arcanist {
                 "",
                 "",
                 ablResourceLogicComp,
-                ablEffectComp);
+                ablEffectComp,
+                Helpers.Create<AbilityRequirementNoSupremancy>());
             abl.SetName(Helpers.CreateString("ArcanistClass.Reservoir.AddDCAbl.Name"));
             abl.SetDescription(Helpers.CreateString("ArcanistClass.Reservoir.AddDCAbl.Desc"));
             abl.LocalizedDuration = Helpers.CreateString("ArcaneTide.ThreeRounds");
@@ -481,7 +486,7 @@ namespace ArcaneTide.Arcanist {
     }
 
     static class GreaterExploits {
-        static internal BlueprintCharacterClass arcanist => Main.arcanist;
+        static internal BlueprintCharacterClass arcanist => ArcanistClass.arcanist;
         static internal LibraryScriptableObject library => Main.library;
         static public BlueprintFeature feat;
         static public BlueprintFeature Create() {
@@ -494,6 +499,68 @@ namespace ArcaneTide.Arcanist {
                 FeatureGroup.None);
             feat.SetName(Helpers.CreateString("ArcanistClass.GreaterExploits.Feat.Name"));
             feat.SetDescription(Helpers.CreateString("ArcanistClass.GreaterExploits.Feat.Desc"));
+            return feat;
+        }
+    }
+    static class Supremancy {
+        static internal BlueprintCharacterClass arcanist => ArcanistClass.arcanist;
+        static internal LibraryScriptableObject library => Main.library;
+        static public BlueprintFeature feat;
+        static public BlueprintBuff buff, buff2;
+        static public BlueprintFeature Create() {
+            MagicSupremancyBuffComp comp = Helpers.Create<MagicSupremancyBuffComp>();
+            comp.resource = ArcaneReservoir.resource;
+            buff = Helpers.CreateBuff("ArcanistClassMagicSupremancyBuff", "", "",
+                "d4a2fc38efec094263696cb8342bd274",//MD5-32[ArcanistClass.MagaicSupremancy.Buff]
+                IconSet.spell_strike_icon,
+                null,
+                comp);
+            buff.SetName(Helpers.CreateString("ArcanistClass.MagaicSupremancy.Buff.Name"));
+            buff.SetDescription(Helpers.CreateString("ArcanistClass.MagaicSupremancy.Buff.Desc"));
+            //When buff finds the first spell to apply, add buff2 to caster as a flag
+            buff2 = Helpers.CreateBuff("ArcanistClassMagicSupremancyBuff2", "", "",
+                "b1e2b39dd4ecb343322098b3403d11df",//MD5-32[ArcanistClass.MagaicSupremancy.Buff_FindProperSpell]
+                IconSet.vanish_icon, null);
+            var comp_res = Helpers.Create<AbilityResourceLogic>();
+            comp_res.Amount = 1;
+            comp_res.RequiredResource = ArcaneReservoir.resource;
+            comp_res.IsSpendResource = true;
+            comp_res.CostIsCustom = false;
+
+            var ablEffectComp = Helpers.Create<AbilityEffectRunAction>();
+            var ablEffectCompAction = Helpers.Create<ContextActionApplyBuff>();
+            ablEffectCompAction.Buff = buff;
+            ablEffectCompAction.Permanent = false;
+            ablEffectCompAction.DurationValue = PresetDurations.threeRounds;
+            ablEffectCompAction.IsFromSpell = false;
+            ablEffectCompAction.IsNotDispelable = false;
+            ablEffectCompAction.ToCaster = false;
+            ablEffectCompAction.AsChild = true;
+            ablEffectComp.Actions = new ActionList {
+                Actions = new GameAction[] { null, ablEffectCompAction }
+            };
+
+            var abl = Helpers.CreateAbility("ArcanistClassMagicSupremancyAbl", "", "",
+                "fb2a3383e82cbc6ad9c13ac0bca46723",//MD5-32[ArcanistClass.MagicSupremancy.Abl]
+                IconSet.spell_strike_icon,
+                AbilityType.Supernatural,
+                UnitCommand.CommandType.Free,
+                AbilityRange.Personal,
+                "", "",
+                comp_res,
+                ablEffectComp);
+            abl.SetName(Helpers.CreateString("ArcanistClass.MagicSupremancy.Abl.Name"));
+            abl.SetDescription(Helpers.CreateString("ArcanistClass.MagicSupremancy.Abl.Desc"));
+            abl.LocalizedDuration = Helpers.CreateString("ArcaneTide.ThreeRounds");
+            abl.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.NoSave");
+
+            feat = Helpers.CreateFeature("ArcanistClassMagicSupremancyFeat", "", "",
+                "e9438c7efd1c9df62a041ba6e360a5c1",//MD5-32[ArcanistClass.MagicSupremancy.Feat]
+                IconSet.spell_strike_icon,
+                FeatureGroup.None,
+                Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { abl }));
+            feat.SetName(Helpers.CreateString("ArcanistClass.MagicSupremancy.Feat.Name"));
+            feat.SetDescription(Helpers.CreateString("ArcanistClass.MagicSupremancy.Feat.Desc"));
             return feat;
         }
     }

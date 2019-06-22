@@ -94,6 +94,7 @@
     <Compile Include="LocalizationPatch.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Patches\Arcanist_SpellcastingMode_Patch.cs" />
+    <Compile Include="Patches\Arcanist_Supremancy_Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\FeatBuffUtils.cs" />
   </ItemGroup>

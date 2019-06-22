@@ -186,6 +186,38 @@
       "Value": "9"
     },
     {
+      "Key": "ArcanistClass.GreaterExploits.Feat.Name",
+      "Value": "高等技艺"
+    },
+    {
+      "Key": "ArcanistClass.GreaterExploits.Feat.Desc",
+      "Value": "高等技艺的说明"
+    },
+    {
+      "Key": "ArcanistClass.MagaicSupremancy.Buff.Name",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.MagaicSupremancy.Buff.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.MagicSupremancy.Abl.Name",
+      "Value": "魔法主宰"
+    },
+    {
+      "Key": "ArcanistClass.MagicSupremancy.Abl.Desc",
+      "Value": "20级时，奥能师习得了在奥能源泉和法术之间相互转换的方法。她可以从【奥能源泉】中消耗1点来激活此能力，她施展下一个已经准备的法术时，额外从【奥能源泉】中消耗“法术环级”点，这次施法不消耗法术位。当她以这种方式施放法术时，她的施法者等级视为比原有高2级，此法术的任何相关豁免DC+2。她无法再消耗【奥能源泉】点数来强化以这种方式施放的法术。\n若要使用这个能力，奥能师的【奥能源泉】里必须具有足够的点数。如果点数不够则这个能力的效果不会触发。如果这个能力的效果在激活后3轮内没有被触发，则自动消散。"
+    },
+    {
+      "Key": "ArcanistClass.MagicSupremancy.Feat.Name",
+      "Value": "魔法主宰"
+    },
+    {
+      "Key": "ArcanistClass.MagicSupremancy.Feat.Desc",
+      "Value": "20级时，奥能师习得了在奥能源泉和法术之间相互转换的方法。她可以从【奥能源泉】中消耗1点来激活此能力，她施展下一个已经准备的法术时，额外从【奥能源泉】中消耗“法术环级”点，这次施法不消耗法术位。当她以这种方式施放法术时，她的施法者等级视为比原有高2级，此法术的任何相关豁免DC+2。她无法再消耗【奥能源泉】点数来强化以这种方式施放的法术。\n若要使用这个能力，奥能师的【奥能源泉】里必须具有足够的点数。如果点数不够则这个能力的效果不会触发。如果这个能力的效果在激活后3轮内没有被触发，则自动消散。"
+    },
+    {
       "Key": "ArcanistClass.Exploit.FeatureSelection.Name",
       "Value": "奥能技艺"
     },
@@ -199,7 +231,7 @@
     },
     {
       "Key": "ArcanistClass.Exploit.PotentMagic.Desc",
-      "Value": ""
+      "Value": "每当奥能师从【奥能源泉】中消费点数来提高施法者等级时，施法者等级+2而不是+1。每当奥能师从【奥能源泉】中消费点数来提高法术DC时，+2而不是+1。"
     },
     {
       "Key": "ArcaneTide.AbilityRequirementClassSpellLevel.Reason",
