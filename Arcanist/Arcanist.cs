@@ -443,7 +443,7 @@ namespace ArcaneTide.Arcanist {
                 };
 
                 BlueprintAbility abl_i = Helpers.CreateAbility($"ArcanistClassConsumeSpellLevel{i}Abl", "", "",
-                    OtherUtils.GetMd5($"ArcanistClassConsumeSpellLevel{i}Abl"), IconSet.spell_strike_icon, AbilityType.Supernatural,
+                    OtherUtils.GetMd5($"ArcanistClassConsumeSpellLevel{i}Abl"), IconSet.magus_spellrecall, AbilityType.Supernatural,
                     UnitCommand.CommandType.Move, AbilityRange.Personal,
                     "", "", comp_pre, comp_res, comp_act);
                 abl_i.SetName(Helpers.CreateString($"ArcanistClass.ConsumeSpell.Level{i}.Abl.Name"));
@@ -461,7 +461,7 @@ namespace ArcaneTide.Arcanist {
 
             BlueprintAbility abl = Helpers.CreateAbility("ArcanistClassConsumeSpellAbl", "", "",
                 "33bec6603df0f7cfe904525e9a44432e",//MD5-32[ArcanistClass.ConsumeSpells.Abl]
-                IconSet.vanish_icon,
+                IconSet.magus_spellrecall,
                 AbilityType.Supernatural,
                 UnitCommand.CommandType.Move,
                 AbilityRange.Personal,
@@ -476,7 +476,7 @@ namespace ArcaneTide.Arcanist {
 
             feat = Helpers.CreateFeature("ArcanistClassConsumeSpellsFeat", "", "",
                 "6e48c034817eabd99df991e0435025ed",//MD5-32[ArcanistClass.ConsumeSpells.Feat]
-                IconSet.vanish_icon,
+                IconSet.magus_spellrecall,
                 FeatureGroup.None,
                 Helpers.Create<AddAbilityResources>(a => a.Resource = consume_resource),
                 Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { abl }));
@@ -496,7 +496,7 @@ namespace ArcaneTide.Arcanist {
             }
             feat = Helpers.CreateFeature("", "", "",
                 "2bfed724fae781a0a427c598f9620a8f",//MD5-32[ArcanistClass.GreaterExploits.Feat]
-                IconSet.vanish_icon,
+                null,
                 FeatureGroup.None);
             feat.SetName(Helpers.CreateString("ArcanistClass.GreaterExploits.Feat.Name"));
             feat.SetDescription(Helpers.CreateString("ArcanistClass.GreaterExploits.Feat.Desc"));
@@ -513,7 +513,7 @@ namespace ArcaneTide.Arcanist {
             comp.resource = ArcaneReservoir.resource;
             buff = Helpers.CreateBuff("ArcanistClassMagicSupremancyBuff", "", "",
                 "d4a2fc38efec094263696cb8342bd274",//MD5-32[ArcanistClass.MagaicSupremancy.Buff]
-                IconSet.spell_strike_icon,
+                IconSet.tsunami,
                 null,
                 comp);
             buff.SetName(Helpers.CreateString("ArcanistClass.MagaicSupremancy.Buff.Name"));
@@ -521,7 +521,7 @@ namespace ArcaneTide.Arcanist {
             //When buff finds the first spell to apply, add buff2 to caster as a flag
             buff2 = Helpers.CreateBuff("ArcanistClassMagicSupremancyBuff2", "", "",
                 "b1e2b39dd4ecb343322098b3403d11df",//MD5-32[ArcanistClass.MagaicSupremancy.Buff_FindProperSpell]
-                IconSet.vanish_icon, null);
+                IconSet.tsunami, null);
             var comp_res = Helpers.Create<AbilityResourceLogic>();
             comp_res.Amount = 1;
             comp_res.RequiredResource = ArcaneReservoir.resource;
@@ -543,7 +543,7 @@ namespace ArcaneTide.Arcanist {
 
             var abl = Helpers.CreateAbility("ArcanistClassMagicSupremancyAbl", "", "",
                 "fb2a3383e82cbc6ad9c13ac0bca46723",//MD5-32[ArcanistClass.MagicSupremancy.Abl]
-                IconSet.spell_strike_icon,
+                IconSet.tsunami,
                 AbilityType.Supernatural,
                 UnitCommand.CommandType.Free,
                 AbilityRange.Personal,
@@ -557,7 +557,7 @@ namespace ArcaneTide.Arcanist {
 
             feat = Helpers.CreateFeature("ArcanistClassMagicSupremancyFeat", "", "",
                 "e9438c7efd1c9df62a041ba6e360a5c1",//MD5-32[ArcanistClass.MagicSupremancy.Feat]
-                IconSet.spell_strike_icon,
+                IconSet.tsunami,
                 FeatureGroup.None,
                 Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { abl }));
             feat.SetName(Helpers.CreateString("ArcanistClass.MagicSupremancy.Feat.Name"));
@@ -579,7 +579,7 @@ namespace ArcaneTide.Arcanist {
             for(int i = 1; i <= 9; i++) {
                 string buffname = $"ArcanistClassSponHeighten{i}SubBuff";
                 var buff_i = Helpers.CreateBuff(buffname, "", "",
-                    OtherUtils.GetMd5(buffname), IconSet.vanish_icon, null);
+                    OtherUtils.GetMd5(buffname), heightenFeat.Icon, null);
                 buff_i.SetName(Helpers.CreateString($"ArcanistClass.SponMetamagic.Heighten{i}.Name"));
                 buff_i.SetDescription(heightenFeat.GetDescription());
 
@@ -607,8 +607,8 @@ namespace ArcaneTide.Arcanist {
                 var abl_i_name = $"ArcanistClassSponHeighten{i}SubAbl";
                 var abl_i = Helpers.CreateAbility(abl_i_name, "", "",
                     OtherUtils.GetMd5(abl_i_name),
-                    IconSet.vanish_icon,
-                    AbilityType.Supernatural,
+                    heightenFeat.Icon,
+                    AbilityType.Special,
                     UnitCommand.CommandType.Free,
                     AbilityRange.Personal,
                     "", "",
@@ -623,7 +623,7 @@ namespace ArcaneTide.Arcanist {
             }
             BlueprintAbility abl = Helpers.CreateAbility("ArcanistClassSponHeightenAbl", "", "",
                 OtherUtils.GetMd5("ArcanistClassSponHeightenAbl"),
-                IconSet.vanish_icon,
+                heightenFeat.Icon,
                 AbilityType.Special,
                 UnitCommand.CommandType.Free,
                 AbilityRange.Personal,
@@ -654,7 +654,7 @@ namespace ArcaneTide.Arcanist {
                 comp.metamagic = metaId;                
                 var buff_i = Helpers.CreateBuff($"ArcanistClassSponMetamagic{metaId}SubBuff", "", "",
                     OtherUtils.GetMd5($"ArcanistClassSponMetamagic{metaId}SubBuff"),
-                    IconSet.vanish_icon, null,comp);
+                    metaFeat.Icon, null,comp);
                 buff_i.SetName(metaFeat.GetName());
                 buff_i.SetDescription(metaFeat.GetDescription());
 
@@ -677,7 +677,7 @@ namespace ArcaneTide.Arcanist {
 
                 var abl_i = Helpers.CreateAbility($"ArcanistClassSponMetamagic{metaId}SubAbl", "", "",
                     OtherUtils.GetMd5($"ArcanistClassSponMetamagic{metaId}SubAbl"),
-                    IconSet.vanish_icon,
+                    metaFeat.Icon,
                     AbilityType.Special,
                     UnitCommand.CommandType.Free,
                     AbilityRange.Personal,
@@ -695,7 +695,7 @@ namespace ArcaneTide.Arcanist {
 
             var abl = Helpers.CreateAbility("ArcanistClassSponMetamagicAbl", "", "",
                 "d4abbfad4a4cd0eadde062132945f7bf",//MD5-32[ArcanistClass.SponMetamagic.Abl]
-                IconSet.vanish_icon,
+                IconSet.metamagic,
                 AbilityType.Special,
                 UnitCommand.CommandType.Free,
                 AbilityRange.Personal,

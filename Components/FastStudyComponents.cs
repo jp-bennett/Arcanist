@@ -53,7 +53,9 @@ namespace ArcaneTide.Components {
                 }
             }
             unit.AddBuff(flagBuff, unit.Unit);
+            UnityModManager.Logger.Log("Rua1?");
             FastStudy.RefreshSubAbls(spellbook, spellLevel);
+            UnityModManager.Logger.Log("Rua1?>");
             FastStudy.AddMasterAbls(unit);
         }
 
@@ -62,12 +64,12 @@ namespace ArcaneTide.Components {
         }
 
         public bool IsAvailableFor(AbilityData ability) {
-            UnityModManager.Logger.Log("Enter.00");
+            //UnityModManager.Logger.Log("Enter.00");
             if (ability == null) {
-                UnityModManager.Logger.Log("Fuck!!!!!");
+                //UnityModManager.Logger.Log("Fuck!!!!!");
                 return false;
             }
-            UnityModManager.Logger.Log($"ability name is {ability.Name}");
+            //UnityModManager.Logger.Log($"ability name is {ability.Name}");
             /*
             if (ability.Spellbook == null) return false;
             var spellbook = ability.Spellbook;
@@ -99,6 +101,7 @@ namespace ArcaneTide.Components {
                 }
             }
             FastStudy.RemoveMasterAbls(base.Target.Unit.Descriptor);
+            base.Target.Unit.Descriptor.Buffs.RemoveFact(FastStudy.flagBuff);
         }
 
         public AbilityData spell;
@@ -107,20 +110,20 @@ namespace ArcaneTide.Components {
     [HarmonyPatch(typeof(ActionBarGroupSlot), "SetToggleAdditionalSpells", new Type[] { typeof(AbilityData)})]
     class ActionBarGroupSlot_SetToggleAdditionalSpells_Patch {
         static public void Postfix(ActionBarGroupSlot __instance, AbilityData spell, ref List<AbilityData> ___Conversion, ref ButtonPF ___ToggleAdditionalSpells) {
-            if (spell == null) UnityModManager.Logger.Log("Rua! spel is null!!!");
+            //if (spell == null) UnityModManager.Logger.Log("Rua! spel is null!!!");
             Spellbook spellbook = spell.Spellbook;
             if(spellbook != null) {
                 UnityModManager.Logger.Log($"spellbook is {spellbook.Blueprint.Name}");
                 MechanicActionBarSlotSpontaneusSpell mechanicActionBarSlotSpontaneusSpell = __instance.MechanicSlot as MechanicActionBarSlotSpontaneusSpell;
                 SpellSlot spellSlot2 = (mechanicActionBarSlotSpontaneusSpell != null) ? mechanicActionBarSlotSpontaneusSpell.Spell.ParamSpellSlot : null;
-                if (mechanicActionBarSlotSpontaneusSpell == null) UnityModManager.Logger.Log("mechanicABSSS is null");
-                if (spellSlot2 == null) UnityModManager.Logger.Log("spellslot2 is null");
+                //if (mechanicActionBarSlotSpontaneusSpell == null) UnityModManager.Logger.Log("mechanicABSSS is null");
+                //if (spellSlot2 == null) UnityModManager.Logger.Log("spellslot2 is null");
                 if (spellSlot2 != null) {
-                    UnityModManager.Logger.Log("miaomiao1!!!");
+                    //UnityModManager.Logger.Log("miaomiao1!!!");
                     foreach (Ability ability2 in spell.Caster.Abilities) {
                         if (ability2.Blueprint.GetComponent<FastStudyComponent>()) {
-                            UnityModManager.Logger.Log($"Rua, have fast study.");
-                            UnityModManager.Logger.Log($"spell is {spell.Name}");
+                            //UnityModManager.Logger.Log($"Rua, have fast study.");
+                            //UnityModManager.Logger.Log($"spell is {spell.Name}");
                             AbilityData item2 = new AbilityData(ability2) {
                                 ParamSpellSlot = spellSlot2,
                                 ParamSpellLevel = spell.SpellLevel,
@@ -130,7 +133,7 @@ namespace ArcaneTide.Components {
                         }
                     }
                 }
-                UnityModManager.Logger.Log("miaomiao2!!!");
+                //UnityModManager.Logger.Log("miaomiao2!!!");
                 BlueprintAbility spellBlueprint = spell.Blueprint;
                 if (___Conversion.Any((AbilityData s) => s.Blueprint != spellBlueprint) || (spellBlueprint.Variants != null && spellBlueprint.Variants.Any<BlueprintAbility>())) {
                     if (___ToggleAdditionalSpells != null) {

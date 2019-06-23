@@ -14,6 +14,7 @@ using Kingmaker.UnitLogic.FactLogic;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.Localization;
 using Kingmaker.Blueprints.Classes.Spells;
+using Kingmaker.Blueprints.Classes.Selection;
 
 namespace ArcaneTide.Utils {
     static class PresetDurations {
@@ -51,12 +52,18 @@ namespace ArcaneTide.Utils {
         static internal LibraryScriptableObject library => Main.library;
         static public Sprite spell_strike_icon;
         static public Sprite vanish_icon;
-        static public Sprite itembond_icon;
+        static public Sprite itembond_icon, metamagic,elvenmagic, tsunami;
+        static public Sprite wizard_feat_selection, magus_spellrecall;
         static public Dictionary<SpellSchool, Sprite> school_icons = new Dictionary<SpellSchool, Sprite>();
         static public void Load() {
             spell_strike_icon = library.Get<BlueprintFeature>("be50f4e97fff8a24ba92561f1694a945").Icon;
             vanish_icon = Helpers.GetIcon("f001c73999fb5a543a199f890108d936");
             itembond_icon = library.Get<BlueprintAbility>("e5dcf71e02e08fc448d9745653845df1").Icon;
+            wizard_feat_selection = library.Get<BlueprintFeatureSelection>("8c3102c2ff3b69444b139a98521a4899").Icon;
+            metamagic = library.Get<BlueprintFeature>("2f5d1e705c7967546b72ad8218ccf99c").Icon;
+            elvenmagic = library.Get<BlueprintFeature>("55edf82380a1c8540af6c6037d34f322").Icon;
+            tsunami = library.Get<BlueprintAbility>("d8144161e352ca846a73cf90e85bf9ac").Icon;
+            magus_spellrecall = library.Get<BlueprintAbility>("1bd76e00b6e056d42a8ecc1031dd43b4").Icon;
 
             school_icons[SpellSchool.Necromancy] = library.Get<BlueprintFeature>("a9bb3dcb2e8d44a49ac36c393c114bd9").Icon;
             school_icons[SpellSchool.Abjuration] = library.Get<BlueprintFeature>("7f8c1b838ff2d2e4f971b42ccdfa0bfd").Icon;
