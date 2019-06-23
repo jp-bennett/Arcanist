@@ -570,15 +570,86 @@ namespace ArcaneTide.Arcanist {
         static internal BlueprintCharacterClass arcanist => ArcanistClass.arcanist;
         static internal LibraryScriptableObject library => Main.library;
         static public BlueprintFeature feat;
+        static public BlueprintBuff flagBuff;
         static public Dictionary<Pair<int,int>, BlueprintBuff> buffDict;
-        
+        static public BlueprintAbility CreateHeighten() {
+            var variants = new List<BlueprintAbility>();
+            Metamagic heighten = Metamagic.Heighten;
+            BlueprintFeature heightenFeat = library.Get<BlueprintFeature>(MetaFeats.dict[(int)heighten]);
+            for(int i = 1; i <= 9; i++) {
+                string buffname = $"ArcanistClassSponHeighten{i}SubBuff";
+                var buff_i = Helpers.CreateBuff(buffname, "", "",
+                    OtherUtils.GetMd5(buffname), IconSet.vanish_icon, null);
+                buff_i.SetName(Helpers.CreateString($"ArcanistClass.SponMetamagic.Heighten{i}.Name"));
+                buff_i.SetDescription(heightenFeat.GetDescription());
+
+                var ablEffectComp = Helpers.Create<AbilityEffectRunAction>();
+                var ablEffectCompAction = Helpers.Create<ContextActionApplyBuff>();
+                ablEffectCompAction.Buff = buff_i;
+                ablEffectCompAction.Permanent = false;
+                ablEffectCompAction.DurationValue = PresetDurations.oneRound;
+                ablEffectCompAction.IsFromSpell = false;
+                ablEffectCompAction.IsNotDispelable = false;
+                ablEffectCompAction.ToCaster = false;
+                ablEffectCompAction.AsChild = true;
+                ablEffectComp.Actions = new ActionList {
+                    Actions = new GameAction[] { null, ablEffectCompAction }
+                };
+
+                var ablRequirementComp = Helpers.Create<AbilityRequirementFeature>();
+                ablRequirementComp.Feat = heightenFeat;
+                ablRequirementComp.Not = false;
+
+                var ablRequirementComp2 = Helpers.Create<AbilityRequirementClassSpellLevel>();
+                ablRequirementComp2.characterClass = ArcanistClass.arcanist;
+                ablRequirementComp2.RequiredSpellLevel = i;
+
+                var abl_i_name = $"ArcanistClassSponHeighten{i}SubAbl";
+                var abl_i = Helpers.CreateAbility(abl_i_name, "", "",
+                    OtherUtils.GetMd5(abl_i_name),
+                    IconSet.vanish_icon,
+                    AbilityType.Supernatural,
+                    UnitCommand.CommandType.Free,
+                    AbilityRange.Personal,
+                    "", "",
+                    ablEffectComp, ablRequirementComp, ablRequirementComp2);
+                abl_i.SetName(buff_i.GetName());
+                abl_i.SetDescription(buff_i.GetDescription());
+                abl_i.LocalizedDuration = Helpers.CreateString("ArcaneTide.OneRound");
+                abl_i.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.WillSave.NoHarm");
+
+                variants.Add(abl_i);
+                buffDict[OtherUtils.make_pair<int, int>((int)heighten, i)] = buff_i;
+            }
+            BlueprintAbility abl = Helpers.CreateAbility("ArcanistClassSponHeightenAbl", "", "",
+                OtherUtils.GetMd5("ArcanistClassSponHeightenAbl"),
+                IconSet.vanish_icon,
+                AbilityType.Special,
+                UnitCommand.CommandType.Free,
+                AbilityRange.Personal,
+                "", "");
+            abl.SetName(heightenFeat.GetName());
+            abl.SetDescription(heightenFeat.GetDescription());
+            abl.LocalizedDuration = Helpers.CreateString("ArcaneTide.OneRound");
+            abl.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.WillSave.NoHarm");
+            abl.AddComponent(abl.CreateAbilityVariants(variants));
+            return abl;
+        }
         static public BlueprintFeature Create() {
+            if (library.BlueprintsByAssetId.ContainsKey("b04d23c4d4f14d431d316063db884fe5")) {
+                return library.Get<BlueprintFeature>("b04d23c4d4f14d431d316063db884fe5");
+            }
             var variants = new List<BlueprintAbility>();
             buffDict = new Dictionary<Pair<int,int>, BlueprintBuff>();
+            flagBuff = Helpers.CreateBuff("ArcanistClassSponMetamagicFlagBuff", "", "",
+                OtherUtils.GetMd5("ArcanistClassSponMetamagicFlagBuff"), null, null);
+            flagBuff.SetBuffFlags(flagBuff.GetBuffFlags() | BuffFlags.HiddenInUi);
+
+            //make metamagics other than heighten
             foreach(var kv in MetaFeats.dict) {
                 Metamagic metaId = (Metamagic)(kv.Key);
                 BlueprintFeature metaFeat = library.Get<BlueprintFeature>(kv.Value);
-
+                if (metaId == Metamagic.Heighten) continue;
                 RealMetamagicOnNextSpell comp = Helpers.Create<RealMetamagicOnNextSpell>();
                 comp.metamagic = metaId;                
                 var buff_i = Helpers.CreateBuff($"ArcanistClassSponMetamagic{metaId}SubBuff", "", "",
@@ -600,14 +671,18 @@ namespace ArcaneTide.Arcanist {
                     Actions = new GameAction[] { null, ablEffectCompAction }
                 };
 
+                var ablRequirementComp = Helpers.Create<AbilityRequirementFeature>();
+                ablRequirementComp.Feat = metaFeat;
+                ablRequirementComp.Not = false;
+
                 var abl_i = Helpers.CreateAbility($"ArcanistClassSponMetamagic{metaId}SubAbl", "", "",
                     OtherUtils.GetMd5($"ArcanistClassSponMetamagic{metaId}SubAbl"),
                     IconSet.vanish_icon,
-                    AbilityType.Supernatural,
+                    AbilityType.Special,
                     UnitCommand.CommandType.Free,
                     AbilityRange.Personal,
                     "", "",
-                    ablEffectComp);
+                    ablEffectComp, ablRequirementComp);
                 abl_i.SetName(metaFeat.GetName());
                 abl_i.SetDescription(metaFeat.GetDescription());
                 abl_i.LocalizedDuration = Helpers.CreateString("ArcaneTide.OneRound");
@@ -616,11 +691,12 @@ namespace ArcaneTide.Arcanist {
                 variants.Add(abl_i);
                 buffDict[OtherUtils.make_pair<int, int>((int)metaId, 0)] = buff_i;
             }
+            
 
             var abl = Helpers.CreateAbility("ArcanistClassSponMetamagicAbl", "", "",
                 "d4abbfad4a4cd0eadde062132945f7bf",//MD5-32[ArcanistClass.SponMetamagic.Abl]
                 IconSet.vanish_icon,
-                AbilityType.Supernatural,
+                AbilityType.Special,
                 UnitCommand.CommandType.Free,
                 AbilityRange.Personal,
                 "", "");
@@ -630,11 +706,13 @@ namespace ArcaneTide.Arcanist {
             abl.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.WillSave.NoHarm");
             abl.AddComponent(Helpers.CreateAbilityVariants(abl, variants));
 
+            var ablHeighten = CreateHeighten();
+
             feat = Helpers.CreateFeature("ArcanistClassSponMetamagicFeat", "", "",
                 "b04d23c4d4f14d431d316063db884fe5",//MD5-32[ArcanistClass.SponMetamagic.Feat]
                 null,
                 FeatureGroup.None,
-                Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { abl }));
+                Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { abl, ablHeighten }));
             return feat;
         }
     }

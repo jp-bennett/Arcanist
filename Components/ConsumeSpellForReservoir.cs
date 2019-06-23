@@ -41,28 +41,5 @@ namespace ArcaneTide.Components {
         public BlueprintSpellbook blueprintSpellbook;
     }
 
-    public class AbilityRequirementClassSpellLevel : BlueprintComponent, IAbilityAvailabilityProvider {
-        public string GetReason() {
-            LocalizedString lstr = Helpers.CreateString("ArcaneTide.AbilityRequirementClassSpellLevel.Reason");
-            return String.Format(lstr.ToString(), RequiredSpellLevel);
-        }
-
-        public bool IsAvailableFor(AbilityData ability) {
-            UnitDescriptor unit = ability.Caster;
-            ClassData classData = unit.Progression.GetClassData(characterClass);
-            BlueprintSpellbook x = (classData != null) ? classData.Spellbook : null;
-            if (x != null) {
-                Spellbook spellbook = unit.DemandSpellbook(classData.CharacterClass);
-                int maxSpellLevel = spellbook.MaxSpellLevel;
-                if (maxSpellLevel >= this.RequiredSpellLevel) {
-                    int SpontaneousSlotCnt = spellbook.GetSpontaneousSlots(this.RequiredSpellLevel);
-                    return SpontaneousSlotCnt > 0;
-                }
-            }
-            return false;
-        }
-
-        public BlueprintCharacterClass characterClass;
-        public int RequiredSpellLevel;
-    }
+   
 }

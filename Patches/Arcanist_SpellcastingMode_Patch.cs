@@ -24,6 +24,7 @@ using Kingmaker.Utility;
 using Kingmaker.Blueprints.Items.Equipment;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.Parts;
+using ArcaneTide.Arcanist;
 
 namespace ArcaneTide.Patches {
     
@@ -63,16 +64,22 @@ namespace ArcaneTide.Patches {
     //Fix metamagiced-spells' casting time.
     [HarmonyPatch(typeof(AbilityData), "RequireFullRoundAction", MethodType.Getter)]
     class AbilityData_RequireFullRoundAction_Getter_Patch {
-        static public bool Prefix(AbilityData __instance, bool __result) {
+        static public bool Prefix(AbilityData __instance, ref bool __result) {
             bool result;
             if (__instance.ActionType == UnitCommand.CommandType.Standard) {
                 Spellbook spellbook = __instance.Spellbook;
-                bool? flag = (spellbook != null) ? new bool?(spellbook.Blueprint.Spontaneous && spellbook.Blueprint.CharacterClass != Main.arcanist) : null;
-                if (flag != null && flag.Value) {
+                bool? isSpontaneous = (spellbook != null) ? new bool?(spellbook.Blueprint.Spontaneous) : null;
+                bool? isArcanist = (spellbook != null) ? new bool?(spellbook.Blueprint.CharacterClass == ArcanistClass.arcanist) : null;
+                bool? isUsingSponMetamagic = (spellbook != null) ? new bool?(spellbook.Owner.HasFact(SponMetamagic.flagBuff)) : null;
+                UnityModManager.Logger.Log($"spontaneous  = {(isSpontaneous!=null ? (isSpontaneous.Value?"T":"F") : "null")}");
+                UnityModManager.Logger.Log($"arcanist  = {(isArcanist != null ? (isArcanist.Value ? "T" : "F") : "null")}");
+                UnityModManager.Logger.Log($"sponmeta  = {(isUsingSponMetamagic != null ? (isUsingSponMetamagic.Value ? "T" : "F") : "null")}");
+                if (isSpontaneous != null && isSpontaneous.Value) {
                     MetamagicData metamagicData = __instance.MetamagicData;
                     bool? flag2 = (metamagicData != null) ? new bool?(metamagicData.NotEmpty) : null;
                     if (flag2 != null && flag2.Value) {
-                        __result = true;
+                        __result = !(isArcanist.Value && !(isUsingSponMetamagic.Value));
+                        if (isUsingSponMetamagic.Value) spellbook.Owner.RemoveFact(SponMetamagic.flagBuff);
                         return false;
                     }
                 }

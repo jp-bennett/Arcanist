@@ -31,7 +31,13 @@ namespace ArcaneTide.Patches {
             if (spell.Spellbook == null) return true;
             if (spell.Spellbook.Blueprint.CharacterClass != ArcanistClass.arcanist) return true;
             UnitDescriptor unit = spell.Caster;
-            UnityModManager.Logger.Log($"spell {spell.Name} has metamagic {(spell.MetamagicData!=null?spell.MetamagicData.MetamagicMask:0)}");
+            bool hadMetamagic = spell.MetamagicData != null;
+            bool hadMetamixing = unit.Buffs.HasFact(Metamixing.buff);
+
+            //An arcanist can't combine prepared metamagic and spontaneous metamagic, if she doesn't have 
+            //the Metamixing exploit.
+            if (hadMetamagic && !hadMetamixing) return true;
+            //UnityModManager.Logger.Log($"spell {spell.Name} has metamagic {(spell.MetamagicData!=null?spell.MetamagicData.MetamagicMask:0)}");
             MetamagicBuilder builder = new MetamagicBuilder(spell.Spellbook, spell);
             Dictionary<Metamagic, Feature> meta_feat = new Dictionary<Metamagic, Feature>();
             foreach(var ft in builder.SpellMetamagicFeatures) {
@@ -40,26 +46,41 @@ namespace ArcaneTide.Patches {
                 Metamagic metaId = comp.Metamagic;
                 meta_feat[metaId] = ft;
             }
-            UnityModManager.Logger.Log("Fuck Spon 1");
+            bool flag = false;
             foreach(var kv in SponMetamagic.buffDict) {
                 Metamagic metaId = (Metamagic)(kv.Key.first);
                 int HeightenLevel = kv.Key.second;
                 if (!meta_feat.ContainsKey(metaId)) continue;
                 BlueprintBuff buff = kv.Value;
                 if (!unit.HasFact(buff)) continue;
+
+                //If the arcanist has the Metamixing exploit, she can add ONE 
+                //metamagic feat to a prepared spell, without using extra time to cast.
+                //(regardless if the spell had metamagic feats when prepared)
                 if(metaId == Metamagic.Heighten) {
-                    builder.AddHeightenMetamagic(meta_feat[metaId], HeightenLevel);
+                    int originalLevel = spell.Spellbook.GetSpellLevel(spell.Blueprint);
+                    if (HeightenLevel <= originalLevel) continue;
+                    builder.AddHeightenMetamagic(meta_feat[metaId], HeightenLevel-originalLevel);
                     unit.RemoveFact(buff);
+                    flag = true;
+                    if (hadMetamixing) {
+                        unit.Resources.Spend(ArcaneReservoir.resource, 1);
+                        break;
+                    }
                 }
                 else {
                     builder.AddMetamagic(meta_feat[metaId]);
                     unit.RemoveFact(buff);
+                    flag = true;
+                    if (hadMetamixing) {
+                        unit.Resources.Spend(ArcaneReservoir.resource, 1);
+                        break;
+                    }
                 }
             }
-            UnityModManager.Logger.Log("Fuck Spon 2");
+            if (flag && !hadMetamixing) unit.AddBuff(SponMetamagic.flagBuff,unit.Unit);
             spell = builder.ResultAbilityData;
-            UnityModManager.Logger.Log($"new spell {spell.Name} has metamagic {(spell.MetamagicData != null ? spell.MetamagicData.MetamagicMask : 0)}");
-            UnityModManager.Logger.Log("Fuck Spon 3");
+            //UnityModManager.Logger.Log($"new spell {spell.Name} has metamagic {(spell.MetamagicData != null ? spell.MetamagicData.MetamagicMask : 0)}");
             return true;
 
         }

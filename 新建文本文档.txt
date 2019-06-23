@@ -14,5 +14,6 @@
 关于sponmetamagic还要实现的部分：
 自发超魔要延长施法时间至整轮，可以通过在上好超魔之后给角色上一个标记buff来实现，施法结束后把标记buff去掉
 实现自发超魔的ability要具有对应的专长才能使用
+实现完升阶
 自发超魔的feature和框架ability可以先构架好（在eldritch arcana之前），然后等eldritch arcana初始化完了之后再读取超模专长（MetaFeats类）、填充框架ability。
 已经搭配超模专长的法术不能自发超魔，除非有混合超魔技艺
