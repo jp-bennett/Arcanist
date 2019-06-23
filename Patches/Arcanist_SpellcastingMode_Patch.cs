@@ -71,9 +71,9 @@ namespace ArcaneTide.Patches {
                 bool? isSpontaneous = (spellbook != null) ? new bool?(spellbook.Blueprint.Spontaneous) : null;
                 bool? isArcanist = (spellbook != null) ? new bool?(spellbook.Blueprint.CharacterClass == ArcanistClass.arcanist) : null;
                 bool? isUsingSponMetamagic = (spellbook != null) ? new bool?(spellbook.Owner.HasFact(SponMetamagic.flagBuff)) : null;
-                UnityModManager.Logger.Log($"spontaneous  = {(isSpontaneous!=null ? (isSpontaneous.Value?"T":"F") : "null")}");
-                UnityModManager.Logger.Log($"arcanist  = {(isArcanist != null ? (isArcanist.Value ? "T" : "F") : "null")}");
-                UnityModManager.Logger.Log($"sponmeta  = {(isUsingSponMetamagic != null ? (isUsingSponMetamagic.Value ? "T" : "F") : "null")}");
+                //UnityModManager.Logger.Log($"spontaneous  = {(isSpontaneous!=null ? (isSpontaneous.Value?"T":"F") : "null")}");
+                //UnityModManager.Logger.Log($"arcanist  = {(isArcanist != null ? (isArcanist.Value ? "T" : "F") : "null")}");
+                //UnityModManager.Logger.Log($"sponmeta  = {(isUsingSponMetamagic != null ? (isUsingSponMetamagic.Value ? "T" : "F") : "null")}");
                 if (isSpontaneous != null && isSpontaneous.Value) {
                     MetamagicData metamagicData = __instance.MetamagicData;
                     bool? flag2 = (metamagicData != null) ? new bool?(metamagicData.NotEmpty) : null;
@@ -335,6 +335,7 @@ namespace ArcaneTide.Patches {
                             foreach(SpellSlot spellSlot in memorizedSpells) {
                                 if (!spellSlot.Available) continue;
                                 AbilityData abilityData = spellSlot.Spell;
+                                abilityData.ParamSpellSlot = spellSlot;
                                 if (!list.Contains(abilityData)) {
                                     list.Add(abilityData);
                                     if (___m_Levels != null) {

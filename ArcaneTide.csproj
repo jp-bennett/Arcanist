@@ -90,6 +90,7 @@
     <Compile Include="Components\AbilityRequirements.cs" />
     <Compile Include="Components\AddCLDCOnNextSpell.cs" />
     <Compile Include="Components\ConsumeSpellForReservoir.cs" />
+    <Compile Include="Components\FastStudyComponents.cs" />
     <Compile Include="Components\RealAddMetamagic.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HelpersNeu.cs" />

@@ -294,6 +294,50 @@
       "Value": ""
     },
     {
+      "Key": "ArcanistClass.Exploit.FastStudy.Name",
+      "Value": "快速研读"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.AbjurationMasterAbl.Name",
+      "Value": "快速研读-防护系法术"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.ConjurationMasterAbl.Name",
+      "Value": "快速研读-咒法系法术"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.DivinationMasterAbl.Name",
+      "Value": "快速研读-预言系法术"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.EnchantmentMasterAbl.Name",
+      "Value": "快速研读-惑控系法术"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.EvocationMasterAbl.Name",
+      "Value": "快速研读-塑能系法术"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.IllusionMasterAbl.Name",
+      "Value": "快速研读-幻术系法术"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.NecromancyMasterAbl.Name",
+      "Value": "快速研读-死灵系法术"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.TransmutationMasterAbl.Name",
+      "Value": "快速研读-变化系法术"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.UniversalMasterAbl.Name",
+      "Value": "快速研读-共通系法术"
+    },
+    {
       "Key": "ArcaneTide.AbilityRequirementClassSpellLevel.Reason",
       "Value": "需要释放{0}环法术的能力"
     }

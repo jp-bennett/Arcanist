@@ -5,6 +5,7 @@ using Kingmaker.Localization;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Abilities.Components.Base;
+using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.Utility;
 using System;
@@ -27,10 +28,7 @@ namespace ArcaneTide.Components {
             if (x != null) {
                 Spellbook spellbook = unit.DemandSpellbook(classData.CharacterClass);
                 int maxSpellLevel = spellbook.MaxSpellLevel;
-                if (maxSpellLevel >= this.RequiredSpellLevel) {
-                    int SpontaneousSlotCnt = spellbook.GetSpontaneousSlots(this.RequiredSpellLevel);
-                    return SpontaneousSlotCnt > 0;
-                }
+                return maxSpellLevel >= RequiredSpellLevel;
             }
             return false;
         }
@@ -52,5 +50,20 @@ namespace ArcaneTide.Components {
 
         public bool Not;
         public BlueprintFeature Feat;
+    }
+
+    public class AbilityRequirementBuff : BlueprintComponent, IAbilityAvailabilityProvider {
+        public string GetReason() {
+            return string.Empty;
+        }
+
+        public bool IsAvailableFor(AbilityData ability) {
+            var unit = ability.Caster;
+            bool hasFeat = unit.Buffs.HasFact(buff);
+            return Not ? (!hasFeat) : hasFeat;
+        }
+
+        public bool Not;
+        public BlueprintBuff buff;
     }
 }

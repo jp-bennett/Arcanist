@@ -17,3 +17,6 @@
 实现完升阶
 自发超魔的feature和框架ability可以先构架好（在eldritch arcana之前），然后等eldritch arcana初始化完了之后再读取超模专长（MetaFeats类）、填充框架ability。
 已经搭配超模专长的法术不能自发超魔，除非有混合超魔技艺
+===================================
+快速研读涉及的法术上小尖角，要修改的方法：
+ActionBarGrouSlot::SetToggleAdditionalSpells(AbilityData spell)
