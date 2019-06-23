@@ -34,6 +34,7 @@ using ArcaneTide.Utils;
 using Kingmaker.ElementsSystem;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.ResourceLinks;
+using Kingmaker.UnitLogic.Abilities;
 
 namespace ArcaneTide.Arcanist {
     static class ArcanistClass {
@@ -147,7 +148,7 @@ namespace ArcaneTide.Arcanist {
                 arcanistCantrip, 
                 arcanistProfiency, rayCalcFeat, touchCalcFeat, Caster9, detectMagic));
             entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateReservoir()));
-
+            entries.Add(Helpers.LevelEntry(1, SponMetamagic.Create()));
             ArcaneExploits.Load();
             for (int i = 1; i <= 20; i += 2) {
                 entries.Add(Helpers.LevelEntry(i, ArcaneExploits.exploitSelection));
@@ -442,7 +443,7 @@ namespace ArcaneTide.Arcanist {
                 };
 
                 BlueprintAbility abl_i = Helpers.CreateAbility($"ArcanistClassConsumeSpellLevel{i}Abl", "", "",
-                    Guid.NewGuid().ToString("N"), IconSet.spell_strike_icon, AbilityType.Supernatural,
+                    OtherUtils.GetMd5($"ArcanistClassConsumeSpellLevel{i}Abl"), IconSet.spell_strike_icon, AbilityType.Supernatural,
                     UnitCommand.CommandType.Move, AbilityRange.Personal,
                     "", "", comp_pre, comp_res, comp_act);
                 abl_i.SetName(Helpers.CreateString($"ArcanistClass.ConsumeSpell.Level{i}.Abl.Name"));
@@ -561,6 +562,79 @@ namespace ArcaneTide.Arcanist {
                 Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { abl }));
             feat.SetName(Helpers.CreateString("ArcanistClass.MagicSupremancy.Feat.Name"));
             feat.SetDescription(Helpers.CreateString("ArcanistClass.MagicSupremancy.Feat.Desc"));
+            return feat;
+        }
+    }
+
+    static class SponMetamagic {
+        static internal BlueprintCharacterClass arcanist => ArcanistClass.arcanist;
+        static internal LibraryScriptableObject library => Main.library;
+        static public BlueprintFeature feat;
+        static public Dictionary<Pair<int,int>, BlueprintBuff> buffDict;
+        
+        static public BlueprintFeature Create() {
+            var variants = new List<BlueprintAbility>();
+            buffDict = new Dictionary<Pair<int,int>, BlueprintBuff>();
+            foreach(var kv in MetaFeats.dict) {
+                Metamagic metaId = (Metamagic)(kv.Key);
+                BlueprintFeature metaFeat = library.Get<BlueprintFeature>(kv.Value);
+
+                RealMetamagicOnNextSpell comp = Helpers.Create<RealMetamagicOnNextSpell>();
+                comp.metamagic = metaId;                
+                var buff_i = Helpers.CreateBuff($"ArcanistClassSponMetamagic{metaId}SubBuff", "", "",
+                    OtherUtils.GetMd5($"ArcanistClassSponMetamagic{metaId}SubBuff"),
+                    IconSet.vanish_icon, null,comp);
+                buff_i.SetName(metaFeat.GetName());
+                buff_i.SetDescription(metaFeat.GetDescription());
+
+                var ablEffectComp = Helpers.Create<AbilityEffectRunAction>();
+                var ablEffectCompAction = Helpers.Create<ContextActionApplyBuff>();
+                ablEffectCompAction.Buff = buff_i;
+                ablEffectCompAction.Permanent = false;
+                ablEffectCompAction.DurationValue = PresetDurations.oneRound;
+                ablEffectCompAction.IsFromSpell = false;
+                ablEffectCompAction.IsNotDispelable = false;
+                ablEffectCompAction.ToCaster = false;
+                ablEffectCompAction.AsChild = true;
+                ablEffectComp.Actions = new ActionList {
+                    Actions = new GameAction[] { null, ablEffectCompAction }
+                };
+
+                var abl_i = Helpers.CreateAbility($"ArcanistClassSponMetamagic{metaId}SubAbl", "", "",
+                    OtherUtils.GetMd5($"ArcanistClassSponMetamagic{metaId}SubAbl"),
+                    IconSet.vanish_icon,
+                    AbilityType.Supernatural,
+                    UnitCommand.CommandType.Free,
+                    AbilityRange.Personal,
+                    "", "",
+                    ablEffectComp);
+                abl_i.SetName(metaFeat.GetName());
+                abl_i.SetDescription(metaFeat.GetDescription());
+                abl_i.LocalizedDuration = Helpers.CreateString("ArcaneTide.OneRound");
+                abl_i.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.WillSave.NoHarm");
+
+                variants.Add(abl_i);
+                buffDict[OtherUtils.make_pair<int, int>((int)metaId, 0)] = buff_i;
+            }
+
+            var abl = Helpers.CreateAbility("ArcanistClassSponMetamagicAbl", "", "",
+                "d4abbfad4a4cd0eadde062132945f7bf",//MD5-32[ArcanistClass.SponMetamagic.Abl]
+                IconSet.vanish_icon,
+                AbilityType.Supernatural,
+                UnitCommand.CommandType.Free,
+                AbilityRange.Personal,
+                "", "");
+            abl.SetName(Helpers.CreateString("ArcanistClass.SponMetamagic.Abl.Name"));
+            abl.SetDescription(Helpers.CreateString("ArcanistClass.SponMetamagic.Abl.Desc"));
+            abl.LocalizedDuration = Helpers.CreateString("ArcaneTide.OneRound");
+            abl.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.WillSave.NoHarm");
+            abl.AddComponent(Helpers.CreateAbilityVariants(abl, variants));
+
+            feat = Helpers.CreateFeature("ArcanistClassSponMetamagicFeat", "", "",
+                "b04d23c4d4f14d431d316063db884fe5",//MD5-32[ArcanistClass.SponMetamagic.Feat]
+                null,
+                FeatureGroup.None,
+                Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { abl }));
             return feat;
         }
     }

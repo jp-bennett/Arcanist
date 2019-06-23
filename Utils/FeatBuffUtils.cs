@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using ArcaneTide;
 using Kingmaker.Blueprints.Classes;
+using Kingmaker.UnitLogic.FactLogic;
 
 namespace ArcaneTide.Utils {
     static class PresetDurations {
@@ -26,6 +27,19 @@ namespace ArcaneTide.Utils {
                 Value = 3
             }
         };
+
+        static public ContextDurationValue oneRound = new ContextDurationValue {
+            Rate = DurationRate.Rounds,
+            DiceType = DiceType.Zero,
+            DiceCountValue = new ContextValue {
+                ValueType = ContextValueType.Simple,
+                Value = 0
+            },
+            BonusValue = new ContextValue {
+                ValueType = ContextValueType.Simple,
+                Value = 1
+            }
+        };
     }
 
     static class IconSet {
@@ -35,6 +49,28 @@ namespace ArcaneTide.Utils {
         static public void Load() {
             spell_strike_icon = library.Get<BlueprintFeature>("be50f4e97fff8a24ba92561f1694a945").Icon;
             vanish_icon = Helpers.GetIcon("f001c73999fb5a543a199f890108d936");
+        }
+    }
+
+    static class MetaFeats {
+        static internal LibraryScriptableObject library => Main.library;
+        static public Dictionary<int, string> dict;
+        static public void Load() {
+            dict = new Dictionary<int, string>();
+            foreach(var kv in library.BlueprintsByAssetId) {
+                var key = kv.Key;
+                var value = kv.Value;
+                if((value as BlueprintFeature) != null) {
+                    var metamagicComp = value.GetComponent<AddMetamagicFeat>();
+                    if(metamagicComp != null) {
+                        int metaId = (int)(metamagicComp.Metamagic);
+                        dict[metaId] = key;
+                    }
+                }
+            }
+            foreach(var kv in dict) {
+                UnityModManagerNet.UnityModManager.Logger.Log($"Metamagic Id {kv.Key} refers to feat {kv.Value}");
+            }
         }
     }
     static class ResourceManagement {

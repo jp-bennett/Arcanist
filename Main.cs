@@ -21,6 +21,8 @@ using UnityEngine;
 using UnityModManagerNet;
 using ArcaneTide.Arcanist;
 using ArcaneTide.Utils;
+using Harmony12;
+
 namespace ArcaneTide {
     public class Main {
         internal static LibraryScriptableObject library;
@@ -31,7 +33,9 @@ namespace ArcaneTide {
         public static BlueprintCharacterClass arcanist;
 
         [Harmony12.HarmonyPatch(typeof(LibraryScriptableObject), "LoadDictionary", new Type[0])]
+        
         static class LibraryScriptableObject_LoadDictionary_Patch {
+            
             static void Postfix(LibraryScriptableObject __instance) {
                 var self = __instance;
                 if (Main.library != null) return;
@@ -39,9 +43,9 @@ namespace ArcaneTide {
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
-                
                 SafeLoad(Helpers.Load, "Helpers");
                 SafeLoad(IconSet.Load, "Icons");
+                SafeLoad(MetaFeats.Load, "MetaFeatSet");
                 SafeLoad(ArcanistClass.Load, "Arcanist");
                 Main.arcanist = ArcanistClass.arcanist;
             }
@@ -50,7 +54,7 @@ namespace ArcaneTide {
         static class Player_PostLoad_Patch {
             static void Postfix(Player __instance) {
                 var self = __instance;
-
+                
             }
         }
         static bool Load(UnityModManager.ModEntry modEntry) {
