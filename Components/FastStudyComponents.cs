@@ -80,7 +80,7 @@ namespace ArcaneTide.Components {
             AbilityData spell = (spellSlot != null) ? spellSlot.Spell : null;
             Spellbook spellbook = (spell != null) ? spell.Spellbook : null;
             UnitDescriptor unit = (spellbook != null) ? spellbook.Owner : null;
-            return (unit != null) && CheckArcanist.isArcanist(spellbook);
+            return (unit != null) && !unit.Buffs.HasFact(flagBuff) && CheckArcanist.isArcanist(spellbook);
         }
         // shows if a Fast Study process is not finished.
         // buff is removed when the ArcanistClassExploitFastStudy{School}NewSpellAbl abilities are removed.
@@ -113,7 +113,7 @@ namespace ArcaneTide.Components {
             //if (spell == null) UnityModManager.Logger.Log("Rua! spel is null!!!");
             Spellbook spellbook = spell.Spellbook;
             if(spellbook != null) {
-                UnityModManager.Logger.Log($"spellbook is {spellbook.Blueprint.Name}");
+                //UnityModManager.Logger.Log($"spellbook is {spellbook.Blueprint.Name}");
                 MechanicActionBarSlotSpontaneusSpell mechanicActionBarSlotSpontaneusSpell = __instance.MechanicSlot as MechanicActionBarSlotSpontaneusSpell;
                 SpellSlot spellSlot2 = (mechanicActionBarSlotSpontaneusSpell != null) ? mechanicActionBarSlotSpontaneusSpell.Spell.ParamSpellSlot : null;
                 //if (mechanicActionBarSlotSpontaneusSpell == null) UnityModManager.Logger.Log("mechanicABSSS is null");

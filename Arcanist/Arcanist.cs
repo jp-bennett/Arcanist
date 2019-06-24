@@ -143,21 +143,34 @@ namespace ArcaneTide.Arcanist {
             var Caster9 = library.Get<BlueprintFeature>("9fc9813f569e2e5448ddc435abf774b3");
             var detectMagic = library.Get<BlueprintFeature>("ee0b69e90bac14446a4cf9a050f87f2e");
 
+            var reservoirFeat = ArcaneReservoir.CreateReservoir();
+            var sponmetaFeat = SponMetamagic.Create();
+            ArcaneExploits.Load();
+            var reservoirAblFeat = ArcaneReservoir.CreateAddDCCLFeature();
+            var consumeFeat = ConsumeSpells.Create();
+            var greaterExploit = GreaterExploits.Create();
+            var supremancyFeat = Supremancy.Create();
             var entries = new List<LevelEntry>();
             entries.Add(Helpers.LevelEntry(1,
                 arcanistCantrip, 
-                arcanistProfiency, rayCalcFeat, touchCalcFeat, Caster9, detectMagic));
-            entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateReservoir()));
-            entries.Add(Helpers.LevelEntry(1, SponMetamagic.Create()));
-            ArcaneExploits.Load();
-            for (int i = 1; i <= 20; i += 2) {
-                entries.Add(Helpers.LevelEntry(i, ArcaneExploits.exploitSelection));
+                arcanistProfiency, rayCalcFeat, touchCalcFeat, Caster9, detectMagic,
+                reservoirFeat,
+                reservoirAblFeat,
+                sponmetaFeat,
+                consumeFeat,
+                ArcaneExploits.exploitSelection
+                ));
+            
+            for (int i = 3; i <= 20; i += 2) {
+                if(i != 11)entries.Add(Helpers.LevelEntry(i, ArcaneExploits.exploitSelection));
+                else {
+                    entries.Add(Helpers.LevelEntry(11,
+                        ArcaneExploits.exploitSelection,
+                        greaterExploit));
+                }
             }
 
-            entries.Add(Helpers.LevelEntry(1, ArcaneReservoir.CreateAddDCCLFeature()));
-            entries.Add(Helpers.LevelEntry(1, ConsumeSpells.Create()));
-            entries.Add(Helpers.LevelEntry(11, GreaterExploits.Create()));
-            entries.Add(Helpers.LevelEntry(20, Supremancy.Create()));
+            entries.Add(Helpers.LevelEntry(20, supremancyFeat));
             progression.LevelEntries = entries.ToArray<LevelEntry>();
 
 

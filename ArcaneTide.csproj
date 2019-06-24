@@ -88,14 +88,17 @@
     <Compile Include="Arcanist\ArcaneExploits.cs" />
     <Compile Include="Arcanist\Arcanist.cs" />
     <Compile Include="Components\AbilityRequirements.cs" />
+    <Compile Include="Components\AddClassLevelToRankBonus.cs" />
     <Compile Include="Components\AddCLDCOnNextSpell.cs" />
     <Compile Include="Components\ConsumeSpellForReservoir.cs" />
     <Compile Include="Components\FastStudyComponents.cs" />
+    <Compile Include="Components\NewBuffLogics.cs" />
     <Compile Include="Components\RealAddMetamagic.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HelpersNeu.cs" />
     <Compile Include="LocalizationPatch.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Patches\Arcanist_ArcaneReservoir_Patch.cs" />
     <Compile Include="Patches\Arcanist_SpellcastingMode_Patch.cs" />
     <Compile Include="Patches\Arcanist_SponMetamagic_Patch.cs" />
     <Compile Include="Patches\Arcanist_Supremancy_Patch.cs" />

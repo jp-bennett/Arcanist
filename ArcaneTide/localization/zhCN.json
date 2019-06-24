@@ -2,6 +2,10 @@
   "id": "1",
   "strings": [
     {
+      "Key": "ArcaneTide.HoursPerLevel",
+      "Value": "1小时/等级"
+    },
+    {
       "Key": "ArcaneTide.ThreeRounds",
       "Value": "3轮"
     },
@@ -336,6 +340,22 @@
     {
       "Key": "ArcanistClass.Exploit.FastStudy.UniversalMasterAbl.Name",
       "Value": "快速研读-共通系法术"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.Familiar.FeatSelection.Name",
+      "Value": "魔宠"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.Familiar.FeatSelection.Desc",
+      "Value": "选取此技艺的奥能师获得一个魔宠，如同法师的【奥术连结】职业特性，在决定魔宠的属性和能力时，将奥能师等级视作法师等级。若奥能师从其他职业获得了魔宠，在决定魔宠的属性和能力时，将奥能师等级与该职业等级叠加（此能力与血统升华技艺所获得的魔宠不能叠加，她只能选取其中一个）。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ArmoredMask.MAAbl.Name",
+      "Value": "盔甲面具"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ArmoredMask.MAAbl.Desc",
+      "Value": "奥能师可用标准动作从【奥能源泉】中花费1点奥能点给他自己加持一层幻术装甲。当他激活该能力时，奥能师获得任意轻甲或中甲外观的‘法师盔甲’效果，施法者等级等同于他的奥能师等级。在盔甲激活后的任何时间点，奥能师均可用直觉动作从【奥能源泉】中额外花费1点奥能点获得‘虔诚护盾’效果，施法者等级等同于他的奥能师等级。"
     },
     {
       "Key": "ArcaneTide.AbilityRequirementClassSpellLevel.Reason",

@@ -20,3 +20,13 @@
 ===================================
 快速研读涉及的法术上小尖角，要修改的方法：
 ActionBarGrouSlot::SetToggleAdditionalSpells(AbilityData spell)
+
+
+塑能系，力场飞弹，feat f9501f0df27af5446b705b5da255469a，abl 3d55cc710cc497843bb51788057cd93f
+防护系，feat 4e63d38f5f48a474eaf1ce0521bb7e87，abl 2433d465095a9984398a0482b1af0877
+变化系 abl 810992c76efdde84db707a0444cf9a1c
+惑控系 abl 7b3cb9ad9ef68cd43837c6db054f7d9f
+预言系 abl 0997652c1d8eb164caae8a462401a25d
+咒法系 697291ff99d3fbb448be5b60b5f2a30c abl
+幻术系 9b4d07751dd104243a94b495c571c9dd abl
+死灵系 39af648796b7b9b4ab6321898ebb5fff abl
