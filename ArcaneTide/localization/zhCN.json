@@ -6,6 +6,10 @@
       "Value": "1小时/等级"
     },
     {
+      "Key": "ArcaneTide.MinutesPerLevel",
+      "Value": "1分钟/等级"
+    },
+    {
       "Key": "ArcaneTide.ThreeRounds",
       "Value": "3轮"
     },
@@ -356,6 +360,62 @@
     {
       "Key": "ArcanistClass.Exploit.ArmoredMask.MAAbl.Desc",
       "Value": "奥能师可用标准动作从【奥能源泉】中花费1点奥能点给他自己加持一层幻术装甲。当他激活该能力时，奥能师获得任意轻甲或中甲外观的‘法师盔甲’效果，施法者等级等同于他的奥能师等级。在盔甲激活后的任何时间点，奥能师均可用直觉动作从【奥能源泉】中额外花费1点奥能点获得‘虔诚护盾’效果，施法者等级等同于他的奥能师等级。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.FireBuff.Name",
+      "Value": "能量护盾 - 火焰"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.FireBuff.Desc",
+      "Value": "以一个标准动作从【奥能源泉】中消费1点，奥能师可以保护她自己免受能量伤害。她选择一种能量类型，在每奥能师等级1分钟的时间内获得对此种能量10点抗力。每有5个奥能师等级，此抗力就增加5点（最高在20级时达到30）。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.ColdBuff.Name",
+      "Value": "能量护盾 - 寒冷"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.ColdBuff.Desc",
+      "Value": "以一个标准动作从【奥能源泉】中消费1点，奥能师可以保护她自己免受能量伤害。她选择一种能量类型，在每奥能师等级1分钟的时间内获得对此种能量10点抗力。每有5个奥能师等级，此抗力就增加5点（最高在20级时达到30）。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.ElectricityBuff.Name",
+      "Value": "能量护盾 - 电击"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.ElectricityBuff.Desc",
+      "Value": "以一个标准动作从【奥能源泉】中消费1点，奥能师可以保护她自己免受能量伤害。她选择一种能量类型，在每奥能师等级1分钟的时间内获得对此种能量10点抗力。每有5个奥能师等级，此抗力就增加5点（最高在20级时达到30）。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.AcidBuff.Name",
+      "Value": "能量护盾 - 酸液"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.AcidBuff.Desc",
+      "Value": "以一个标准动作从【奥能源泉】中消费1点，奥能师可以保护她自己免受能量伤害。她选择一种能量类型，在每奥能师等级1分钟的时间内获得对此种能量10点抗力。每有5个奥能师等级，此抗力就增加5点（最高在20级时达到30）。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.SonicBuff.Name",
+      "Value": "能量护盾 - 音波"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.SonicBuff.Desc",
+      "Value": "以一个标准动作从【奥能源泉】中消费1点，奥能师可以保护她自己免受能量伤害。她选择一种能量类型，在每奥能师等级1分钟的时间内获得对此种能量10点抗力。每有5个奥能师等级，此抗力就增加5点（最高在20级时达到30）。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.Name",
+      "Value": "能量护盾"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.Desc",
+      "Value": "以一个标准动作从【奥能源泉】中消费1点，奥能师可以保护她自己免受能量伤害。她选择一种能量类型，在每奥能师等级1分钟的时间内获得对此种能量10点抗力。每有5个奥能师等级，此抗力就增加5点（最高在20级时达到30）。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.MetamagicKnowledge.Name",
+      "Value": "超魔学识"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.MetamagicKnowledge.Desc",
+      "Value": "奥能师可以选择一项超魔专长作为奖励专长。她必须满足该专长的先决条件。"
     },
     {
       "Key": "ArcaneTide.AbilityRequirementClassSpellLevel.Reason",

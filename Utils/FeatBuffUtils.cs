@@ -15,6 +15,7 @@ using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.Localization;
 using Kingmaker.Blueprints.Classes.Spells;
 using Kingmaker.Blueprints.Classes.Selection;
+using Kingmaker.Enums.Damage;
 
 namespace ArcaneTide.Utils {
     static class PresetDurations {
@@ -54,7 +55,8 @@ namespace ArcaneTide.Utils {
         static public Sprite vanish_icon;
         static public Sprite itembond_icon, metamagic,elvenmagic, tsunami;
         static public Sprite wizard_feat_selection, magus_spellrecall,familiar_pet;
-        static public Sprite magearmor;
+        static public Sprite magearmor,resistenergy;
+        static public Dictionary<DamageEnergyType, Sprite> resist_specific_energy = new Dictionary<DamageEnergyType, Sprite>();
         static public Dictionary<SpellSchool, Sprite> school_icons = new Dictionary<SpellSchool, Sprite>();
         static public void Load() {
             spell_strike_icon = library.Get<BlueprintFeature>("be50f4e97fff8a24ba92561f1694a945").Icon;
@@ -67,6 +69,7 @@ namespace ArcaneTide.Utils {
             magus_spellrecall = library.Get<BlueprintAbility>("1bd76e00b6e056d42a8ecc1031dd43b4").Icon;
             familiar_pet = library.Get<BlueprintFeature>("97dff21a036e80948b07097ad3df2b30").Icon;
             magearmor = library.Get<BlueprintAbility>("9e1ad5d6f87d19e4d8883d63a6e35568").Icon;
+            resistenergy = library.Get<BlueprintAbility>("21ffef7791ce73f468b6fca4d9371e8b").Icon;
 
             school_icons[SpellSchool.Necromancy] = library.Get<BlueprintFeature>("a9bb3dcb2e8d44a49ac36c393c114bd9").Icon;
             school_icons[SpellSchool.Abjuration] = library.Get<BlueprintFeature>("7f8c1b838ff2d2e4f971b42ccdfa0bfd").Icon;
@@ -77,6 +80,8 @@ namespace ArcaneTide.Utils {
             school_icons[SpellSchool.Illusion] = library.Get<BlueprintFeature>("6750ead44c0c034428c6509c68110375").Icon;
             school_icons[SpellSchool.Transmutation] = library.Get<BlueprintFeature>("fc519612a3c604446888bb345bca5234").Icon;
             school_icons[SpellSchool.Universalist] = library.Get<BlueprintProgression>("0933849149cfc9244ac05d6a5b57fd80").Icon;
+
+            
         }
     }
 
@@ -87,8 +92,9 @@ namespace ArcaneTide.Utils {
             dict = new Dictionary<int, string>();
             foreach(var kv in library.BlueprintsByAssetId) {
                 var key = kv.Key;
-                var value = kv.Value;
-                if((value as BlueprintFeature) != null) {
+                var value = kv.Value as BlueprintFeature;
+                if(value != null && value.HasGroup(FeatureGroup.WizardFeat)) {
+                    
                     var metamagicComp = value.GetComponent<AddMetamagicFeat>();
                     if(metamagicComp != null) {
                         int metaId = (int)(metamagicComp.Metamagic);
