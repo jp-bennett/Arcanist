@@ -30,6 +30,10 @@
       "Value": "意志（无害）"
     },
     {
+      "Key": "ArcaneTide.FortSave.Part",
+      "Value": "强韧，通过则部分无效"
+    },
+    {
       "Key": "ArcaneTide.NoSave",
       "Value": "无豁免"
     },
@@ -416,6 +420,14 @@
     {
       "Key": "ArcanistClass.Exploit.MetamagicKnowledge.Desc",
       "Value": "奥能师可以选择一项超魔专长作为奖励专长。她必须满足该专长的先决条件。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.AcidJet.Name",
+      "Value": "酸液喷射"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.AcidJet.Desc",
+      "Value": "奥能师可以从【奥能源泉】中消费1点来发射出一股强酸。她能对30尺距离内任一目标进行一次远程接触攻击。若攻击命中，则造成“1d6+奥能师魅力调整值”的强酸伤害。1级以后每2级再增强1d6点（最高在19级达到10d6）。目标还会恶心1d4轮，通过强韧豁免则不会恶心。"
     },
     {
       "Key": "ArcaneTide.AbilityRequirementClassSpellLevel.Reason",

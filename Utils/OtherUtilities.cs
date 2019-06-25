@@ -65,6 +65,7 @@ namespace ArcaneTide.Utils {
         static public LocalizedString loc_instant = Helpers.CreateString("ArcaneTide.Instant");
         static public LocalizedString loc_minute = Helpers.CreateString("ArcaneTide.MinutesPerLevel");
         static public LocalizedString save_will_noharm = Helpers.CreateString("ArcaneTide.WillSave.NoHarm");
+        static public LocalizedString save_fort_part = Helpers.CreateString("ArcaneTide.FortSave.Part");
         static public LocalizedString save_none = Helpers.CreateString("ArcaneTide.NoSave");
     }
     class Pair<U, V> {
