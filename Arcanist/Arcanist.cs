@@ -257,7 +257,7 @@ namespace ArcaneTide.Arcanist {
         static public BlueprintBuff AR_AddCLBuff, AR_AddDCBuff;
         static public BlueprintAbility AR_AddCLAbl, AR_AddDCAbl;
         static public BlueprintAbilityResource resource;
-
+        static public BlueprintFeature reservoir;
         static public BlueprintFeature CreateReservoir() {
             if (library.BlueprintsByAssetId.ContainsKey("46c10437728d31d5b7611eb34f6cb011")) {
                 // has created arcane reservoir already.
@@ -279,7 +279,7 @@ namespace ArcaneTide.Arcanist {
             var comp1 = Helpers.Create<AddAbilityResources>(a => a.Resource = resource);
             comp1.RestoreAmount = false;
             comp1.Amount = 3;
-            BlueprintFeature reservoir = Helpers.CreateFeature("ArcanistClassArcaneReservoir",
+            reservoir = Helpers.CreateFeature("ArcanistClassArcaneReservoir",
                 "", "", "46c10437728d31d5b7611eb34f6cb011",//MD5-32[ArcanistClass.ArcaneReservoir]
                 icon_AR,
                 FeatureGroup.None,
@@ -419,7 +419,9 @@ namespace ArcaneTide.Arcanist {
         static internal BlueprintCharacterClass arcanist => ArcanistClass.arcanist;
         static internal LibraryScriptableObject library => Main.library;
         static public BlueprintFeature feat;
+        static public BlueprintAbility abl;
         static public BlueprintAbilityResource consume_resource;
+        static public List<BlueprintAbility> ablList = new List<BlueprintAbility>();
         static public BlueprintFeature Create() {
             if (ArcaneReservoir.resource == null) {
                 UnityModManagerNet.UnityModManager.Logger.Log("[Arcanist ConsumeSpell]Arcane Reservoir Pool must be created before ConsumeSpells::Create()");
@@ -464,6 +466,7 @@ namespace ArcaneTide.Arcanist {
                 abl_i.LocalizedDuration = Helpers.CreateString("ArcaneTide.Instant");
                 abl_i.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.NoSave");
                 variants.Add(abl_i);
+                ablList.Add(abl_i);
             }
 
             AbilityResourceLogic comp_res0 = Helpers.Create<AbilityResourceLogic>();
@@ -472,7 +475,7 @@ namespace ArcaneTide.Arcanist {
             comp_res0.RequiredResource = consume_resource;
             comp_res0.CostIsCustom = false;
 
-            BlueprintAbility abl = Helpers.CreateAbility("ArcanistClassConsumeSpellAbl", "", "",
+            abl = Helpers.CreateAbility("ArcanistClassConsumeSpellAbl", "", "",
                 "33bec6603df0f7cfe904525e9a44432e",//MD5-32[ArcanistClass.ConsumeSpells.Abl]
                 IconSet.magus_spellrecall,
                 AbilityType.Supernatural,
@@ -486,7 +489,7 @@ namespace ArcaneTide.Arcanist {
             abl.LocalizedDuration = Helpers.CreateString("ArcaneTide.Instant");
             abl.LocalizedSavingThrow = Helpers.CreateString("ArcaneTide.NoSave");
             abl.AddComponent(abl.CreateAbilityVariants(variants.ToArray<BlueprintAbility>()));
-
+            ablList.Add(abl);
             feat = Helpers.CreateFeature("ArcanistClassConsumeSpellsFeat", "", "",
                 "6e48c034817eabd99df991e0435025ed",//MD5-32[ArcanistClass.ConsumeSpells.Feat]
                 IconSet.magus_spellrecall,

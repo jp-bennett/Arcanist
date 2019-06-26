@@ -18,6 +18,10 @@
       "Value": "1轮"
     },
     {
+      "Key": "ArcaneTide.RoundPerChaModifier",
+      "Value": "1轮×魅力调整值"
+    },
+    {
       "Key": "ArcaneTide.Instant",
       "Value": "立即"
     },
@@ -420,6 +424,38 @@
     {
       "Key": "ArcanistClass.Exploit.MetamagicKnowledge.Desc",
       "Value": "奥能师可以选择一项超魔专长作为奖励专长。她必须满足该专长的先决条件。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SchoolUnderstanding.FeatSelect.Name",
+      "Value": "学派理解"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SchoolUnderstanding.FeatSelect.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SchoolUnderstanding.ActivateBuff.Name",
+      "Value": "洞察学识"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SchoolUnderstanding.ActivateBuff.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SwiftConsume.Name",
+      "Value": "迅捷转耗"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SwiftConsume.Desc",
+      "Value": "奥能师可以用一个迅捷动作而非移动动作来使用【转耗法术】职业能力或【转耗魔具】技艺。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ConsumeItem.Name",
+      "Value": "转耗魔具"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ConsumeItem.Desc",
+      "Value": "奥能师可以消耗药剂、卷轴、法杖和魔杖中的力量，用来充填自己的【奥能源泉】。使用此能力是一个会引发藉机攻击的标准动作，每天使用次数等于他的魅力调整值（最小为1）。当使用此技艺时，奥能师为他的【奥能源泉】增加等同于魔法物品中法术环级一半的点数（0环和1环法术无法充填奥能源泉）。若用于药剂或卷轴，则该物品将损毁。若用于魔杖，该魔杖失去5发充能；若其充能少于5发，则魔杖损毁且奥能师无法获益。若用于法杖，该法杖失去1发充能，而奥能师获得的点数等同于该法杖消耗1发充能所能施放的最高法术环级；若该法杖没有仅消耗1发充能的法术，则奥能师无法转耗此法杖的魔力。一根法杖每天只能以此方式吸取1发充能。超过奥能源泉最大值的点数将流失。此技艺对于魔法防具、武器、戒指、权杖、奇物或其他上文没有说明的魔法物品无效。"
     },
     {
       "Key": "ArcanistClass.Exploit.AcidJet.Name",

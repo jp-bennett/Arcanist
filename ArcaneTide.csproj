@@ -87,8 +87,10 @@
   <ItemGroup>
     <Compile Include="Arcanist\ArcaneExploits.cs" />
     <Compile Include="Arcanist\Arcanist.cs" />
+    <Compile Include="Arcanist\ArcanistWizardSchool.cs" />
     <Compile Include="Components\AbilityRequirements.cs" />
-    <Compile Include="Components\AddClassLevelToRankBonus.cs" />
+    <Compile Include="Components\ConsumeItemComponents.cs" />
+    <Compile Include="Components\SchoolUnderstanding.cs" />
     <Compile Include="Components\AddCLDCOnNextSpell.cs" />
     <Compile Include="Components\ConsumeSpellForReservoir.cs" />
     <Compile Include="Components\FastStudyComponents.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Patches\Arcanist_SpellcastingMode_Patch.cs" />
     <Compile Include="Patches\Arcanist_SponMetamagic_Patch.cs" />
     <Compile Include="Patches\Arcanist_Supremancy_Patch.cs" />
+    <Compile Include="Patches\Arcanist_Consume_Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\FeatBuffUtils.cs" />
     <Compile Include="Utils\OtherUtilities.cs" />
