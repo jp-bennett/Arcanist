@@ -28,6 +28,7 @@ namespace ArcaneTide.Components {
             evt.AddBonusCasterLevel(valueCL*scale);
             evt.AddBonusDC(valueDC*scale);
             
+            
         }
         public void OnEventDidTrigger(RuleCalculateAbilityParams evt) {
             base.Buff.Remove();

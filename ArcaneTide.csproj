@@ -88,6 +88,7 @@
     <Compile Include="Arcanist\ArcaneExploits.cs" />
     <Compile Include="Arcanist\Arcanist.cs" />
     <Compile Include="Arcanist\ArcanistWizardSchool.cs" />
+    <Compile Include="Components\AbilityRangeComponent.cs" />
     <Compile Include="Components\AbilityRequirements.cs" />
     <Compile Include="Components\ConsumeItemComponents.cs" />
     <Compile Include="Components\SchoolUnderstanding.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="HelpersNeu.cs" />
     <Compile Include="LocalizationPatch.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="Patches\Arcanist_AbilityCalcRange_Patch.cs" />
     <Compile Include="Patches\Arcanist_ArcaneReservoir_Patch.cs" />
     <Compile Include="Patches\Arcanist_SpellcastingMode_Patch.cs" />
     <Compile Include="Patches\Arcanist_SponMetamagic_Patch.cs" />
@@ -111,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ArcaneTide\Info.json" />
+    <None Include="ArcaneTide\localization\enGB.json" />
     <None Include="ArcaneTide\localization\zhCN.json" />
   </ItemGroup>
   <ItemGroup>

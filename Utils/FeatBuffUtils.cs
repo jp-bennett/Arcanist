@@ -53,7 +53,7 @@ namespace ArcaneTide.Utils {
         static internal LibraryScriptableObject library => Main.library;
         static public Sprite spell_strike_icon;
         static public Sprite vanish_icon;
-        static public Sprite itembond_icon, metamagic,elvenmagic, tsunami;
+        static public Sprite itembond_icon, metamagic,elvenmagic, tsunami, dimension;
         static public Sprite wizard_feat_selection, magus_spellrecall,familiar_pet;
         static public Sprite magearmor,resistenergy;
         static public Dictionary<DamageEnergyType, Sprite> resist_specific_energy = new Dictionary<DamageEnergyType, Sprite>();
@@ -64,6 +64,7 @@ namespace ArcaneTide.Utils {
             itembond_icon = library.Get<BlueprintAbility>("e5dcf71e02e08fc448d9745653845df1").Icon;
             wizard_feat_selection = library.Get<BlueprintFeatureSelection>("8c3102c2ff3b69444b139a98521a4899").Icon;
             metamagic = library.Get<BlueprintFeature>("2f5d1e705c7967546b72ad8218ccf99c").Icon;
+            dimension = library.Get<BlueprintAbility>("336a841704b7e2341b51f89fc9491f54").Icon;
             elvenmagic = library.Get<BlueprintFeature>("55edf82380a1c8540af6c6037d34f322").Icon;
             tsunami = library.Get<BlueprintAbility>("d8144161e352ca846a73cf90e85bf9ac").Icon;
             magus_spellrecall = library.Get<BlueprintAbility>("1bd76e00b6e056d42a8ecc1031dd43b4").Icon;
