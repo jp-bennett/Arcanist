@@ -55,7 +55,7 @@ namespace ArcaneTide.Utils {
         static public Sprite vanish_icon;
         static public Sprite itembond_icon, metamagic,elvenmagic, tsunami, dimension;
         static public Sprite wizard_feat_selection, magus_spellrecall,familiar_pet;
-        static public Sprite magearmor,resistenergy;
+        static public Sprite magearmor,resistenergy,sr;
         static public Dictionary<DamageEnergyType, Sprite> resist_specific_energy = new Dictionary<DamageEnergyType, Sprite>();
         static public Dictionary<SpellSchool, Sprite> school_icons = new Dictionary<SpellSchool, Sprite>();
         static public void Load() {
@@ -71,6 +71,7 @@ namespace ArcaneTide.Utils {
             familiar_pet = library.Get<BlueprintFeature>("97dff21a036e80948b07097ad3df2b30").Icon;
             magearmor = library.Get<BlueprintAbility>("9e1ad5d6f87d19e4d8883d63a6e35568").Icon;
             resistenergy = library.Get<BlueprintAbility>("21ffef7791ce73f468b6fca4d9371e8b").Icon;
+            sr = library.Get<BlueprintAbility>("0a5ddfbcfb3989543ac7c936fc256889").Icon;
 
             school_icons[SpellSchool.Necromancy] = library.Get<BlueprintFeature>("a9bb3dcb2e8d44a49ac36c393c114bd9").Icon;
             school_icons[SpellSchool.Abjuration] = library.Get<BlueprintFeature>("7f8c1b838ff2d2e4f971b42ccdfa0bfd").Icon;

@@ -97,6 +97,7 @@
     <Compile Include="Components\FastStudyComponents.cs" />
     <Compile Include="Components\NewBuffLogics.cs" />
     <Compile Include="Components\RealAddMetamagic.cs" />
+    <Compile Include="Components\SRExploitsBuff.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HelpersNeu.cs" />
     <Compile Include="LocalizationPatch.cs" />
@@ -120,4 +121,9 @@
     <Content Include="新建文本文档.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties ArcaneTide_4localization_4zhCN_1json__JSONSchema="http://json.schemastore.org/ansible-stable-2.5" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

@@ -61,27 +61,27 @@ namespace ArcaneTide.Patches {
         public static void Postfix(ActionBarGroupSlot __instance, ref List<AbilityData> ___Conversion, ref ButtonPF ___ToggleAdditionalSpells) {
             MechanicActionBarSlotItem mechanicActionBarSlotItem = __instance.MechanicSlot as MechanicActionBarSlotItem;
             if (mechanicActionBarSlotItem != null) {
-                UnityModManager.Logger.Log("Rua 1");
+                //UnityModManager.Logger.Log("Rua 1");
                 var itemType = mechanicActionBarSlotItem.Item.Blueprint.Type;
                 int spellLevel = mechanicActionBarSlotItem.Item.Blueprint.SpellLevel;
                 Ability ability = mechanicActionBarSlotItem.Item.Ability;
-                UnityModManager.Logger.Log("Rua 2");
+                //UnityModManager.Logger.Log("Rua 2");
                 if (spellLevel >= 2 && ability != null && (itemType == UsableItemType.Potion || itemType == UsableItemType.Scroll || itemType == UsableItemType.Wand)) {
                     
-                    UnityModManager.Logger.Log("Rua 3");
+                    //UnityModManager.Logger.Log("Rua 3");
                     var unit = mechanicActionBarSlotItem.Item.Owner;
-                    UnityModManager.Logger.Log("Rua 4");
+                    //UnityModManager.Logger.Log("Rua 4");
                     foreach (Ability _ability in unit.Abilities) {
                         
                         if (_ability.Blueprint.GetComponent<ConsumeItemComponent>() != null && mechanicActionBarSlotItem.Item.Ability != null) {
-                            UnityModManager.Logger.Log("Rua 5");
+                            //UnityModManager.Logger.Log("Rua 5");
                             AbilityData abld = new AbilityData(_ability) {
                                 ParamSpellSlot = new SpellSlot {
                                     Spell = new AbilityData(ability)
                                 }
                                 //PotionForOther = true
                             };
-                            UnityModManager.Logger.Log("Rua 6");
+                            //UnityModManager.Logger.Log("Rua 6");
                             if (mechanicActionBarSlotItem.Item.Blueprint.Type == UsableItemType.Potion) {
                                 // if it's potion, ___Conversion has become  { [give others potion ability]} before this Postfix.
                                 ___Conversion.Add(abld);
@@ -90,12 +90,12 @@ namespace ArcaneTide.Patches {
                                 //elsewise, create a new ___Conversion list.
                                 ___Conversion = new List<AbilityData>() { abld };
                             }
-                            UnityModManager.Logger.Log($"Rua 7: Conversion has {___Conversion.Count} elements");
-                            UnityModManager.Logger.Log("Rua 8");
+                            //UnityModManager.Logger.Log($"Rua 7: Conversion has {___Conversion.Count} elements");
+                            //UnityModManager.Logger.Log("Rua 8");
                             if (___ToggleAdditionalSpells != null) {
                                 ___ToggleAdditionalSpells.gameObject.SetActive(true);
                             }
-                            UnityModManager.Logger.Log("Rua 9");
+                            //UnityModManager.Logger.Log("Rua 9");
                         }
                     }
                     

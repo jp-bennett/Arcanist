@@ -130,7 +130,7 @@ namespace ArcaneTide.Arcanist {
                 bind.Stat = StatType.Intelligence;
                 return bind;
             }));
-            UnityModManagerNet.UnityModManager.Logger.Log($"{((arcanistCantrip.ComponentsArray[2] as BindAbilitiesToClass).CharacterClass == arcanist ? "Rua yes" : "Rua no")}");
+            //UnityModManagerNet.UnityModManager.Logger.Log($"{((arcanistCantrip.ComponentsArray[2] as BindAbilitiesToClass).CharacterClass == arcanist ? "Rua yes" : "Rua no")}");
             var arcanistProfiency = library.CopyAndAdd<BlueprintFeature>(
                 "25c97697236ccf2479d0c6a4185eae7f",//sorcerer profiency
                 "ArcanistClassProfiencies",

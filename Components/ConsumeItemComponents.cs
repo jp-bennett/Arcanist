@@ -59,23 +59,23 @@ namespace ArcaneTide.Components {
 
         public bool IsAvailableFor(AbilityData ability) {
             //UnityModManager.Logger.Log("Enter.00");
-            UnityModManager.Logger.Log("Rua Rua 1");
+            //UnityModManager.Logger.Log("Rua Rua 1");
             var unit = ability.Caster;
-            UnityModManager.Logger.Log("Rua Rua 1.5");
+            //UnityModManager.Logger.Log("Rua Rua 1.5");
             if (ability == null || !unit.HasFact(ArcaneReservoir.reservoir)) {
                 return false;
             }
-            UnityModManager.Logger.Log("Rua Rua 2");
+            //UnityModManager.Logger.Log("Rua Rua 2");
             SpellSlot spellSlot = ability.ParamSpellSlot;
-            UnityModManager.Logger.Log("Rua Rua 2.5");
+            //UnityModManager.Logger.Log("Rua Rua 2.5");
             AbilityData spell = (spellSlot != null) ? spellSlot.Spell : null;
-            UnityModManager.Logger.Log("Rua Rua 3");
+            //UnityModManager.Logger.Log("Rua Rua 3");
             ItemEntity item = (spell != null) ? spell.SourceItem : null;
-            UnityModManager.Logger.Log("Rua Rua 3.5");
+            //UnityModManager.Logger.Log("Rua Rua 3.5");
             BlueprintItemEquipmentUsable blueprintItm = (item != null) ? (item.Blueprint as BlueprintItemEquipmentUsable) : null;
-            UnityModManager.Logger.Log("Rua Rua 4");
+           // UnityModManager.Logger.Log("Rua Rua 4");
             if (blueprintItm != null) {
-                UnityModManager.Logger.Log("Rua Rua 5");
+                //UnityModManager.Logger.Log("Rua Rua 5");
                 if (blueprintItm.Type == UsableItemType.Scroll) {
                     int spellLevel = blueprintItm.SpellLevel;
                     return spellLevel >= 2;
