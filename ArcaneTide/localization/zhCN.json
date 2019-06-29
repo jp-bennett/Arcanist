@@ -498,6 +498,14 @@
       "Value": "当奥能师使用【法术抗力】技艺时，只要她的法术抗力成功的从一个敌人施展的法术效果中保护了她，她就可以用一个直觉动作终止此效果。若如此做，将等于该法术环数一半的点数加入她的【奥能源泉】。超过【奥能源泉】上限的点数也会流失。奥能师必须拥有【高等法术抗力】技艺才能选择此技艺。"
     },
     {
+      "Key": "ArcanistClass.Exploit.GreaterMetamagicKnowledge.Name",
+      "Value": "高等超魔学识"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.GreaterMetamagicKnowledge.Desc",
+      "Value": "奥能师可以选择一项超魔专长作为奖励专长。他必须满足该专长的先决条件。每天早上准备法术时，奥能师可以从【奥能源泉】中消费1点，来将此奖励专长替换为另一项超魔专长，只要他同样满足其先决条件。奥能师必须拥有【超魔学识】技艺才能选择此技艺。"
+    },
+    {
       "Key": "ArcanistClass.Exploit.AcidJet.Name",
       "Value": "酸液喷射"
     },

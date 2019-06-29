@@ -97,6 +97,7 @@
     <Compile Include="Components\FastStudyComponents.cs" />
     <Compile Include="Components\NewBuffLogics.cs" />
     <Compile Include="Components\RealAddMetamagic.cs" />
+    <Compile Include="Components\SpellDisruptionComponent.cs" />
     <Compile Include="Components\SRExploitsBuff.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HelpersNeu.cs" />
@@ -109,6 +110,8 @@
     <Compile Include="Patches\Arcanist_Supremancy_Patch.cs" />
     <Compile Include="Patches\Arcanist_Consume_Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Spells\Non-PF.cs" />
+    <Compile Include="Spells\SpellsMonitor.cs" />
     <Compile Include="Utils\FeatBuffUtils.cs" />
     <Compile Include="Utils\OtherUtilities.cs" />
   </ItemGroup>

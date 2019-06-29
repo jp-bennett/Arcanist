@@ -1,14 +1,19 @@
-﻿using Kingmaker.Blueprints;
+﻿using ArcaneTide.Arcanist;
+using Kingmaker.Blueprints;
+using Kingmaker.Blueprints.Classes;
+using Kingmaker.Blueprints.Classes.Selection;
 using Kingmaker.Blueprints.Facts;
 using Kingmaker.UnitLogic;
+using Kingmaker.UnitLogic.Buffs.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityModManagerNet;
 
 namespace ArcaneTide.Components {
-    class BuffAddFacts : OwnedGameLogicComponent<UnitDescriptor> {
+    class BuffAddFacts : BuffLogic {
         public override void OnTurnOn() {
             base.OnTurnOn();
             factsToRemoveList = new List<BlueprintUnitFact>();
@@ -32,5 +37,57 @@ namespace ArcaneTide.Components {
         }
         public BlueprintUnitFact[] Facts;
         List<BlueprintUnitFact> factsToRemoveList;
+    }
+
+    class BuffChangeSingleSelectedFeature : BuffLogic{
+        public override void OnTurnOn() {
+            base.OnTurnOn();
+
+            var unit = base.Owner;
+            
+            foreach (var subBuff in GreaterMetamagicKnowledge.subBuffs) {
+                if (subBuff == this.Buff.Blueprint) continue;
+                if (unit.Buffs.HasFact(subBuff)) {
+                    this.Buff.Remove();
+                    return;
+                }
+            }
+
+            unit.Resources.Spend(ArcaneReservoir.resource, 1);
+            UnityModManager.Logger.Log($"Unit = {unit.CharacterName}");
+            FeatureSelectionData selectionData = unit.Progression.GetSelectionData(selectionBlue);
+            if (selectionData.SelectionsByLevel.Count != 1) return;
+            level = selectionData.SelectionsByLevel.ElementAt(0).Key;
+
+            this.replacedOriginalFeats = new List<BlueprintFeature>(selectionData.GetSelections(level));
+            UnityModManager.Logger.Log($"Replaced Original Feats has {this.replacedOriginalFeats.Count} feats.");
+            
+            foreach (var feat in this.replacedOriginalFeats) {
+                UnityModManager.Logger.Log($"Remove Feat {feat.Name}");
+                unit.Progression.Features.RemoveFact(feat);
+                //selectionData.RemoveSelection(level, feat);
+                UnityModManager.Logger.Log($"Remove Feat {feat.Name} Finish.");
+            }
+            UnityModManager.Logger.Log($"Start to add Feat.");
+            //selectionData.AddSelection(level, newFeatBlue);
+            unit.AddFact(newFeatBlue);
+            UnityModManager.Logger.Log($"Added feat {newFeatBlue.Name}");
+        }
+        public override void OnTurnOff() {
+            if (this.replacedOriginalFeats != null && level != -1) {
+                var unit = base.Owner;
+                FeatureSelectionData selectionData = unit.Progression.GetSelectionData(selectionBlue);
+                unit.Progression.Features.RemoveFact(newFeatBlue);
+                foreach (var feat in this.replacedOriginalFeats) {
+                    unit.AddFact(feat);
+                }
+            }
+            
+            base.OnTurnOff();
+        }
+        public BlueprintFeatureSelection selectionBlue;
+        public BlueprintFeature newFeatBlue;
+        private List<BlueprintFeature> replacedOriginalFeats = null;
+        private int level = -1;
     }
 }

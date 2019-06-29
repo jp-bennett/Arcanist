@@ -16,6 +16,10 @@ namespace ArcaneTide.Patches {
                 int arcanist_level = ___m_Owner.Progression.GetClassLevel(ArcanistClass.arcanist);
                 __instance.Spend(blueprint, arcanist_level / 2 + arcanist_level % 2);
             }
+            //resource used as special counters. Should not be restored after rest.
+            if ((blueprint as BlueprintAbilityResource) == SpellResistanceDrain.drained_arcane_points_res) {
+                __instance.Spend(blueprint, 5);
+            }
         }
     }
 }

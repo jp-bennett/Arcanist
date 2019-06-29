@@ -1,4 +1,5 @@
-﻿using Kingmaker.Blueprints;
+﻿using ArcaneTide.Arcanist;
+using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Spells;
 using Kingmaker.Localization;
@@ -6,6 +7,7 @@ using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Abilities.Components.Base;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
+using Kingmaker.UnitLogic.Class.LevelUp;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.Utility;
 using System;
@@ -65,5 +67,40 @@ namespace ArcaneTide.Components {
 
         public bool Not;
         public BlueprintBuff buff;
+    }
+
+    public class AbilityRequirementFeatureCanBeChosen : BlueprintComponent, IAbilityAvailabilityProvider {
+        public string GetReason() {
+            return "Miaomiaomiao";
+        }
+
+        public bool IsAvailableFor(AbilityData ability) {
+            var unit = ability.Caster;
+            bool ok = feat.MeetsPrerequisites(null, unit, new LevelUpState(unit, LevelUpState.CharBuildMode.LevelUp));
+            return Not ^ ok;//if not = true, return !ok, else return ok.
+        }
+        public BlueprintFeature feat;
+        public bool Not;
+    }
+
+    public class AbilityRequirementUnitHasBuff : BlueprintComponent, IAbilityAvailabilityProvider {
+        public string GetReason() {
+            throw new NotImplementedException();
+        }
+
+        public bool IsAvailableFor(AbilityData ability) {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class AbilityRequirementGreaterMetaKnowledge : BlueprintComponent, IAbilityAvailabilityProvider {
+        public string GetReason() {
+            return string.Empty;
+        }
+
+        public bool IsAvailableFor(AbilityData ability) {
+            UnitDescriptor unit = ability.Caster;
+            return unit.Resources.GetResourceAmount(ArcaneReservoir.resource) >= 1;
+        }
     }
 }
