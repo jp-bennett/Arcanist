@@ -73,10 +73,10 @@ namespace ArcaneTide {
                             if (__result.Strings.ContainsKey(item.Key)) {
                                 continue;
                             }
-                            logger.Log($"RUA {__result.Strings.Count}");
+                            //logger.Log($"RUA {__result.Strings.Count}");
                             __result.Strings.Add(item.Key, item.Value);
                         }
-                        logger.Log($"RUAB {__result.Strings.Count}");
+                        //logger.Log($"RUAB {__result.Strings.Count}");
 
                     }
                 }

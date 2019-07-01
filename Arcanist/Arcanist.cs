@@ -188,6 +188,7 @@ namespace ArcaneTide.Arcanist {
             };
             arcanist.Progression = progression;
             arcanist.RegisterClass();
+            RegisterOtherAssets();
         }
         static internal BlueprintSpellsTable CreateArcanistMemorize() {
             if (library.BlueprintsByAssetId.ContainsKey("70a540f04461bcd29da08e9a25b5c566")) {
@@ -246,6 +247,11 @@ namespace ArcaneTide.Arcanist {
             }
             library.AddAsset(perday, "7de5c1dbbbc57d9dea0f7280a229d6db");//MD5-32[ArcanistClass.SpellsPerDayTable]
             return perday;
+        }
+        static internal void RegisterOtherAssets() {
+            List<BlueprintFeature> featsList = new List<BlueprintFeature>();
+            featsList.Add(ArcaneExploits.extraExploitFeat);
+            library.AddFeats(featsList.ToArray());
         }
         
     }
@@ -411,6 +417,7 @@ namespace ArcaneTide.Arcanist {
                 );
             feat.SetName(Helpers.CreateString("ArcanistClass.Reservoir.AddDCCLFeat.Name"));
             feat.SetDescription(Helpers.CreateString("ArcanistClass.Reservoir.AddDCCLFeat.Desc"));
+            feat.HideInUI = true;
             return feat;
         }
     }
@@ -729,6 +736,7 @@ namespace ArcaneTide.Arcanist {
                 null,
                 FeatureGroup.None,
                 Helpers.Create<AddFacts>(a => a.Facts = new BlueprintUnitFact[] { abl, ablHeighten }));
+            feat.HideInUI = true;
             return feat;
         }
     }

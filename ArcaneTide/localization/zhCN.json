@@ -47,15 +47,15 @@
     },
     {
       "Key": "ArcanistClass.ClassDesc",
-      "Value": "奥能师职业的描述"
+      "Value": "奥能师是所有魔法事物的学者。她们持久地探寻魔法的新形态，理解其机理，并常常将这些魔法的能量收为己用。相对于“施展魔法”这件事，很多奥能师不知疲倦地追逐着魔法力量本身。"
     },
     {
       "Key": "ArcanistClass.ProgressionName",
-      "Value": "奥能师progression名称"
+      "Value": "奥能师"
     },
     {
       "Key": "ArcanistClass.ProgressionDesc",
-      "Value": "奥能师progression的描述"
+      "Value": "奥能师是所有魔法事物的学者。她们持久地探寻魔法的新形态，理解其机理，并常常将这些魔法的能量收为己用。相对于“施展魔法”这件事，很多奥能师不知疲倦地追逐着魔法力量本身。"
     },
     {
       "Key": "ArcanistClass.Cantrip.Name",
@@ -71,15 +71,15 @@
     },
     {
       "Key": "ArcanistClass.Profiencies.Desc",
-      "Value": "奥能师武器熟练内容"
+      "Value": "奥能师擅长使用所有的简单武器。她们不擅长使用任何盔甲或盾牌。防具会限制奥能师的手势，因而可能导致施展具有姿态成分的法术时失败。"
     },
     {
       "Key": "ArcanistClass.Reservoir.Name",
-      "Value": ""
+      "Value": "奥能源泉"
     },
     {
       "Key": "ArcanistClass.Reservoir.Desc",
-      "Value": ""
+      "Value": "奥能师拥有天生的魔法能量之池，可以为她的【奥能技艺】提供能量、或强化她施展的法术。奥能师的奥能源泉中可以储存的最大魔法能量点数为“3+奥能师等级”。\n每天准备法术时，奥能师的奥能源泉将充满原始魔法能量，获得“3+1/2奥能师等级”点数。她在前一天剩余的点数将浪费掉。她还能通过【转耗法术】职业能力和一些【奥能技艺】来获得这些点数。奥术源泉中储存的点数无法超过前述的上限，超过最大值的点数会被浪费。\n奥术源泉点数可以用来为多种奥能师能力提供能量。此外，她可以在施放奥能师法术时，通过自由动作从奥术源泉中消耗1点，使得施法者等级+1或此法术DC+1。奥能师以此方式在一个法术上最多消耗1点。"
     },
     {
       "Key": "ArcanistClass.Reservoir.AddCLBuff.Name",
@@ -95,7 +95,7 @@
     },
     {
       "Key": "ArcanistClass.Reservoir.AddCLAbl.Desc",
-      "Value": ""
+      "Value": "从奥能源泉中消费1点，给下一个法术CL+1。如果具有【强化魔法】奥能技艺，则CL+2而不是+1。"
     },
     {
       "Key": "ArcanistClass.Reservoir.AddDCBuff.Name",
@@ -111,7 +111,7 @@
     },
     {
       "Key": "ArcanistClass.Reservoir.AddDCAbl.Desc",
-      "Value": ""
+      "Value": "从奥能源泉中消费1点，给下一个法术DC+1。如果具有【强化魔法】奥能技艺，则DC+2而不是+1。"
     },
     {
       "Key": "ArcanistClass.Reservoir.AddDCCLFeat.Name",
@@ -143,7 +143,7 @@
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level1.Abl.Desc",
-      "Value": "1"
+      "Value": ""
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level2.Abl.Name",
@@ -151,7 +151,7 @@
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level2.Abl.Desc",
-      "Value": "2"
+      "Value": ""
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level3.Abl.Name",
@@ -159,7 +159,7 @@
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level3.Abl.Desc",
-      "Value": "3"
+      "Value": ""
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level4.Abl.Name",
@@ -167,7 +167,7 @@
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level4.Abl.Desc",
-      "Value": "4"
+      "Value": ""
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level5.Abl.Name",
@@ -175,7 +175,7 @@
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level5.Abl.Desc",
-      "Value": "5"
+      "Value": ""
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level6.Abl.Name",
@@ -183,7 +183,7 @@
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level6.Abl.Desc",
-      "Value": "6"
+      "Value": ""
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level7.Abl.Name",
@@ -191,7 +191,7 @@
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level7.Abl.Desc",
-      "Value": "7"
+      "Value": ""
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level8.Abl.Name",
@@ -199,7 +199,7 @@
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level8.Abl.Desc",
-      "Value": "8"
+      "Value": ""
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level9.Abl.Name",
@@ -207,7 +207,7 @@
     },
     {
       "Key": "ArcanistClass.ConsumeSpell.Level9.Abl.Desc",
-      "Value": "9"
+      "Value": ""
     },
     {
       "Key": "ArcanistClass.GreaterExploits.Feat.Name",
@@ -215,7 +215,7 @@
     },
     {
       "Key": "ArcanistClass.GreaterExploits.Feat.Desc",
-      "Value": "高等技艺的说明"
+      "Value": "11级和之后每2级，奥能师可以从选取一个高等技艺来取代一个奥能技艺。"
     },
     {
       "Key": "ArcanistClass.MagaicSupremancy.Buff.Name",
@@ -286,12 +286,20 @@
       "Value": "法术升阶-9环"
     },
     {
+      "Key": "ArcanistClass.Exploit.ExtraExploit.Name",
+      "Value": "额外奥能技艺"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ExtraExploit.Desc",
+      "Value": "获得一个额外的奥能技艺。只有具有奥能源泉的角色才能选择此专长。"
+    },
+    {
       "Key": "ArcanistClass.Exploit.FeatureSelection.Name",
       "Value": "奥能技艺"
     },
     {
       "Key": "ArcanistClass.Exploit.FeatureSelection.Desc",
-      "Value": "奥能技艺的说明"
+      "Value": "通过扭曲、甚至打破魔法的规律则，奥能师习得了怎样开发魔法规律中的漏洞和特例。有的技艺还能让他粉碎各种形态的魔法，将其精华加入他的【奥能源泉】。1级和之后每2级，奥能师习得下表中一项新的奥能技艺。一项奥能技艺只能选择一次。一旦奥能技艺选定后则无法再更改。多数奥能技艺需要奥能师从【奥能源泉】中消费点数来施展。若无特别说明，奥能技艺的豁免DC为“10+1/2奥能师等级+奥能师的魅力调整值”。"
     },
     {
       "Key": "ArcanistClass.Exploit.PotentMagic.Name",
@@ -307,7 +315,7 @@
     },
     {
       "Key": "ArcanistClass.Exploit.Metamixing.Desc",
-      "Value": ""
+      "Value": "奥能师可以从【奥能源泉】中消费1点，为她施展的法术添加一项她已知的超魔专长，而不影响施展时间（仍如常使用高环法术位）。她可以通过此能力将一项超魔专长添加到一个准备时应用了超魔专长的法术，不过仍然不能多次应用相同的超魔专长。"
     },
     {
       "Key": "ArcanistClass.Exploit.FastStudy.Name",
@@ -315,7 +323,7 @@
     },
     {
       "Key": "ArcanistClass.Exploit.FastStudy.Desc",
-      "Value": ""
+      "Value": "从【奥能源泉】中消费1点，奥能师能够准备一个法术来替换一个已经存在的法术。使用此能力是一个会引发借机攻击的整轮动作。在使用此能力时奥能师必须能翻阅她的法术书。准备的法术必须和替换的法术环级相同。"
     },
     {
       "Key": "ArcanistClass.Exploit.FastStudy.AbjurationMasterAbl.Name",
@@ -503,7 +511,7 @@
     },
     {
       "Key": "ArcanistClass.Exploit.GreaterMetamagicKnowledge.Desc",
-      "Value": "奥能师可以选择一项超魔专长作为奖励专长。他必须满足该专长的先决条件。每天早上准备法术时，奥能师可以从【奥能源泉】中消费1点，来将此奖励专长替换为另一项超魔专长，只要他同样满足其先决条件。奥能师必须拥有【超魔学识】技艺才能选择此技艺。"
+      "Value": "奥能师可以选择一项超魔专长作为奖励专长。她必须满足该专长的先决条件。每天早上准备法术时，奥能师可以从【奥能源泉】中消费1点，来将此奖励专长替换为另一项超魔专长，只要她同样满足其先决条件。奥能师必须拥有【超魔学识】技艺才能选择此技艺。"
     },
     {
       "Key": "ArcanistClass.Exploit.AcidJet.Name",
@@ -512,6 +520,14 @@
     {
       "Key": "ArcanistClass.Exploit.AcidJet.Desc",
       "Value": "奥能师可以从【奥能源泉】中消费1点来发射出一股强酸。她能对30尺距离内任一目标进行一次远程接触攻击。若攻击命中，则造成“1d6+奥能师魅力调整值”的强酸伤害。1级以后每2级再增强1d6点（最高在19级达到10d6）。目标还会恶心1d4轮，通过强韧豁免则不会恶心。"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.LingeringAcid.Name",
+      "Value": "缠身酸液"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.LingeringAcid.Desc",
+      "Value": "当奥能师使用【酸液喷射】技艺时，他可以从【奥能源泉】中消费2点而非1点。若如此做，则豁免失败的目标会在之后数轮中受到额外伤害。初始攻击的每造成了2d6点强酸伤害，就会使目标在接下来一轮中受到1d6强酸伤害。随后轮中每造成2d6点强酸伤害，也会使目标下一轮再受到1d6强酸伤害。此伤害持续到前一轮的此效果造成的强酸伤害为1d6为止。例如一个9级奥能师能够造成“5d6+奥能师魅力调整值”点强酸伤害，第二轮造成2d6点强酸伤害，第三轮即最后一次造成1d6点强酸伤害。奥能师必须拥有【酸液喷射】技艺才能选择此技艺。"
     },
     {
       "Key": "ArcaneTide.AbilityRequirementClassSpellLevel.Reason",

@@ -53,6 +53,7 @@ namespace ArcaneTide {
                 SafeLoad(IconSet.Load, "Icons");
                 SafeLoad(MetaFeats.Load, "MetaFeatSet");
                 SafeLoad(ArcanistClass.Load, "Arcanist");
+                //SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
                 Main.arcanist = ArcanistClass.arcanist;
                 Main.loaded = true;
             }

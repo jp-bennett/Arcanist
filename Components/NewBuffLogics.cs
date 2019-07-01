@@ -3,8 +3,13 @@ using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Selection;
 using Kingmaker.Blueprints.Facts;
+using Kingmaker.Controllers.Units;
+using Kingmaker.Enums.Damage;
+using Kingmaker.RuleSystem;
+using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Buffs.Components;
+using Kingmaker.UnitLogic.Mechanics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,24 +59,24 @@ namespace ArcaneTide.Components {
             }
 
             unit.Resources.Spend(ArcaneReservoir.resource, 1);
-            UnityModManager.Logger.Log($"Unit = {unit.CharacterName}");
+            //UnityModManager.Logger.Log($"Unit = {unit.CharacterName}");
             FeatureSelectionData selectionData = unit.Progression.GetSelectionData(selectionBlue);
             if (selectionData.SelectionsByLevel.Count != 1) return;
             level = selectionData.SelectionsByLevel.ElementAt(0).Key;
 
             this.replacedOriginalFeats = new List<BlueprintFeature>(selectionData.GetSelections(level));
-            UnityModManager.Logger.Log($"Replaced Original Feats has {this.replacedOriginalFeats.Count} feats.");
+            //UnityModManager.Logger.Log($"Replaced Original Feats has {this.replacedOriginalFeats.Count} feats.");
             
             foreach (var feat in this.replacedOriginalFeats) {
-                UnityModManager.Logger.Log($"Remove Feat {feat.Name}");
+                //UnityModManager.Logger.Log($"Remove Feat {feat.Name}");
                 unit.Progression.Features.RemoveFact(feat);
                 //selectionData.RemoveSelection(level, feat);
-                UnityModManager.Logger.Log($"Remove Feat {feat.Name} Finish.");
+                //UnityModManager.Logger.Log($"Remove Feat {feat.Name} Finish.");
             }
-            UnityModManager.Logger.Log($"Start to add Feat.");
+            //UnityModManager.Logger.Log($"Start to add Feat.");
             //selectionData.AddSelection(level, newFeatBlue);
             unit.AddFact(newFeatBlue);
-            UnityModManager.Logger.Log($"Added feat {newFeatBlue.Name}");
+            //UnityModManager.Logger.Log($"Added feat {newFeatBlue.Name}");
         }
         public override void OnTurnOff() {
             if (this.replacedOriginalFeats != null && level != -1) {
@@ -89,5 +94,30 @@ namespace ArcaneTide.Components {
         public BlueprintFeature newFeatBlue;
         private List<BlueprintFeature> replacedOriginalFeats = null;
         private int level = -1;
+    }
+
+    class BuffAcidBurst : BuffLogic, ITickEachRound {
+        public override void OnTurnOn() {
+            base.OnTurnOn();
+            hasDealtFirstDamage = true;
+            diceCnt = CL.Calculate(this.Context);
+        }
+        public override void OnTurnOff() {
+            base.OnTurnOff();
+        }
+
+        public void OnNewRound() {
+            if (!hasDealtFirstDamage) {
+                return;
+            }
+            diceCnt /= 2;
+            DiceFormula damageDice = new DiceFormula(diceCnt, DiceType.D6);
+            base.Context.TriggerRule<RuleDealDamage>(new RuleDealDamage(this.Buff.Context.MaybeCaster, this.Buff.Owner.Unit,
+                new EnergyDamage(damageDice, DamageEnergyType.Acid)));
+            if (diceCnt == 1) this.Buff.Remove();
+        }
+        bool hasDealtFirstDamage = false;
+        int diceCnt;
+        public ContextValue CL;
     }
 }
