@@ -145,10 +145,11 @@ namespace ArcaneTide.Arcanist {
 
             var reservoirFeat = ArcaneReservoir.CreateReservoir();
             var sponmetaFeat = SponMetamagic.Create();
+            var greaterExploit = GreaterExploits.Create();
             ArcaneExploits.Load();
             var reservoirAblFeat = ArcaneReservoir.CreateAddDCCLFeature();
             var consumeFeat = ConsumeSpells.Create();
-            var greaterExploit = GreaterExploits.Create();
+            
             var supremancyFeat = Supremancy.Create();
             var entries = new List<LevelEntry>();
             entries.Add(Helpers.LevelEntry(1,

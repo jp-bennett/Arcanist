@@ -59,6 +59,10 @@
     <Reference Include="UnityEngine.AnimationModule">
       <HintPath>..\..\..\pathfinder-mods\Managed\UnityEngine.AnimationModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\Unity\2018.1.0f2\Editor\Data\Managed\UnityEngine\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\pathfinder-mods\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
@@ -110,6 +114,7 @@
     <Compile Include="Patches\Arcanist_Supremancy_Patch.cs" />
     <Compile Include="Patches\Arcanist_Consume_Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Risia\TestCopyScene.cs" />
     <Compile Include="Spells\Non-PF.cs" />
     <Compile Include="Spells\SpellsMonitor.cs" />
     <Compile Include="TestSpawner\TestSpawner.cs" />

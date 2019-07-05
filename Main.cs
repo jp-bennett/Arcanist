@@ -25,6 +25,8 @@ using Harmony12;
 using UnityEngine.SceneManagement;
 using Kingmaker.UnitLogic;
 using Kingmaker.Designers;
+using Kingmaker.Blueprints.Items.Weapons;
+using ArcaneTide.Risia;
 
 namespace ArcaneTide {
     public class Main {
@@ -32,6 +34,9 @@ namespace ArcaneTide {
         public static bool enabled;
         public static UnityModManager.ModEntry.ModLogger logger;
         public static string ModPath;
+        public static string bundleName = "risia";
+        public static AssetBundle Bundle;
+        public static Dictionary<string, string> BundleLookup = new Dictionary<string, string>();
         static Harmony12.HarmonyInstance harmonyInstance;
         public static BlueprintCharacterClass arcanist;
         public static bool loaded = false;
@@ -46,6 +51,10 @@ namespace ArcaneTide {
                 var self = __instance;
                 if (Main.library != null) return;
                 Main.library = self;
+                logger.Log("Dua 1!?!");
+                LoadBundle($"{ModPath}/bundles/{bundleName}.assetbundle");
+                logger.Log("Dua 2!?!");
+                
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
@@ -54,6 +63,7 @@ namespace ArcaneTide {
                 SafeLoad(MetaFeats.Load, "MetaFeatSet");
                 SafeLoad(ArcanistClass.Load, "Arcanist");
                 //SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
+                SafeLoad(TestCopyScene.Load, "");
                 Main.arcanist = ArcanistClass.arcanist;
                 Main.loaded = true;
             }
@@ -74,9 +84,68 @@ namespace ArcaneTide {
             harmonyInstance = Harmony12.HarmonyInstance.Create(modEntry.Info.Id);
             harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
             arcanist = ArcanistClass.arcanist;
+
+            foreach (var file in Directory.GetFiles(Path.Combine(ModPath, "bundles"))) {
+
+                if (!file.EndsWith("manifest") && Path.GetFileName(file) != bundleName) {
+                    BundleLookup[Path.GetFileName(file).Replace("resource_", "")] = file;
+                }
+            }
             return true;
         }
-
+        static void LoadBundle(string path) {
+            var bundle = AssetBundle.LoadFromFile(path);
+            if (bundle.isStreamedSceneAssetBundle) {
+                /*string[] scenePaths = bundle.GetAllScenePaths();
+                string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePaths[0]);
+                SceneManager.LoadScene(sceneName);*/
+                return;
+            }
+            var blueprints = bundle.LoadAllAssets<BlueprintScriptableObject>();
+            /*Main.DebugLog("Verifying blueprint ----------------------");
+            foreach (var blueprint in blueprints)
+            {
+                VerifyBundles.VerifyBlueprint(blueprint);
+            }
+            Main.DebugLog("Finished vefiying blueprint ----------------------");*/
+            foreach (var blueprint in blueprints) {
+                if (blueprint.name.StartsWith("Existing.")) {
+                    continue;
+                }
+                logger.Log($"Loaded Blueprint {blueprint.name}");
+                if (ResourcesLibrary.LibraryObject.BlueprintsByAssetId.ContainsKey(blueprint.AssetGuid)) {
+                    logger.Log($"Fuck, Id {blueprint.AssetGuid}, name {blueprint.name} is duplicated!");
+                    //throw new Exception($"ResourceLibrary already contains blueprint {blueprint.AssetGuid}");
+                    continue;
+                }
+                ResourcesLibrary.LibraryObject.BlueprintsByAssetId[blueprint.AssetGuid] = blueprint;
+                ResourcesLibrary.LibraryObject.GetAllBlueprints().Add(blueprint);
+                if (blueprint is BlueprintRace race) {
+                    logger.Log($"Registering Race {blueprint.name}");
+                    ref var races = ref Game.Instance.BlueprintRoot.Progression.CharacterRaces;
+                    if (races.Contains(race)) return;
+                    var length = races.Length;
+                    Array.Resize(ref races, length + 1);
+                    races[length] = race;
+                }
+                if (blueprint is BlueprintCharacterClass _class) {
+                    logger.Log($"Registering Class {blueprint.name}");
+                    ref var classes = ref Game.Instance.BlueprintRoot.Progression.CharacterClasses;
+                    if (classes.Contains(_class)) return;
+                    var length = classes.Length;
+                    Array.Resize(ref classes, length + 1);
+                    classes[length] = _class;
+                }
+                if (blueprint is BlueprintItemWeapon _weapon) {
+                    logger.Log($"Registering Weapon {blueprint.name}");
+                }
+            }
+            foreach (var kv in BundleLookup) {
+                ResourcesLibrary.LibraryObject.ResourceNamesByAssetId[kv.Key] = kv.Key;
+            }
+            logger.Log("Do Load Bundle Finish!!!");
+            //FixBlueprint.Fix();
+        }
         static bool OnToggle(UnityModManager.ModEntry modEntry, bool value) {
             enabled = value;
             return true;
