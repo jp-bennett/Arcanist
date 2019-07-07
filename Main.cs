@@ -57,7 +57,6 @@ namespace ArcaneTide {
                 
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
-                //use sorcerer to temporarily simulate arcanist
                 SafeLoad(Helpers.Load, "Helpers");
                 SafeLoad(IconSet.Load, "Icons");
                 SafeLoad(MetaFeats.Load, "MetaFeatSet");
