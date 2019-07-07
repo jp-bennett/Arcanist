@@ -54,10 +54,10 @@ namespace ArcaneTide {
                 var self = __instance;
                 if (Main.library != null) return;
                 Main.library = self;
-                logger.Log("Dua 1!?!");
-                LoadBundle($"{ModPath}/bundles/risiablue.assetbundle");
-                LoadBundle($"{ModPath}/bundles/risia.assetbundle");
-                logger.Log("Dua 2!?!");
+                //logger.Log("Dua 1!?!");
+                //LoadBundle($"{ModPath}/bundles/risiablue.assetbundle");
+                //LoadBundle($"{ModPath}/bundles/risia.assetbundle");
+                //logger.Log("Dua 2!?!");
                 
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
@@ -66,8 +66,8 @@ namespace ArcaneTide {
                 SafeLoad(IconSet.Load, "Icons");
                 SafeLoad(MetaFeats.Load, "MetaFeatSet");
                 SafeLoad(ArcanistClass.Load, "Arcanist");
-                SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
-                SafeLoad(TestCopyScene.Load, "");
+                //SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
+                //SafeLoad(TestCopyScene.Load, "");
                 Main.arcanist = ArcanistClass.arcanist;
                 Main.loaded = true;
             }
@@ -169,7 +169,7 @@ namespace ArcaneTide {
                 return;
             }
             if (Main.loaded) {
-                
+                /*
                 GUILayout.BeginVertical(new GUILayoutOption[] { });
                 GUILayout.Label(new GUIContent("All companions:\n"), new GUILayoutOption[] { });
                 GUILayout.BeginHorizontal(new GUILayoutOption[] { });
@@ -210,8 +210,9 @@ namespace ArcaneTide {
                 if (button3) {
                     Bala.ExportMainCharPrefab();
                 }
+                GUILayout.EndHorizonal();
                 GUILayout.EndVertical();
-                
+                */
             }
         }
         static void OnSaveGUI(UnityModManager.ModEntry modEntry) {
