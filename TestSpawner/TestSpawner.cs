@@ -39,18 +39,18 @@ namespace ArcaneTide.TestSpawner {
             spawner.transform.SetPositionAndRotation(new UnityEngine.Vector3(11.77268f, 1.241176f, 1.633618f), UnityEngine.Quaternion.identity);
             spawner.UniqueId = "c47dab2a-47b4-826e-d162-01142956d607";*/
             EntityReference spawnerRef = new EntityReference {
-                UniqueId = spawner.UniqueId
+                UniqueId = "9197b23a-4e69-dba5-be76-fef09c815d93"
             };
             logger.Log("rua rua rua rua 3");
             BlueprintArea ElkTemple = library.Get<BlueprintArea>("340a310b850e1ed469a60388012734f9");
             logger.Log("rua rua rua rua 4");
-            AreaDidLoadTrigger compNeu = Helpers.Create<AreaDidLoadTrigger>();
+            var compNeu = Helpers.Create<ActivateTrigger>();
             compNeu.Conditions = new ConditionsChecker {
                 Conditions = new Condition[]{
-                    /*Helpers.Create<FlagUnlocked>(a => {
+                    Helpers.Create<FlagUnlocked>(a => {
                         a.ConditionFlag = flagIsRisiaSpawned;
                         a.Not = true;
-                    })*/
+                    })
                 }
             };
             compNeu.Actions = new ActionList {

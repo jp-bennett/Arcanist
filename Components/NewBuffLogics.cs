@@ -172,4 +172,22 @@ namespace ArcaneTide.Components {
         int diceCnt;
         public ContextValue CL;
     }
+
+    class BuffIcyTombGotFireDamageRemoval : BuffLogic, ITargetRulebookHandler<RuleDealDamage>, IRulebookHandler<RuleDealDamage>, ITargetRulebookSubscriber {
+        public void OnEventAboutToTrigger(RuleDealDamage evt) {
+            
+        }
+
+        public void OnEventDidTrigger(RuleDealDamage evt) {
+            foreach(DamageValue val in evt.ResultDamage) {
+                if(val.Source is EnergyDamage) {
+                    EnergyDamage d = val.Source as EnergyDamage;
+                    if(d.EnergyType == damageType && val.FinalValue >= 10) {
+                        base.Buff.Remove();
+                    }
+                }
+            }
+        }
+        public DamageEnergyType damageType;
+    }
 }

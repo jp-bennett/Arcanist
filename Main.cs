@@ -27,6 +27,9 @@ using Kingmaker.UnitLogic;
 using Kingmaker.Designers;
 using Kingmaker.Blueprints.Items.Weapons;
 using ArcaneTide.Risia;
+using static UnityModManagerNet.UnityModManager.ModEntry;
+using Kingmaker.EntitySystem.Entities;
+using Kingmaker.View;
 
 namespace ArcaneTide {
     public class Main {
@@ -34,7 +37,7 @@ namespace ArcaneTide {
         public static bool enabled;
         public static UnityModManager.ModEntry.ModLogger logger;
         public static string ModPath;
-        public static string bundleName = "risia";
+        //public static string bundleName = "risia";
         public static AssetBundle Bundle;
         public static Dictionary<string, string> BundleLookup = new Dictionary<string, string>();
         static Harmony12.HarmonyInstance harmonyInstance;
@@ -52,7 +55,8 @@ namespace ArcaneTide {
                 if (Main.library != null) return;
                 Main.library = self;
                 logger.Log("Dua 1!?!");
-                LoadBundle($"{ModPath}/bundles/{bundleName}.assetbundle");
+                LoadBundle($"{ModPath}/bundles/risiablue.assetbundle");
+                LoadBundle($"{ModPath}/bundles/risia.assetbundle");
                 logger.Log("Dua 2!?!");
                 
                 //use sorcerer to temporarily simulate arcanist
@@ -62,7 +66,7 @@ namespace ArcaneTide {
                 SafeLoad(IconSet.Load, "Icons");
                 SafeLoad(MetaFeats.Load, "MetaFeatSet");
                 SafeLoad(ArcanistClass.Load, "Arcanist");
-                //SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
+                SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
                 SafeLoad(TestCopyScene.Load, "");
                 Main.arcanist = ArcanistClass.arcanist;
                 Main.loaded = true;
@@ -84,13 +88,14 @@ namespace ArcaneTide {
             harmonyInstance = Harmony12.HarmonyInstance.Create(modEntry.Info.Id);
             harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
             arcanist = ArcanistClass.arcanist;
-
+            /*
             foreach (var file in Directory.GetFiles(Path.Combine(ModPath, "bundles"))) {
 
                 if (!file.EndsWith("manifest") && Path.GetFileName(file) != bundleName) {
                     BundleLookup[Path.GetFileName(file).Replace("resource_", "")] = file;
                 }
             }
+            */
             return true;
         }
         static void LoadBundle(string path) {
@@ -118,8 +123,10 @@ namespace ArcaneTide {
                     //throw new Exception($"ResourceLibrary already contains blueprint {blueprint.AssetGuid}");
                     continue;
                 }
+
                 ResourcesLibrary.LibraryObject.BlueprintsByAssetId[blueprint.AssetGuid] = blueprint;
                 ResourcesLibrary.LibraryObject.GetAllBlueprints().Add(blueprint);
+                /*
                 if (blueprint is BlueprintRace race) {
                     logger.Log($"Registering Race {blueprint.name}");
                     ref var races = ref Game.Instance.BlueprintRoot.Progression.CharacterRaces;
@@ -139,12 +146,14 @@ namespace ArcaneTide {
                 if (blueprint is BlueprintItemWeapon _weapon) {
                     logger.Log($"Registering Weapon {blueprint.name}");
                 }
+                */
             }
+            /*
             foreach (var kv in BundleLookup) {
                 ResourcesLibrary.LibraryObject.ResourceNamesByAssetId[kv.Key] = kv.Key;
-            }
+            }*/
             logger.Log("Do Load Bundle Finish!!!");
-            //FixBlueprint.Fix();
+            FixBlueprint.Fix(bundle);
         }
         static bool OnToggle(UnityModManager.ModEntry modEntry, bool value) {
             enabled = value;
@@ -194,6 +203,13 @@ namespace ArcaneTide {
                     Game.Instance.UI.GetCameraRig().ScrollTo(position);
                     GameHelper.GetPlayerCharacter().Position = position;
                 }
+                GUILayout.BeginHorizontal(new GUILayoutOption[] { });
+                bool button3 = GUILayout.Button(new GUIContent("Export MainChar Prefab"), new GUILayoutOption[] {
+                    GUILayout.ExpandWidth(false)
+                });
+                if (button3) {
+                    Bala.ExportMainCharPrefab();
+                }
                 GUILayout.EndVertical();
                 
             }
@@ -213,6 +229,22 @@ namespace ArcaneTide {
             catch (Exception e) {
                 Log.Error(e);
             }
+        }
+    }
+    public class Bala {
+        static public LibraryScriptableObject library => Main.library;
+        static public ModLogger logger => Main.logger;
+        static public void ExportMainCharPrefab() {
+            
+            UnitEntityData unit = Game.Instance.Player.MainCharacter.Value;
+            GameObject obj = unit.View.gameObject;
+            UnityEngine.Object newPrefab = UnityEditor.PrefabUtility.CreateEmptyPrefab("Assets/Here.prefab");
+            newPrefab = UnityEditor.PrefabUtility.ReplacePrefab(obj, newPrefab);
+            /*
+            foreach(GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects()) {
+                logger.Log(obj.name);
+            }*/
+
         }
     }
 }

@@ -35,10 +35,12 @@ using Kingmaker.ElementsSystem;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.ResourceLinks;
 using Kingmaker.UnitLogic.Abilities;
+using static UnityModManagerNet.UnityModManager.ModEntry;
 
 namespace ArcaneTide.Arcanist {
     static class ArcanistClass {
         static LibraryScriptableObject library => Main.library;
+        static ModLogger logger => Main.logger;
         internal static BlueprintCharacterClass wizard, sorcerer;
         public static BlueprintCharacterClass arcanist;
         static public void Load() {
@@ -188,8 +190,51 @@ namespace ArcaneTide.Arcanist {
                 }
             };
             arcanist.Progression = progression;
+
+            FixPrestigeSpellbookSelection("ae04b7cdeb88b024b9fd3882cc7d3d76", "9ff7ad30e5a074346a40f80efda277c8", FeatureGroup.ArcaneTricksterSpellbook);
+            FixPrestigeSpellbookSelection("8c1ba14c0b6dcdb439c56341385ee474", "fa2a2469c9ba6d54b8fc2356f4fc0e9e", FeatureGroup.DragonDiscipleSpellbook);
+            FixPrestigeSpellbookSelection("dc3ab8d0484467a4787979d93114ebc3", "89d2b9f096b54804c8350dd2a899f8a4", FeatureGroup.EldritchKnightSpellbook);
+            FixPrestigeSpellbookSelection("97f510c6483523c49bc779e93e4c4568", "e8013bf2853590f4fba12b4b57366bcc", FeatureGroup.MysticTheurgeArcaneSpellbook);
             arcanist.RegisterClass();
             RegisterOtherAssets();
+        }
+        static internal void FixPrestigeSpellbookSelection(string prestigeSpellbookSelectionId, string prestigeSpellbookSelectionWizardItemId, FeatureGroup group){
+            BlueprintFeatureSelection spellbookSelection = library.Get<BlueprintFeatureSelection>(prestigeSpellbookSelectionId);
+            if(spellbookSelection == null) {
+                string errorMsg = $"Error, Prestige Spellbook Selection {prestigeSpellbookSelectionId} not exist!";
+                logger.Error(errorMsg);
+                throw new Exception(errorMsg);
+            }
+
+            var wizardFeature = spellbookSelection.AllFeatures.Cast<BlueprintFeatureReplaceSpellbook>()
+                .First(f => f.AssetGuid == prestigeSpellbookSelectionWizardItemId);
+
+            // Create a new feature for this archetype's spellbook
+            string arcanistFeatureName = $"ArcanistClass{group.ToString()}ChosenItem";
+            var arcanistFeature = library.CopyAndAdd<BlueprintFeatureReplaceSpellbook>(
+                wizardFeature, arcanistFeatureName, OtherUtils.GetMd5(arcanistFeatureName));
+            arcanistFeature.Spellbook = arcanist.Spellbook;
+            arcanistFeature.SetName(arcanist.Name);
+
+            var classSpellPreqComp = wizardFeature.GetComponent<PrerequisiteClassSpellLevel>();
+            if(classSpellPreqComp == null) {
+                classSpellPreqComp = Helpers.Create<PrerequisiteClassSpellLevel>(a => {
+                    a.CharacterClass = arcanist;
+                    a.RequiredSpellLevel = 1;
+                });
+            }
+            else {
+                classSpellPreqComp = UnityEngine.Object.Instantiate(classSpellPreqComp);
+                classSpellPreqComp.CharacterClass = arcanist;
+            }
+            // Update the prerequisites.
+            arcanistFeature.SetComponents(new BlueprintComponent[] { classSpellPreqComp });
+
+            // Add to the list of all features for this selector.
+            var allFeatures = spellbookSelection.AllFeatures.ToList();
+            allFeatures.Add(arcanistFeature);
+            spellbookSelection.AllFeatures = allFeatures.ToArray();
+
         }
         static internal BlueprintSpellsTable CreateArcanistMemorize() {
             if (library.BlueprintsByAssetId.ContainsKey("70a540f04461bcd29da08e9a25b5c566")) {

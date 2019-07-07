@@ -1,0 +1,11 @@
+ManifestFileVersion: 0
+CRC: 2069409655
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: risia.assetbundle
+      Dependencies:
+        Dependency_0: risiablue.assetbundle
+    Info_1:
+      Name: risiablue.assetbundle
+      Dependencies: {}
