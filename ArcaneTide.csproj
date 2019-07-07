@@ -131,6 +131,7 @@
     <None Include="ArcaneTide\Info.json" />
     <None Include="ArcaneTide\localization\enGB.json" />
     <None Include="ArcaneTide\localization\zhCN.json" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="新建文本文档.txt" />
