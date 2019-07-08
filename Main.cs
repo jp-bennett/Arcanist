@@ -237,14 +237,7 @@ namespace ArcaneTide {
         static public ModLogger logger => Main.logger;
         static public void ExportMainCharPrefab() {
             
-            UnitEntityData unit = Game.Instance.Player.MainCharacter.Value;
-            GameObject obj = unit.View.gameObject;
-            UnityEngine.Object newPrefab = UnityEditor.PrefabUtility.CreateEmptyPrefab("Assets/Here.prefab");
-            newPrefab = UnityEditor.PrefabUtility.ReplacePrefab(obj, newPrefab);
-            /*
-            foreach(GameObject obj in SceneManager.GetActiveScene().GetRootGameObjects()) {
-                logger.Log(obj.name);
-            }*/
+
 
         }
     }

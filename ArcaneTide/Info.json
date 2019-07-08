@@ -2,11 +2,11 @@
   "Id": "ArcaneTide",
   "DisplayName": "ArcaneTide",
   "Author": "SnowyJune",
-  "Version": "0.9.1",
+  "Version": "0.9.2",
   "ManagerVersion": "0.16.1",
   "Requirements": [],
   "AssemblyName": "Arcanist.dll",
   "EntryMethod": "ArcaneTide.Main.Load",
-  "Repository": "https://github.com/SnowyJune973/Arcanist"
+  "Repository": "https://github.com/SnowyJune973/Arcanist/tree/release"
 }
 
