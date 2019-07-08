@@ -32,6 +32,9 @@ using Kingmaker.EntitySystem.Entities;
 using Kingmaker.View;
 
 namespace ArcaneTide {
+    public class ModStorage {
+        public static Dictionary<string, DollData> dolls = new Dictionary<string, DollData>();
+    }
     public class Main {
         internal static LibraryScriptableObject library;
         public static bool enabled;
@@ -54,10 +57,11 @@ namespace ArcaneTide {
                 var self = __instance;
                 if (Main.library != null) return;
                 Main.library = self;
-                //logger.Log("Dua 1!?!");
-                //LoadBundle($"{ModPath}/bundles/risiablue.assetbundle");
-                //LoadBundle($"{ModPath}/bundles/risia.assetbundle");
-                //logger.Log("Dua 2!?!");
+                
+                logger.Log("Dua 1!?!");
+                LoadBundle($"{ModPath}/bundles/risiablue.assetbundle");
+                LoadBundle($"{ModPath}/bundles/risia.assetbundle");
+                logger.Log("Dua 2!?!");
                 
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
@@ -66,9 +70,10 @@ namespace ArcaneTide {
                 SafeLoad(IconSet.Load, "Icons");
                 SafeLoad(MetaFeats.Load, "MetaFeatSet");
                 SafeLoad(ArcanistClass.Load, "Arcanist");
-                //SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
-                //SafeLoad(TestCopyScene.Load, "");
+                SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
+                SafeLoad(TestCopyScene.Load, "");
                 Main.arcanist = ArcanistClass.arcanist;
+
                 Main.loaded = true;
             }
         }
@@ -79,12 +84,21 @@ namespace ArcaneTide {
                 
             }
         }
+        static void CopyResourceBundles() {
+            string resBundleDir = Path.Combine(ModPath, "bundles", "resource");
+            string gameResDir = Path.Combine(ModPath, "..", "..", "Kingmaker_Data", "StreamingAssets", "Bundles");
+            DirectoryInfo dirInfo = new DirectoryInfo(resBundleDir);
+            foreach(FileInfo fl in dirInfo.GetFiles()) {
+                fl.CopyTo(Path.Combine(gameResDir, fl.Name), true);
+            }
+        }
         static bool Load(UnityModManager.ModEntry modEntry) {
             logger = modEntry.Logger;
             ModPath = modEntry.Path;
             modEntry.OnToggle = OnToggle;
             modEntry.OnGUI = OnGUI;
             modEntry.OnSaveGUI = OnSaveGUI;
+            Main.CopyResourceBundles();
             harmonyInstance = Harmony12.HarmonyInstance.Create(modEntry.Info.Id);
             harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
             arcanist = ArcanistClass.arcanist;
@@ -169,8 +183,16 @@ namespace ArcaneTide {
                 return;
             }
             if (Main.loaded) {
-                /*
+                
                 GUILayout.BeginVertical(new GUILayoutOption[] { });
+                GUILayout.BeginHorizontal(new GUILayoutOption[] { });
+                bool button4 = GUILayout.Button("Output");
+                if (button4) {
+                    logger.Log($"Game.NewGamePreset = {Game.NewGamePreset.AssetGuid}");
+                    
+                }
+                GUILayout.EndHorizontal();
+                /*
                 GUILayout.Label(new GUIContent("All companions:\n"), new GUILayoutOption[] { });
                 GUILayout.BeginHorizontal(new GUILayoutOption[] { });
                 int followers_cnt = Game.Instance.Player.AllCharacters.Count;
@@ -211,8 +233,9 @@ namespace ArcaneTide {
                     Bala.ExportMainCharPrefab();
                 }
                 GUILayout.EndHorizonal();
-                GUILayout.EndVertical();
                 */
+                GUILayout.EndVertical();
+                
             }
         }
         static void OnSaveGUI(UnityModManager.ModEntry modEntry) {

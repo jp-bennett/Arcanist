@@ -1,7 +1,9 @@
-﻿using Kingmaker.Blueprints;
+﻿using ArcaneTide.Components;
+using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Area;
 using Kingmaker.Designers.EventConditionActionSystem.Actions;
 using Kingmaker.Designers.EventConditionActionSystem.Conditions;
+using Kingmaker.Designers.EventConditionActionSystem.Evaluators;
 using Kingmaker.Designers.EventConditionActionSystem.Events;
 using Kingmaker.ElementsSystem;
 using Kingmaker.View.Spawners;
@@ -55,9 +57,11 @@ namespace ArcaneTide.TestSpawner {
             };
             compNeu.Actions = new ActionList {
                 Actions = new GameAction[] {
-                    Helpers.Create<Spawn>(a => {
-                        a.Spawners = new EntityReference[]{spawnerRef};
-                        a.ActionsOnSpawn = new ActionList();
+                    Helpers.Create<ArcaneTide_ReplaceViewAction>(a => {
+                        a.dollData_key = "dolldata0";
+                        a.unitEV = new UnitFromSpawner {
+                            Spawner = spawnerRef
+                        };
                     }),
                     Helpers.Create<UnlockFlag>(a => a.flag = flagIsRisiaSpawned)
                 }

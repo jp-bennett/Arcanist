@@ -96,6 +96,7 @@
     <Compile Include="Components\AbilityRangeComponent.cs" />
     <Compile Include="Components\AbilityRequirements.cs" />
     <Compile Include="Components\ConsumeItemComponents.cs" />
+    <Compile Include="Components\NewSceneEventActions.cs" />
     <Compile Include="Components\SchoolUnderstanding.cs" />
     <Compile Include="Components\AddCLDCOnNextSpell.cs" />
     <Compile Include="Components\ConsumeSpellForReservoir.cs" />
