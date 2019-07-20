@@ -1,4 +1,5 @@
 ﻿using ArcaneTide.Components;
+using ArcaneTide.Utils;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Area;
 using Kingmaker.Designers.EventConditionActionSystem.Actions;
@@ -20,6 +21,7 @@ namespace ArcaneTide.TestSpawner {
     static class TestSpawner {
         static internal LibraryScriptableObject library => Main.library;
         static internal ModLogger logger => Main.logger;
+        static internal GlobalConstants consts => Main.constsManager;
         static internal BlueprintUnlockableFlag flagIsRisiaSpawned;
         static internal UnitSpawner spawner;
         static public void Load() {
@@ -29,9 +31,7 @@ namespace ArcaneTide.TestSpawner {
             flagIsRisiaSpawned.Lock();
             flagIsRisiaSpawned.name = "flagIsRisiaSpawned";
             logger.Log("rua rua rua rua 1");
-            spawner = HelpersNeu.CreateSpawner(irovetti, "c47dab2a47b4826ed16201142956d607",
-                new UnityEngine.Vector3(11.77268f, 1.241176f, 1.633618f), UnityEngine.Quaternion.identity,
-                false, false, new List<BlueprintSummonPool>());
+            
             logger.Log("rua rua rua rua 2");
             /*EntityReference spawnerIrovettiRef = new EntityReference {
                 UniqueId = "7d4ab0ca-92d9-4960-9225-c341558a47c8" //irovetti
@@ -41,18 +41,18 @@ namespace ArcaneTide.TestSpawner {
             spawner.transform.SetPositionAndRotation(new UnityEngine.Vector3(11.77268f, 1.241176f, 1.633618f), UnityEngine.Quaternion.identity);
             spawner.UniqueId = "c47dab2a-47b4-826e-d162-01142956d607";*/
             EntityReference spawnerRef = new EntityReference {
-                UniqueId = "9197b23a-4e69-dba5-be76-fef09c815d93"
+                UniqueId = consts.GUIDs["RisiaElkTempleSpawner_D"]
             };
             logger.Log("rua rua rua rua 3");
             BlueprintArea ElkTemple = library.Get<BlueprintArea>("340a310b850e1ed469a60388012734f9");
             logger.Log("rua rua rua rua 4");
-            var compNeu = Helpers.Create<ActivateTrigger>();
+            var compNeu = Helpers.Create<AreaDidLoadTrigger>();
             compNeu.Conditions = new ConditionsChecker {
                 Conditions = new Condition[]{
-                    Helpers.Create<FlagUnlocked>(a => {
+                    /*Helpers.Create<FlagUnlocked>(a => {
                         a.ConditionFlag = flagIsRisiaSpawned;
                         a.Not = true;
-                    })
+                    })*/
                 }
             };
             compNeu.Actions = new ActionList {

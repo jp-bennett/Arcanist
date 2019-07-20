@@ -262,3 +262,9 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/ArcaneTide/bundles/risiascene1.assetbundle.manifest
+/ArcaneTide/bundles/risiascene1.assetbundle
+/ArcaneTide/bundles/resource/resource_f6dcfb21b75940cb91131147ff4b5188.manifest
+/ArcaneTide/bundles/resource/resource_f6dcfb21b75940cb91131147ff4b5188
+/ArcaneTide/bundles/resource/resource_7cf8a663c1bf4be18297121d1eb83dd0.manifest
+/ArcaneTide/bundles/resource/resource_7cf8a663c1bf4be18297121d1eb83dd0

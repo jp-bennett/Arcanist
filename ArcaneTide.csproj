@@ -118,14 +118,17 @@
     <Compile Include="Patches\Arcanist_Consume_Patch.cs" />
     <Compile Include="PathUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Risia\RisiaAddLevels.cs" />
     <Compile Include="Risia\TestCopyScene.cs" />
     <Compile Include="Spells\Non-PF.cs" />
     <Compile Include="Spells\SpellsMonitor.cs" />
     <Compile Include="TestSpawner\TestSpawner.cs" />
     <Compile Include="Utils\FeatBuffUtils.cs" />
+    <Compile Include="Utils\GlobalConstants.cs" />
     <Compile Include="Utils\OtherUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ArcaneTide\ArcaneTide.json" />
     <None Include="ArcaneTide\Info.json" />
     <None Include="ArcaneTide\localization\enGB.json" />
     <None Include="ArcaneTide\localization\zhCN.json" />

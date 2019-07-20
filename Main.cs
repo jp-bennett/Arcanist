@@ -30,7 +30,9 @@ using ArcaneTide.Risia;
 using static UnityModManagerNet.UnityModManager.ModEntry;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.View;
-
+using Kingmaker.Visual.CharacterSystem;
+using Kingmaker.Items.Slots;
+using Newtonsoft.Json;
 namespace ArcaneTide {
     public class ModStorage {
         public static Dictionary<string, DollData> dolls = new Dictionary<string, DollData>();
@@ -46,6 +48,9 @@ namespace ArcaneTide {
         static Harmony12.HarmonyInstance harmonyInstance;
         public static BlueprintCharacterClass arcanist;
         public static bool loaded = false;
+
+        public static GlobalConstants constsManager;
+
         static class UIData {
             static public string posX = "0", posY = "0", posZ = "0";
         }
@@ -59,8 +64,10 @@ namespace ArcaneTide {
                 Main.library = self;
                 
                 logger.Log("Dua 1!?!");
-                LoadBundle($"{ModPath}/bundles/risiablue.assetbundle");
-                LoadBundle($"{ModPath}/bundles/risia.assetbundle");
+                foreach(string bundle in constsManager.assetBundleFiles) {
+                    string absolutePath = Path.Combine(ModPath, "bundles", bundle);
+                    LoadBundle(absolutePath);
+                }
                 logger.Log("Dua 2!?!");
                 
                 //use sorcerer to temporarily simulate arcanist
@@ -70,6 +77,7 @@ namespace ArcaneTide {
                 SafeLoad(IconSet.Load, "Icons");
                 SafeLoad(MetaFeats.Load, "MetaFeatSet");
                 SafeLoad(ArcanistClass.Load, "Arcanist");
+                SafeLoad(RisiaAddLevels.Load, "Risia-AddClassLevels");
                 SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
                 SafeLoad(TestCopyScene.Load, "");
                 Main.arcanist = ArcanistClass.arcanist;
@@ -98,6 +106,12 @@ namespace ArcaneTide {
             modEntry.OnToggle = OnToggle;
             modEntry.OnGUI = OnGUI;
             modEntry.OnSaveGUI = OnSaveGUI;
+
+            StreamReader fin = new StreamReader(Path.Combine(ModPath, "ArcaneTide.json"));
+            string fileData = fin.ReadToEnd();
+            fin.Close();
+            constsManager = JsonConvert.DeserializeObject<GlobalConstants>(fileData);
+
             Main.CopyResourceBundles();
             harmonyInstance = Harmony12.HarmonyInstance.Create(modEntry.Info.Id);
             harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
@@ -113,6 +127,7 @@ namespace ArcaneTide {
             return true;
         }
         static void LoadBundle(string path) {
+            logger.Log($"Path is {path}");
             var bundle = AssetBundle.LoadFromFile(path);
             if (bundle.isStreamedSceneAssetBundle) {
                 /*string[] scenePaths = bundle.GetAllScenePaths();
@@ -186,8 +201,9 @@ namespace ArcaneTide {
                 
                 GUILayout.BeginVertical(new GUILayoutOption[] { });
                 GUILayout.BeginHorizontal(new GUILayoutOption[] { });
-                bool button4 = GUILayout.Button("Output");
+                bool button4 = GUILayout.Button("Strip");
                 if (button4) {
+                    Bala.StripMainCharacter();
                     logger.Log($"Game.NewGamePreset = {Game.NewGamePreset.AssetGuid}");
                     
                 }
@@ -258,10 +274,27 @@ namespace ArcaneTide {
     public class Bala {
         static public LibraryScriptableObject library => Main.library;
         static public ModLogger logger => Main.logger;
-        static public void ExportMainCharPrefab() {
+        static public string Risia_ElkTemple_SpawnerId = "1d96bf5c-0d3d-4f3e-a76d-9366725249de";
+        static public void StripMainCharacter() {
+            UnitEntityData mainUnit = Game.Instance.Player.MainCharacter;
+            mainUnit.View.UpdateClassEquipment();
+            var mainGender = mainUnit.Gender;
+            var mainRace = mainUnit.Descriptor.Progression.Race;
+            var mainUnitClothes = mainUnit.Descriptor.Progression.GetEquipmentClass().LoadClothes(mainGender, mainRace);
+            foreach(EquipmentEntity ee in mainUnitClothes) {
+                mainUnit.View.CharacterAvatar.RemoveEquipmentEntity(ee, false);
+            }
+            if (mainUnit.IsPlayerFaction && BlueprintRoot.Instance.Cheats.SillyShirt) {
+                mainUnit.View.CharacterAvatar.RemoveEquipmentEntities(BlueprintRoot.Instance.Cheats.SillyShirt.Load(mainGender, mainRace.RaceId), false);
+            }
             
-
-
+            if (mainUnit != null) {
+                foreach (ItemSlot itemSlot in mainUnit.Body.AllSlots) {
+                    if (itemSlot.HasItem && itemSlot.CanRemoveItem()) {
+                        itemSlot.RemoveItem();
+                    }
+                }
+            }
         }
     }
 }

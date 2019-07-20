@@ -1,0 +1,12 @@
+{
+  "assetBundleFiles": [
+    "risiablue.assetbundle",
+    "risiascene1.assetbundle"
+  ],
+  "GUIDs": {
+    "RisiaElkTempleSpawner_D": "37d9b04a-43e4-4f1a-a84e-623e0ec4ac9b"
+  },
+  "Files": {
+    "RisiaAddClassLevelJson": "jsons/"
+  }
+}

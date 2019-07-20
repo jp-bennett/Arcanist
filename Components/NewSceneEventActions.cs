@@ -1,6 +1,7 @@
 ﻿using Kingmaker;
 using Kingmaker.Designers.EventConditionActionSystem.Evaluators;
 using Kingmaker.ElementsSystem;
+using Kingmaker.Items.Slots;
 using Kingmaker.UnitLogic;
 using Kingmaker.View;
 using System;
@@ -28,8 +29,14 @@ namespace ArcaneTide.Components {
                 newViw.Blueprint = unit.Unit.Blueprint;
                 unit.Doll = doll;
                 unit.Unit.AttachToViewOnLoad(newViw);
+
+                foreach (ItemSlot itemSlot in unit.Unit.Body.AllSlots) {
+                    if (itemSlot.HasItem && itemSlot.CanRemoveItem()) {
+                        itemSlot.RemoveItem();
+                    }
+                }
                 //UnityEngine.Object.Destroy(oldVIw.gameObject);
-                
+
             }
         }
         public UnitFromSpawner unitEV;

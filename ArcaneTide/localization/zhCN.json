@@ -544,6 +544,22 @@
     {
       "Key": "ArcaneTide.AbilityRequirementClassSpellLevel.Reason",
       "Value": "需要释放{0}环法术的能力"
-    }
+    },
+    {
+      "Key": "risia-name",
+      "Value": "莉雪"
+    },
+    {
+      "Key": "risia-capital-name",
+      "Value": "莉雪"
+    },
+	  {
+	    "Key": "risia-dialogue-neutral-cue1",
+	    "Value": "喵喵"
+	  },
+	  {
+	    "Key": "risia-dialogue-neutral-cue1-answer1",
+	    "Value": "加入我8"
+	  }
   ]
 }
