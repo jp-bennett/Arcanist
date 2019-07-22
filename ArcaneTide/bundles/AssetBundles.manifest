@@ -1,11 +1,18 @@
 ManifestFileVersion: 0
-CRC: 2069409655
+CRC: 3472126625
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: risia.assetbundle
+      Name: risiablue.assetbundle
+      Dependencies: {}
+    Info_1:
+      Name: resource_7cf8a663c1bf4be18297121d1eb83dd0
+      Dependencies:
+        Dependency_0: misc.assetbundle
+    Info_2:
+      Name: risiascene1.assetbundle
       Dependencies:
         Dependency_0: risiablue.assetbundle
-    Info_1:
-      Name: risiablue.assetbundle
+    Info_3:
+      Name: misc.assetbundle
       Dependencies: {}
