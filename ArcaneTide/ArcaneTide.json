@@ -1,12 +1,22 @@
 {
   "assetBundleFiles": [
+    "misc.assetbundle",
     "risiablue.assetbundle",
     "risiascene1.assetbundle"
   ],
+  "MainAssetBundleFilename": "risiablue.assetblue",
   "GUIDs": {
-    "RisiaElkTempleSpawner_D": "37d9b04a-43e4-4f1a-a84e-623e0ec4ac9b"
+    "RisiaElkTempleSpawner_D": "37d9b04a-43e4-4f1a-a84e-623e0ec4ac9b",
+    "RisiaBossElkTempleSpawner_D": "2d28392f-1606-4642-aa14-ad55fe4edfec"
   },
-  "Files": {
-    "RisiaAddClassLevelJson": "jsons/"
-  }
+  "LocalizationFiles": [
+    "Arcanist.json",
+    "Risia.json"
+  ],
+  "ImgFiles": {
+    "RisiaL": "bundles/imgs/Risia1_L.png",
+    "RisiaM": "bundles/imgs/Risia1_M.png",
+    "RisiaS": "bundles/imgs/Risia1_S.png"
+  },
+  "VoiceOverColor": "0x38302C"
 }

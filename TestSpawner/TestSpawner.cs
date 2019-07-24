@@ -1,4 +1,5 @@
 ﻿using ArcaneTide.Components;
+using ArcaneTide.Risia;
 using ArcaneTide.Utils;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Area;
@@ -22,17 +23,10 @@ namespace ArcaneTide.TestSpawner {
         static internal LibraryScriptableObject library => Main.library;
         static internal ModLogger logger => Main.logger;
         static internal GlobalConstants consts => Main.constsManager;
-        static internal BlueprintUnlockableFlag flagIsRisiaSpawned;
+        static internal BlueprintUnlockableFlag flagIsRisiaSpawned => RisiaMainLoad.flagIsRisiaSpawned;
+        static internal BlueprintUnlockableFlag flagIsRisiaBossSpawned => RisiaMainLoad.flagIsRisiaBossSpawned;
         static internal UnitSpawner spawner;
         static public void Load() {
-            BlueprintUnit irovetti = library.Get<BlueprintUnit>("8b2cbf4590ed9e84591cd9a1f55bbdb8");
-            flagIsRisiaSpawned = Helpers.Create<BlueprintUnlockableFlag>();
-            library.AddAsset(flagIsRisiaSpawned, "942339abe7b76dfb00324d433a0a9342");
-            flagIsRisiaSpawned.Lock();
-            flagIsRisiaSpawned.name = "flagIsRisiaSpawned";
-            logger.Log("rua rua rua rua 1");
-            
-            logger.Log("rua rua rua rua 2");
             /*EntityReference spawnerIrovettiRef = new EntityReference {
                 UniqueId = "7d4ab0ca-92d9-4960-9225-c341558a47c8" //irovetti
             };
@@ -43,32 +37,54 @@ namespace ArcaneTide.TestSpawner {
             EntityReference spawnerRef = new EntityReference {
                 UniqueId = consts.GUIDs["RisiaElkTempleSpawner_D"]
             };
-            logger.Log("rua rua rua rua 3");
+            EntityReference spawnerBossRef = new EntityReference {
+                UniqueId = consts.GUIDs["RisiaBossElkTempleSpawner_D"]
+            };
+            UnitFromSpawner risiaEval = Helpers.Create<UnitFromSpawner>(a => a.Spawner = spawnerRef);
+            UnitFromSpawner risiaBossEval = Helpers.Create<UnitFromSpawner>(a => a.Spawner = spawnerBossRef);
             BlueprintArea ElkTemple = library.Get<BlueprintArea>("340a310b850e1ed469a60388012734f9");
-            logger.Log("rua rua rua rua 4");
             var compNeu = Helpers.Create<AreaDidLoadTrigger>();
             compNeu.Conditions = new ConditionsChecker {
                 Conditions = new Condition[]{
-                    /*Helpers.Create<FlagUnlocked>(a => {
+                    Helpers.Create<FlagUnlocked>(a => {
                         a.ConditionFlag = flagIsRisiaSpawned;
                         a.Not = true;
-                    })*/
+                    })
                 }
             };
             compNeu.Actions = new ActionList {
                 Actions = new GameAction[] {
                     Helpers.Create<ArcaneTide_ReplaceViewAction>(a => {
                         a.dollData_key = "dolldata0";
-                        a.unitEV = new UnitFromSpawner {
-                            Spawner = spawnerRef
-                        };
+                        a.unitEV = risiaEval;
                     }),
                     Helpers.Create<UnlockFlag>(a => a.flag = flagIsRisiaSpawned)
                 }
             };
-            logger.Log("rua rua rua rua 5");
+            var compNeuBoss = Helpers.Create<AreaDidLoadTrigger>();
+            compNeuBoss.Conditions = new ConditionsChecker {
+                Conditions = new Condition[]{
+                    Helpers.Create<FlagUnlocked>(a => {
+                        a.ConditionFlag = flagIsRisiaBossSpawned;
+                        a.Not = true;
+                    })
+                }
+            };
+            compNeuBoss.Actions = new ActionList {
+                Actions = new GameAction[] {
+                    Helpers.Create<ArcaneTide_ReplaceViewAction>(a => {
+                        a.dollData_key = "dolldata1";
+                        a.unitEV = risiaBossEval;
+                    }),
+                    Helpers.Create<UnlockFlag>(a => a.flag = flagIsRisiaBossSpawned),
+                    Helpers.Create<SwitchToNeutral>(a => {
+                        a.Target = risiaBossEval;
+                        a.Faction = library.Get<BlueprintFaction>("72f240260881111468db610b6c37c099"); //Player Faction
+                    })
+                }
+            };
             ElkTemple.AddComponent(compNeu);
-            logger.Log("rua rua rua rua 6");
+            ElkTemple.AddComponent(compNeuBoss);
         }
     }
 }

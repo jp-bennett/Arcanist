@@ -33,6 +33,7 @@ using Kingmaker.View;
 using Kingmaker.Visual.CharacterSystem;
 using Kingmaker.Items.Slots;
 using Newtonsoft.Json;
+
 namespace ArcaneTide {
     public class ModStorage {
         public static Dictionary<string, DollData> dolls = new Dictionary<string, DollData>();
@@ -54,8 +55,9 @@ namespace ArcaneTide {
         static class UIData {
             static public string posX = "0", posY = "0", posZ = "0";
         }
+
+        [Harmony12.HarmonyAfter("CraftMagicItems")]
         [Harmony12.HarmonyPatch(typeof(LibraryScriptableObject), "LoadDictionary", new Type[0])]
-        
         static class LibraryScriptableObject_LoadDictionary_Patch {
             
             static void Postfix(LibraryScriptableObject __instance) {
@@ -77,7 +79,7 @@ namespace ArcaneTide {
                 SafeLoad(IconSet.Load, "Icons");
                 SafeLoad(MetaFeats.Load, "MetaFeatSet");
                 SafeLoad(ArcanistClass.Load, "Arcanist");
-                SafeLoad(RisiaAddLevels.Load, "Risia-AddClassLevels");
+                SafeLoad(RisiaMainLoad.LoadOnLibraryLoaded, "Risia");
                 SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
                 SafeLoad(TestCopyScene.Load, "");
                 Main.arcanist = ArcanistClass.arcanist;
@@ -135,6 +137,15 @@ namespace ArcaneTide {
                 SceneManager.LoadScene(sceneName);*/
                 return;
             }
+            if(Path.GetFileName(path) == constsManager.MainAssetBundleFilename) {
+                ResourceList resListDict = bundle.LoadAllAssets<ResourceList>()[0];
+                foreach(var kv in resListDict.nameDict) {
+
+                    if (!ResourcesLibrary.LibraryObject.ResourceNamesByAssetId.ContainsKey(kv.Key)) {
+                        ResourcesLibrary.LibraryObject.ResourceNamesByAssetId[kv.Key] = kv.Value;
+                    }
+                }
+            }
             var blueprints = bundle.LoadAllAssets<BlueprintScriptableObject>();
             /*Main.DebugLog("Verifying blueprint ----------------------");
             foreach (var blueprint in blueprints)
@@ -142,14 +153,16 @@ namespace ArcaneTide {
                 VerifyBundles.VerifyBlueprint(blueprint);
             }
             Main.DebugLog("Finished vefiying blueprint ----------------------");*/
+            List<BlueprintScriptableObject> blueprintsToUnload = new List<BlueprintScriptableObject>();
             foreach (var blueprint in blueprints) {
                 if (blueprint.name.StartsWith("Existing.")) {
+                    blueprintsToUnload.Add(blueprint);
                     continue;
                 }
                 logger.Log($"Loaded Blueprint {blueprint.name}");
                 if (ResourcesLibrary.LibraryObject.BlueprintsByAssetId.ContainsKey(blueprint.AssetGuid)) {
                     logger.Log($"Fuck, Id {blueprint.AssetGuid}, name {blueprint.name} is duplicated!");
-                    //throw new Exception($"ResourceLibrary already contains blueprint {blueprint.AssetGuid}");
+                    throw new Exception($"ResourceLibrary already contains blueprint {blueprint.AssetGuid}");
                     continue;
                 }
 
@@ -183,6 +196,9 @@ namespace ArcaneTide {
             }*/
             logger.Log("Do Load Bundle Finish!!!");
             FixBlueprint.Fix(bundle);
+            foreach(var blueprint in blueprintsToUnload) {
+                Resources.UnloadAsset(blueprint);
+            }
         }
         static bool OnToggle(UnityModManager.ModEntry modEntry, bool value) {
             enabled = value;

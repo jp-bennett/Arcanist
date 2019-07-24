@@ -79,7 +79,12 @@ namespace ArcaneTide.Patches {
                 }
             }
             if (flag && !hadMetamixing) unit.AddBuff(SponMetamagic.flagBuff,unit.Unit);
-            spell = builder.ResultAbilityData;
+            //fix ConvertedFrom. this is used in checking if a subspell is existed in memorized spells.
+            //if spell is a subspell, spell.IsAvailableInSpellbook will use its m_ConvertedFrom(which is its master spell) 
+            //to get the return value.
+            var newSpell = builder.ResultAbilityData;
+            newSpell.ConvertedFrom = spell.ConvertedFrom;
+            spell = newSpell;
             //UnityModManager.Logger.Log($"new spell {spell.Name} has metamagic {(spell.MetamagicData != null ? spell.MetamagicData.MetamagicMask : 0)}");
             return true;
 

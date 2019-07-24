@@ -18,6 +18,7 @@ namespace ArcaneTide.Components {
 
         public override void RunAction() {
             ModStorage.dolls["dolldata0"] = Game.Instance.Player.MainCharacter.Value.Descriptor.Doll;
+            ModStorage.dolls["dolldata1"] = Game.Instance.Player.MainCharacter.Value.Descriptor.Doll;
             if (ModStorage.dolls.ContainsKey(dollData_key)) {
                 DollData doll = ModStorage.dolls[dollData_key];
                 UnitDescriptor unit = unitEV.GetValue().Descriptor;
@@ -27,14 +28,12 @@ namespace ArcaneTide.Components {
                 newViw.transform.SetParent(unit.Unit.View.transform);
                 newViw.transform.SetPositionAndRotation(unit.Unit.View.transform.position, unit.Unit.View.transform.rotation);
                 newViw.Blueprint = unit.Unit.Blueprint;
+                newViw.UpdateBodyEquipmentModel();
+                //newViw.UpdateViewActive();
                 unit.Doll = doll;
                 unit.Unit.AttachToViewOnLoad(newViw);
 
-                foreach (ItemSlot itemSlot in unit.Unit.Body.AllSlots) {
-                    if (itemSlot.HasItem && itemSlot.CanRemoveItem()) {
-                        itemSlot.RemoveItem();
-                    }
-                }
+                
                 //UnityEngine.Object.Destroy(oldVIw.gameObject);
 
             }

@@ -21,6 +21,7 @@ using Kingmaker.Localization.Shared;
 using Newtonsoft.Json;
 using ArcaneTide;
 using static UnityModManagerNet.UnityModManager;
+using ArcaneTide.Utils;
 
 namespace ArcaneTide {
     /*
@@ -61,27 +62,31 @@ namespace ArcaneTide {
     class LocalizationManager_LoadPack_Postfix {
         static public ModEntry.ModLogger logger => Main.logger;
         static public string ModPath => Main.ModPath;
+        static internal GlobalConstants consts => Main.constsManager;
         static public void Postfix(LocalizationManager __instance, ref LocalizationPack __result) {
             Locale locale = LocalizationManager.CurrentLocale;
-            string path = Path.Combine(ModPath, "localization", $"{locale.ToString()}.json");
-            logger.Log(path);
-            if (File.Exists(path)) {
-                try {
-                    using (StreamReader streamReader = new StreamReader(path)) {
-                        var modText = JsonConvert.DeserializeObject<LocalizationPack>(streamReader.ReadToEnd());
-                        foreach (var item in modText.Strings) {
-                            if (__result.Strings.ContainsKey(item.Key)) {
-                                continue;
+            string pathDir = Path.Combine(ModPath, "localization", $"{locale.ToString()}");
+            logger.Log(pathDir);
+            foreach (string filename in consts.LocalizationFiles) {
+                string path = Path.Combine(pathDir, filename);
+                if (File.Exists(path)) {
+                    try {
+                        using (StreamReader streamReader = new StreamReader(path)) {
+                            var modText = JsonConvert.DeserializeObject<LocalizationPack>(streamReader.ReadToEnd());
+                            foreach (var item in modText.Strings) {
+                                if (__result.Strings.ContainsKey(item.Key)) {
+                                    continue;
+                                }
+                                //logger.Log($"RUA {__result.Strings.Count}");
+                                __result.Strings.Add(item.Key, item.Value);
                             }
-                            //logger.Log($"RUA {__result.Strings.Count}");
-                            __result.Strings.Add(item.Key, item.Value);
-                        }
-                        //logger.Log($"RUAB {__result.Strings.Count}");
+                            //logger.Log($"RUAB {__result.Strings.Count}");
 
+                        }
                     }
-                }
-                catch {
-                    return;
+                    catch {
+                        return;
+                    }
                 }
             }
         }
