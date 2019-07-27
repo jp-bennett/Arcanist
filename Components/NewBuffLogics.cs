@@ -129,10 +129,22 @@ namespace ArcaneTide.Components {
                     unit.Resources.Spend(ArcaneReservoir.resource, metamagicCost);
 
                     evt.AddMetamagic(this.metamagic);
-                    if(this.metamagic == Metamagic.Heighten) {
-                        MetamagicData md = metamagicData_Getter(evt) as MetamagicData;
-                        md.HeightenLevel = (HeightenTarget - evt.SpellLevel >= md.HeightenLevel ? HeightenTarget - evt.SpellLevel : md.HeightenLevel);
+                    MetamagicData md = metamagicData_Getter(evt) as MetamagicData;
+                    md.HeightenLevel = (HeightenTarget - evt.SpellLevel >= md.HeightenLevel ? HeightenTarget - evt.SpellLevel : md.HeightenLevel);
+                    if (this.ShallRemove) {
+                        base.Buff.Remove();
                     }
+                }
+                else if(metamagic != Metamagic.Heighten) {
+                    int metamagicCost = MetamagicHelper.DefaultCost(metamagic);
+                    if (unit.Resources.GetResourceAmount(ArcaneReservoir.resource) < metamagicCost) {
+                        if (this.ShallRemove) {
+                            base.Buff.Remove();
+                        }
+                    }
+                    unit.Resources.Spend(ArcaneReservoir.resource, metamagicCost);
+
+                    evt.AddMetamagic(this.metamagic);
                     if (this.ShallRemove) {
                         base.Buff.Remove();
                     }

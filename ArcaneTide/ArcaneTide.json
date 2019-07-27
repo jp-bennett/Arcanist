@@ -18,5 +18,6 @@
     "RisiaM": "bundles/imgs/Risia1_M.png",
     "RisiaS": "bundles/imgs/Risia1_S.png"
   },
+  "SchoolSavantConfigFile":  "config/archetype1.json",
   "VoiceOverColor": "0x38302C"
 }

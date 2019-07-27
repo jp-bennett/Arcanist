@@ -1,0 +1,59 @@
+{
+  "FactsWithContextRankConfig": [
+    "2433d465095a9984398a0482b1af0877", //abj protective ward abl
+    "c0e5382d22ca3c14593c88d4e657b0e7", //abj protective ward effect buff
+    "697291ff99d3fbb448be5b60b5f2a30c", //conj acid dart abl
+    "54d21b3221ea82a4d90d5a91b7872f3d", //div main feat
+    "0d10ea99df0b06249823c760c46029b4", //div diviners fortune abl
+    "6d338078b1a8cdc41bf3a39f65247161", //div diviners fortune buff
+    "9e4c4799735ae9c45964e9113107ef02", //ench main feat
+    "2acf05a8cb573744db69f65ea6b60619", //ench dazing touch abl
+  ],
+  "SchoolSpecializationProgressionsIds": [
+    "c451fde0aec46454091b70384ea91989",
+    "567801abe990faf4080df566fadcd038",
+    "d7d18ce5c24bd324d96173fdc3309646",
+    "252363458703f144788af49ef04d0803",
+    "f8019b7724d72a241a97157bc37f1c3b",
+    "24d5402c0c1de48468b563f6174c6256",
+    "e9450978cc9feeb468fb8ee3a90607e3",
+    "b6a604dab356ac34788abf4ad79449ec",
+    "0933849149cfc9244ac05d6a5b57fd80"
+  ],
+  "SchoolSpecializationMainFeatIds": [
+    "30f20e6f850519b48aa59e8c0ff66ae9", //abjuration
+    "cee0f7edbd874a042952ee150f878b84", //conjuration
+    "54d21b3221ea82a4d90d5a91b7872f3d", //divination
+    "9e4c4799735ae9c45964e9113107ef02", //enchantment
+    "c46512b796216b64899f26301241e4e6", //evocation
+  ],
+  "SchoolOppositionFeatureIds": [
+    "a9bb3dcb2e8d44a49ac36c393c114bd9",
+    "7f8c1b838ff2d2e4f971b42ccdfa0bfd",
+    "ca4a0d68c0408d74bb83ade784ebeb0d",
+    "09595544116fe5349953f939aeba7611",
+    "875fff6feb84f5240bf4375cb497e395",
+    "c3724cfbe98875f4a9f6d1aabd4011a6",
+    "6750ead44c0c034428c6509c68110375",
+    "fc519612a3c604446888bb345bca5234"
+  ],
+  "ResourcesIds": [
+    "870a9cc29d8d0e945b7fbd7926378197", //abjuration protective ward
+    "d16e573dc50e8b548b6e7e1044a21373", //abjuration resistance
+    "948df8224518d0f4b9b35921789e8f1f", //abjuration 8 energy absorption
+    "69903f87566b4ff47805cd03e117c14c", //conjuration acid dart
+    "43418252eaf4ac0478e93f32d13f6f7c", //conjuration 8 dimension step
+    "7fbeac3a41c4e41489be06e0b4d79603", //divination base
+    "2aa6b409a9fcb794d80719f038abe665", //divination 8
+    "cfcbfc3a05bd41f43af7b5121e918ecd", //enchantment base
+    "8b3e3b9126ba1734fb7b52bdfa4aa05a", //enchantment 8
+    "f58f284c1d357a4449ce408cdfe6776a", //evocation force missile
+  ],
+  "AbjurationResistanceBuffs": [
+    "b87a0e8a961c63a44a952822fe975edb",
+    "90ce7dac4b9001e449eb44861397a65f",
+    "453201f110f49714fb1d713c1f7bc06d",
+    "b9ce1623447547946b8c58efd069f7c4",
+    "63e2a6323c2bbff40a87fcd522778032"
+  ]
+}

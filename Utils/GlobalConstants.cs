@@ -11,6 +11,8 @@ namespace ArcaneTide.Utils {
         public Dictionary<string, string> GUIDs { get; set; }
         public List<string> LocalizationFiles { get; set; }
         public Dictionary<string, string> ImgFiles { get; set; }
+        public string SchoolSavantConfigFile { get; set; }
+
         public string[] GetImgFilepaths(string actorName) {
             List<string> tmp = new List<string>();
             foreach (string sizeId in new string[] { "L", "M", "S" }) {

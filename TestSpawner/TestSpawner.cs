@@ -81,6 +81,10 @@ namespace ArcaneTide.TestSpawner {
                         a.Target = risiaBossEval;
                         a.Faction = library.Get<BlueprintFaction>("72f240260881111468db610b6c37c099"); //Player Faction
                     })
+                    /*Helpers.Create<AddFact>(a => {
+                        a.Fact = RisiaAddSpecialSpells.addSpecialSpellFeat;
+                        a.Unit = risiaBossEval;
+                    })*/
                 }
             };
             ElkTemple.AddComponent(compNeu);

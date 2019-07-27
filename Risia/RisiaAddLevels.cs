@@ -1,12 +1,21 @@
 ﻿using ArcaneTide.Arcanist;
 using ArcaneTide.Utils;
+using JetBrains.Annotations;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Selection;
 using Kingmaker.Blueprints.Classes.Spells;
+using Kingmaker.Controllers.Brain;
+using Kingmaker.Controllers.Brain.Blueprints;
+using Kingmaker.Controllers.Brain.Blueprints.Considerations;
+using Kingmaker.Designers.Mechanics.Facts;
 using Kingmaker.EntitySystem.Stats;
+using Kingmaker.RuleSystem;
+using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
+using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.UnitLogic.FactLogic;
+using Kingmaker.UnitLogic.Mechanics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +26,14 @@ namespace ArcaneTide.Risia {
     static public class RisiaAddLevels {
         static internal BlueprintCharacterClass arcanist => ArcanistClass.arcanist;
         static internal LibraryScriptableObject library => Main.library;
-        static internal AddClassLevels compNeutral, compBoss;
+        
         static internal BlueprintAbility[] RisiaSpellKnownLevelupSelect, RisiaSpellKnownAfterwards, RisiaBossSpellKnownLevelupSelect, RisiaBossSpellKnownAfterwards;
         static internal BlueprintAbility[] RisiaSpellMemory, RisiaBossSpellMemory;
         static internal BlueprintFeature[] RisiaArcaneExploits, RisiaFeats;
         static internal List<BlueprintFeature> RisiaAddFacts, RisiaBossAddFacts;
+
+        static public AddClassLevels compNeutral, compBoss;
+        static public LearnSpells learnNeutral, learnBoss;
         static private BlueprintAbility getSpell(string Id) => library.Get<BlueprintAbility>(Id);
         static private BlueprintFeature getFeat(string Id) => library.Get<BlueprintFeature>(Id);
         static private BlueprintFeatureSelection getSelection(string Id) => library.Get<BlueprintFeatureSelection>(Id);
@@ -89,6 +101,52 @@ namespace ArcaneTide.Risia {
                 "68a9e6d7256f1354289a39003a46d826"
 
             };
+
+            // Arcanist Memory : 9 5 5 4 4 4 3 3 3 3 
+            string[] RisiaBossSpellMemoryIds = new string[] {
+                // tier 1
+                "95851f6e85fe87d4190675db0419d112",
+                "3c1b92a0a3ce0754a889fb0d7b2c23a4", //shield swift
+                "2c38da66e5a599347ac95b3294acbe00",
+                "91da41b9793a4624797921f221db653c",
+                "4ac47ddb9fa1eaf43a1b6809980cfbd2",
+                // tier 2
+                OtherUtils.GetMd5("Risia.MirrorImageSwift"), //mirror swift
+                "fd4d9fd7f87575d47aafe2a64a6e2d8d", //hideous laughter
+                "ce7dad2b25acf85429b6c9550787b2d9", //glitter dust
+                "cdb106d53c65bbc4086183d54c3b97c7", //scorching ray
+                "134cb6d492269aa4f8662700ef57449f", //web
+                // tier 3
+                "f492622e473d34747806bdb39356eb89", //slow
+                "c7104f7526c4c524f91474614054547e", //hold person
+                "903092f6488f9ce45a80943923576ab3", //displacement
+                "92681f181b507b34ea87018e8f7a528a", //dispel magic
+                // tier 4
+                "cf6c901fb7acc904e85c63b342e9c949", //confusion
+                OtherUtils.GetMd5("Risia.GreaterInvisibility.Swift"), //invisibility greater swift
+                OtherUtils.GetMd5("Risia.StinkingCloud.Heighten4"), //stink cloud heighten 4
+                // tier 5
+                "237427308e48c3341b3d532b9d3a001f", //shadow evocation
+                "eabf94e4edc6e714cabd96aa69f8b207", //mind fog
+                "a34921035f2a6714e9be5ca76c5e34b5", //vampiric shadow shield
+                "3105d6e9febdc3f41a08d2b7dda1fe74", //baleful polymorph
+                // tier 6
+                "dbf99b00cd35d0a4491c6cc9e771b487", //acid fog
+                "f0f761b808dc4b149b08eaf44b99f633", //dispel magic greater
+                "4aa7942c3e62a164387a73184bca3fc1", //disintegrate
+                // tier 7
+                OtherUtils.GetMd5("Risia.CloakOfDream.Heighten7"), //claok of dream 7
+                OtherUtils.GetMd5("Risia.TarPool.Heighten7"), // tar pool 7
+                "ab167fd8203c1314bac6568932f1752f", //summon monster 7
+                // tier 8
+                "0e67fa8f011662c43934d486acc50253", //prediction failure
+                "f958ef62eea5050418fb92dfa944c631", //power word stun
+                "d3ac756a229830243a72e84f3ab050d0", //summon monster 8
+                // tier 9
+                "41cf93453b027b94886901dbfc680cb9", //overwhelming presence
+                "08ccad78cac525040919d51963f9ac39", //fiery body
+                "870af83be6572594d84d276d7fc583e0", //weird
+            };
             List<BlueprintAbility> tmpList = new List<BlueprintAbility>();
             foreach(var id in RisiaSpellKnownLevelUpIds) {
                 tmpList.Add(getSpell(id));
@@ -107,17 +165,58 @@ namespace ArcaneTide.Risia {
             }
             RisiaSpellKnownAfterwards = tmpList.ToArray();
 
+            // Risia Boss
+            tmpList = new List<BlueprintAbility>();
+            for(int i = 1; i <= 9; i++) {
+                // get 7 tier 1 spell at level 1, 2 spells every level afterwards
+                int levelSpellCnt = (i == 1) ? 11 : ((i == 9) ? 6 : 4);
+                SpellLevelList lst = ArcanistClass.arcanist.Spellbook.SpellList.SpellsByLevel[i];
+                for(int j = 0; j < levelSpellCnt; j++) {
+                    tmpList.Add(lst.Spells[j]);
+                }
+            }
+            RisiaBossSpellKnownLevelupSelect = tmpList.ToArray();
+
+            tmpList = new List<BlueprintAbility>();
+            foreach(var id in RisiaBossSpellMemoryIds) {
+                tmpList.Add(getSpell(id));
+            }
+            RisiaBossSpellMemory = tmpList.ToArray();
+
+            tmpList = new List<BlueprintAbility>();
+            for (int i = 1; i <= 9; i++) {
+                SpellLevelList lst = ArcanistClass.arcanist.Spellbook.SpellList.SpellsByLevel[i];
+                foreach (var spell in lst.Spells) {
+                    if (!RisiaBossSpellKnownLevelupSelect.Contains(spell)) {
+                        tmpList.Add(spell);
+                    }
+                }     
+            }
+            RisiaBossSpellKnownAfterwards = tmpList.ToArray<BlueprintAbility>();
+
             RisiaFeats = new BlueprintFeature[] {
                 getFeat("16fa59cc9a72a6043b566b49184f53fe"),// spell focus illusion               
                 getFeat("797f25d709f559546b29e7bcb181cc74"),// improved initiative
                 getFeat("16fa59cc9a72a6043b566b49184f53fe"),// spell focus enchantment
                 getFeat("06964d468fde1dc4aa71a92ea04d930d"),// combat casting
+                getFeat("5b04b45b228461c43bad768eb0f7c7bf"),// spell focus greater illusion
+                getFeat("90e54424d682d104ab36436bd527af09"),// weapon finesse
+                getFeat("ee7dc126939e4d9438357fbd5980d459"),// spell penetration
+                getFeat("5b04b45b228461c43bad768eb0f7c7bf"),// spell focus greater enchantment
+                getFeat("d09b20029e9abfe4480b356c92095623"),// toughness
+                getFeat("79042cb55f030614ea29956177977c52") // great fortitude
             };
             RisiaArcaneExploits = new BlueprintFeature[] {
                 ArcaneExploits.fastStudy,
                 ArcaneExploits.potentMagic,
                 ArcaneExploits.metaMixing,
-                ArcaneExploits.dimensionalSlide
+                ArcaneExploits.dimensionalSlide,
+                ArcaneExploits.metaKnowledge,
+                ArcaneExploits.greaterMetaKnowledgeTmp,
+                ArcaneExploits.familiar,
+                ArcaneExploits.swiftConsume,
+                ArcaneExploits.energyShield,
+                ArcaneExploits.SR
             };
         }
         static public void LoadNeutral() {
@@ -165,16 +264,16 @@ namespace ArcaneTide.Risia {
                 Features = RisiaArcaneExploits
             });
             compNeutral.Selections = selectionEntryList.ToArray();
-
-            var RisiaLearnSpellsFeature = Helpers.CreateFeature("RisiaLearnSpellsFeat", "", "",
-                OtherUtils.GetMd5("Risia.LearnSpellsFeat"),
+            learnNeutral = Helpers.Create<LearnSpells>(a => {
+                a.Spells = RisiaSpellKnownAfterwards;
+                a.CharacterClass = ArcanistClass.arcanist;
+            });
+            var RisiaLearnSpellFeat = Helpers.CreateFeature("RisiaLearnSpellFeat", "", "",
+                OtherUtils.GetMd5("Risia.LearnSpellFeat"),
                 null,
                 FeatureGroup.None,
-                Helpers.Create<LearnSpells>(a => {
-                    a.Spells = RisiaSpellKnownAfterwards;
-                    a.CharacterClass = ArcanistClass.arcanist;
-                }));
-            RisiaAddFacts.Add(RisiaLearnSpellsFeature);
+                learnNeutral);
+            RisiaAddFacts.Add(RisiaLearnSpellFeat);
 
         }
         static public void LoadBoss() {
@@ -183,7 +282,7 @@ namespace ArcaneTide.Risia {
             compBoss = Helpers.Create<AddClassLevels>();
             compBoss.Archetypes = new BlueprintArchetype[] { };
             compBoss.CharacterClass = arcanist;
-            compBoss.Levels = 7;
+            compBoss.Levels = 20;
             compBoss.LevelsStat = StatType.Intelligence;
             compBoss.Skills = new StatType[] {
                 StatType.SkillKnowledgeArcana,
@@ -194,44 +293,78 @@ namespace ArcaneTide.Risia {
                 StatType.SkillUseMagicDevice,
                 StatType.SkillMobility
             };
-            compBoss.SelectSpells = RisiaSpellKnownLevelupSelect;
-            compBoss.MemorizeSpells = RisiaSpellMemory;
+            compBoss.SelectSpells = RisiaBossSpellKnownLevelupSelect;
+            compBoss.MemorizeSpells = RisiaBossSpellMemory;
 
             BlueprintFeatureSelection basicFeatSelection = getSelection("247a4068296e8be42890143f451b4b45");
             BlueprintParametrizedFeature spellFocus = getFeat("16fa59cc9a72a6043b566b49184f53fe") as BlueprintParametrizedFeature;
-
+            BlueprintParametrizedFeature spellFocusGreater = getFeat("5b04b45b228461c43bad768eb0f7c7bf") as BlueprintParametrizedFeature;
             List<SelectionEntry> selectionEntryList = new List<SelectionEntry>();
             selectionEntryList.Add(new SelectionEntry {
                 Selection = basicFeatSelection,//basic feat selection
                 Features = RisiaFeats
             });
             selectionEntryList.Add(new SelectionEntry {
-                Selection = getSelection("247a4068296e8be42890143f451b4b45"),
+                Selection = basicFeatSelection,
                 IsParametrizedFeature = true,
                 ParametrizedFeature = spellFocus,
                 ParamSpellSchool = SpellSchool.Illusion
             });
             selectionEntryList.Add(new SelectionEntry {
-                Selection = getSelection("247a4068296e8be42890143f451b4b45"),
+                Selection = basicFeatSelection,
                 IsParametrizedFeature = true,
                 ParametrizedFeature = spellFocus,
                 ParamSpellSchool = SpellSchool.Enchantment
             });
             selectionEntryList.Add(new SelectionEntry {
+                Selection = basicFeatSelection,
+                IsParametrizedFeature = true,
+                ParametrizedFeature = spellFocusGreater,
+                ParamSpellSchool = SpellSchool.Illusion
+            });
+            selectionEntryList.Add(new SelectionEntry {
+                Selection = basicFeatSelection,
+                IsParametrizedFeature = true,
+                ParametrizedFeature = spellFocusGreater,
+                ParamSpellSchool = SpellSchool.Enchantment
+            });
+
+            //Exploit Selections
+            selectionEntryList.Add(new SelectionEntry {
                 Selection = ArcaneExploits.exploitSelection,
                 Features = RisiaArcaneExploits
             });
+            selectionEntryList.Add(new SelectionEntry {
+                Selection = MetamagicKnownledge.exploit,
+                Features = new BlueprintFeature[] {getFeat("ef7ece7bb5bb66a41b256976b27f424e") }//quicken spell
+            });
+            string GreaterMetaKnowledgeHeightenId = OtherUtils.GetMd5($"ArcanistClassExploitTempGreaterMetamagicKnowledge{Metamagic.Heighten}SubFeat");
+            selectionEntryList.Add(new SelectionEntry {
+                Selection = GreaterMetamagicKnowledge.exploitTemp,
+                Features = new BlueprintFeature[] {getFeat(GreaterMetaKnowledgeHeightenId) }//heighten spell
+            });
+            selectionEntryList.Add(new SelectionEntry {
+                Selection = Familiar.exploit,
+                Features = new BlueprintFeature[] { getFeat("1cb0b559ca2e31e4d9dc65de012fa82f") } //cat familiar
+            });
             compBoss.Selections = selectionEntryList.ToArray();
-
-            var RisiaLearnSpellsFeature = Helpers.CreateFeature("RisiaLearnSpellsFeat", "", "",
-                OtherUtils.GetMd5("Risia.LearnSpellsFeat"),
+            learnBoss = Helpers.Create<LearnSpells>(a => {
+                a.Spells = RisiaBossSpellKnownAfterwards;
+                a.CharacterClass = ArcanistClass.arcanist;
+            });
+            var RisiaBossLearnSpellFeat = Helpers.CreateFeature("RisiaBossLearnSpellFeat", "", "",
+                OtherUtils.GetMd5("Risia.Boss.LearnSpellFeat"),
                 null,
                 FeatureGroup.None,
-                Helpers.Create<LearnSpells>(a => {
-                    a.Spells = RisiaSpellKnownAfterwards;
-                    a.CharacterClass = ArcanistClass.arcanist;
-                }));
-            RisiaAddFacts.Add(RisiaLearnSpellsFeature);
+                learnBoss);
+            var RisiaBossApplyBuffOnBattle = Helpers.CreateFeature("RisiaBossApplyBuffOnBattle", "", "",
+                OtherUtils.GetMd5("Risia.Boss.ApplyBuffOnBattle.Feat"),
+                null,
+                FeatureGroup.None,
+                Helpers.Create<AddBuffOnCombatStart>(a => a.Feature = library.Get<BlueprintBuff>("8ab51b96c1310c34199238549d601160")),//stoneskin cl15
+                Helpers.Create<AddBuffOnCombatStart>(a => a.Feature = library.Get<BlueprintBuff>("51ebd62ee464b1446bb01fa1e214942f")));//delay poison;
+            RisiaBossAddFacts.Add(RisiaBossLearnSpellFeat);
+            RisiaBossAddFacts.Add(RisiaBossApplyBuffOnBattle);
 
         }
         static public void Load() {
@@ -240,25 +373,17 @@ namespace ArcaneTide.Risia {
             }
             Prepare();
             LoadNeutral();
-
+            LoadBoss();
             BlueprintUnit risia_companion = library.Get<BlueprintUnit>("c2dc52c5fec84bc2a74e2cb34fdb566b");
             BlueprintUnit risia_neutral = library.Get<BlueprintUnit>("d87f8e86724f46e798821d60f9d31eaf");
             BlueprintUnit risia_boss = library.Get<BlueprintUnit>("95fb27a5b8ae40099bd727ea93de5b9b");
-            risia_neutral.AddComponent(compNeutral);
-            risia_companion.AddComponent(compNeutral);
-            risia_boss.AddComponent(compNeutral);
-            var tmpList = risia_neutral.AddFacts.ToList();
-            tmpList.AddRange(RisiaAddFacts);
-            risia_neutral.AddFacts = tmpList.ToArray();
-            tmpList = risia_companion.AddFacts.ToList();
-            tmpList.AddRange(RisiaAddFacts);
-            risia_companion.AddFacts.ToList();
-            tmpList = risia_boss.AddFacts.ToList();
-            tmpList.AddRange(RisiaAddFacts);
-            risia_boss.AddFacts.ToList();
+            
+            
 
             BlueprintUnit octavia = library.Get<BlueprintUnit>("f9161aa0b3f519c47acbce01f53ee217");
             Main.logger.Log($"{(octavia.Faction == risia_companion.Faction ? "Yes, faction are the same" : "Nope!")}");
         }
     }
+
+    
 }

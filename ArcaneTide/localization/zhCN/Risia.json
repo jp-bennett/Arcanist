@@ -53,10 +53,10 @@
 	  "Key": "risia-gaze-feature-name",
 	  "Value": "魅惑凝视"
 	},
-	{
-	  "Key": "risia-gaze-feature-desc",
-	  "Value": "魅惑凝视的说明"
-	},
+    {
+      "Key": "risia-gaze-feature-desc",
+      "Value": "魅惑凝视的说明"
+    },
 	{
 	  "Key": "risia-template-name",
 	  "Value": "莉雪模板名称"
@@ -69,10 +69,22 @@
 	  "Key": "risia-template-wish-name",
 	  "Value": "祈愿术"
 	},
-	{
-	  "Key": "risia-template-wish-desc",
-	  "Value": "莉雪使用祈愿术为自己的敏捷、体质、魅力提供+4内在加值，智力提供+5内在加值。"
-	},
+    {
+      "Key": "risia-template-wish-desc",
+      "Value": "莉雪使用祈愿术为自己的敏捷、体质、魅力、智力提供+4内在加值。"
+    },
+    {
+      "Key": "risia-offset-name",
+      "Value": "偏移量"
+    },
+    {
+      "Key": "risia-offset-desc",
+      "Value": "偏移量的说明"
+    },
+    {
+      "Key": "risia-offset-flavor",
+      "Value": "pianyiliangdeflavor"
+    },
     {
       "Key": "Risia.AddSpecialSpell.Feat.Name",
       "Value": "莉雪-添加独特法术"

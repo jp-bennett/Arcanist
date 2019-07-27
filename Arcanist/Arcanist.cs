@@ -146,7 +146,7 @@ namespace ArcaneTide.Arcanist {
             var detectMagic = library.Get<BlueprintFeature>("ee0b69e90bac14446a4cf9a050f87f2e");
 
             var reservoirFeat = ArcaneReservoir.CreateReservoir();
-            var sponmetaFeat = SponMetamagic.Create();
+            
             var greaterExploit = GreaterExploits.Create();
             ArcaneExploits.Load();
             var reservoirAblFeat = ArcaneReservoir.CreateAddDCCLFeature();
@@ -159,7 +159,6 @@ namespace ArcaneTide.Arcanist {
                 arcanistProfiency, rayCalcFeat, touchCalcFeat, Caster9, detectMagic,
                 reservoirFeat,
                 reservoirAblFeat,
-                sponmetaFeat,
                 consumeFeat,
                 ArcaneExploits.exploitSelection
                 ));
@@ -196,6 +195,18 @@ namespace ArcaneTide.Arcanist {
             FixPrestigeSpellbookSelection("dc3ab8d0484467a4787979d93114ebc3", "89d2b9f096b54804c8350dd2a899f8a4", FeatureGroup.EldritchKnightSpellbook);
             FixPrestigeSpellbookSelection("97f510c6483523c49bc779e93e4c4568", "e8013bf2853590f4fba12b4b57366bcc", FeatureGroup.MysticTheurgeArcaneSpellbook);
             arcanist.RegisterClass();
+            
+        }
+        static public void LoadAfterwards() {
+            ArcaneExploits.LoadAfterwards();
+            var sponmetaFeat = SponMetamagic.Create();
+            var entries = arcanist.Progression.LevelEntries.ToList();
+            foreach(var entry in entries) {
+                if(entry.Level == 1) {
+                    entry.Features.Add(sponmetaFeat);
+                }
+            }
+            arcanist.Progression.LevelEntries = entries.ToArray();
             RegisterOtherAssets();
         }
         static internal void FixPrestigeSpellbookSelection(string prestigeSpellbookSelectionId, string prestigeSpellbookSelectionWizardItemId, FeatureGroup group){
@@ -447,7 +458,7 @@ namespace ArcaneTide.Arcanist {
             if (library.BlueprintsByAssetId.ContainsKey("930d62a76ccde4a698d396b4bb932d6a")) {
                 return library.Get<BlueprintFeature>("930d62a76ccde4a698d396b4bb932d6a");
             }
-            if (!ArcaneExploits.loaded) {
+            if (!ArcaneExploits.loadedPre) {
                 UnityModManagerNet.UnityModManager.Logger.Log("[Error]Arcanist: you should initiate exploits before calling ArcaneReservoir::CreateAndDCCLFeature()");
                 return null;
             }

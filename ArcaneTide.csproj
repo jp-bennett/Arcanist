@@ -96,6 +96,7 @@
     <Compile Include="Arcanist\ArcaneExploits.cs" />
     <Compile Include="Arcanist\Arcanist.cs" />
     <Compile Include="Arcanist\ArcanistWizardSchool.cs" />
+    <Compile Include="Arcanist\Archetypes\SchoolSavant.cs" />
     <Compile Include="BlueprintManifest.cs" />
     <Compile Include="Components\AbilityRangeComponent.cs" />
     <Compile Include="Components\AbilityRequirements.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="ResourceList.cs" />
     <Compile Include="Risia\RisiaAddLevels.cs" />
     <Compile Include="Risia\RisiaAddSpecialSpells.cs" />
+    <Compile Include="Risia\RisiaBrain.cs" />
     <Compile Include="Risia\RisiaMainLoad.cs" />
     <Compile Include="Risia\TestCopyScene.cs" />
     <Compile Include="Spells\Non-PF.cs" />
@@ -140,10 +142,14 @@
     <None Include="ArcaneTide\localization\enGB.json" />
     <None Include="ArcaneTide\localization\zhCN\Arcanist.json" />
     <None Include="ArcaneTide\localization\zhCN\Risia.json" />
+    <None Include="Arcanist\Archetypes\archetype1.json" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="新建文本文档.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ArcaneTide\config\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />

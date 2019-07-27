@@ -33,6 +33,7 @@ using Kingmaker.View;
 using Kingmaker.Visual.CharacterSystem;
 using Kingmaker.Items.Slots;
 using Newtonsoft.Json;
+using ArcaneTide.Arcanist.Archetypes;
 
 namespace ArcaneTide {
     public class ModStorage {
@@ -56,37 +57,48 @@ namespace ArcaneTide {
             static public string posX = "0", posY = "0", posZ = "0";
         }
 
-        [Harmony12.HarmonyAfter("CraftMagicItems")]
+        [Harmony12.HarmonyBefore("EldritchArcana")]
         [Harmony12.HarmonyPatch(typeof(LibraryScriptableObject), "LoadDictionary", new Type[0])]
-        static class LibraryScriptableObject_LoadDictionary_Patch {
-            
+        static class LibraryScriptableObject_LoadDictionary_Patch_BeforeEA {
+
             static void Postfix(LibraryScriptableObject __instance) {
                 var self = __instance;
                 if (Main.library != null) return;
                 Main.library = self;
-                
+
                 logger.Log("Dua 1!?!");
-                foreach(string bundle in constsManager.assetBundleFiles) {
+                foreach (string bundle in constsManager.assetBundleFiles) {
                     string absolutePath = Path.Combine(ModPath, "bundles", bundle);
                     LoadBundle(absolutePath);
                 }
                 logger.Log("Dua 2!?!");
-                
+
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
                 SafeLoad(Helpers.Load, "Helpers");
                 SafeLoad(IconSet.Load, "Icons");
-                SafeLoad(MetaFeats.Load, "MetaFeatSet");
+                
                 SafeLoad(ArcanistClass.Load, "Arcanist");
-                SafeLoad(RisiaMainLoad.LoadOnLibraryLoaded, "Risia");
-                SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
-                SafeLoad(TestCopyScene.Load, "");
+                
                 Main.arcanist = ArcanistClass.arcanist;
 
                 Main.loaded = true;
             }
         }
+        [Harmony12.HarmonyAfter("EldritchArcana")]
+        [Harmony12.HarmonyPatch(typeof(LibraryScriptableObject), "LoadDictionary", new Type[0])]
+        static class LibraryScriptableObject_LoadDictionary_Patch_AfterEA {
+            static public void Postfix(LibraryScriptableObject __instance) {
+                SafeLoad(MetaFeats.Load, "MetaFeatSet");
+                SafeLoad(ArcanistClass.LoadAfterwards, "Arcanist Loading after EA");
+                SafeLoad(RisiaMainLoad.LoadOnLibraryLoaded, "Risia");
+                SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
+                SafeLoad(TestCopyScene.Load, "");
+                SafeLoad(SchoolSavant.Test, "");
+            }
+        }
+
         [Harmony12.HarmonyPatch(typeof(Player), "PostLoad", new Type[] {  })]
         static class Player_PostLoad_Patch {
             static void Postfix(Player __instance) {

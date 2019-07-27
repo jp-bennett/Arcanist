@@ -1,5 +1,7 @@
 ﻿using ArcaneTide.Utils;
 using Kingmaker.Blueprints;
+using Kingmaker.Blueprints.Classes;
+using Kingmaker.UnitLogic.FactLogic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +15,7 @@ namespace ArcaneTide.Risia {
         static public BlueprintUnlockableFlag flagIsRisiaSpawned, flagIsRisiaBossSpawned;
         static internal LibraryScriptableObject library => Main.library;
         static internal GlobalConstants consts => Main.constsManager;
+        static private bool loaded = false;
         static public PortraitData CreatePortraitData(string actorName) {
             string[] portraitPathsRela = consts.GetImgFilepaths(actorName);
             if (portraitPathsRela == null) return null;
@@ -34,6 +37,7 @@ namespace ArcaneTide.Risia {
         }
 
         static public void LoadOnLibraryLoaded() {
+            if (loaded) return;
             flagIsRisiaSpawned = Helpers.Create<BlueprintUnlockableFlag>();
             flagIsRisiaBossSpawned = Helpers.Create<BlueprintUnlockableFlag>();
             library.AddAsset(flagIsRisiaSpawned, "942339abe7b76dfb00324d433a0a9342");
@@ -54,7 +58,44 @@ namespace ArcaneTide.Risia {
             }
             RisiaAddSpecialSpells.LoadSpecialSpells();
             RisiaAddLevels.Load();
-            RisiaAddSpecialSpells.AddSpellsToRisia(risia_boss);
+            RisiaAddSpecialSpells.CreateFeats();
+            RisiaAddBrain.Load();
+
+            List<BlueprintFeature> risiaNeutralAddFacts = new List<BlueprintFeature>();
+            risiaNeutralAddFacts.AddRange(RisiaAddLevels.RisiaAddFacts);
+            risiaNeutralAddFacts.Add(RisiaAddSpecialSpells.addSpecialSpellListFeat);
+            risiaNeutralAddFacts.Add(RisiaAddSpecialSpells.addSpecialSpellFeat);
+            List<BlueprintFeature> risiaBossAddFacts = new List<BlueprintFeature>();
+            risiaBossAddFacts.AddRange(RisiaAddLevels.RisiaBossAddFacts);
+            risiaBossAddFacts.Add(RisiaAddSpecialSpells.addSpecialSpellListFeat);
+            risiaBossAddFacts.Add(RisiaAddSpecialSpells.addSpecialSpellFeat);
+
+            var risiaFeatureList = Helpers.CreateFeature("RisiaFeatureList", "", "",
+                OtherUtils.GetMd5("Risia.FeatureList"),
+                IconSet.elvenmagic,
+                FeatureGroup.None,
+                //RisiaAddLevels.compNeutral,
+                Helpers.Create<AddFacts>(a => a.Facts = risiaNeutralAddFacts.ToArray()));
+            var risiaBossFeatureList = Helpers.CreateFeature("RisiaBossFeatureList", "", "",
+                OtherUtils.GetMd5("Risia.Boss.FeatureList"),
+                IconSet.elvenmagic,
+                FeatureGroup.None,
+                //RisiaAddLevels.compBoss,
+                Helpers.Create<AddFacts>(a => a.Facts = risiaBossAddFacts.ToArray()));
+
+            risia_neutral.AddComponent(RisiaAddLevels.compNeutral);
+            risia_companion.AddComponent(RisiaAddLevels.compNeutral);
+            risia_boss.AddComponent(RisiaAddLevels.compBoss);
+            var tmpList = risia_neutral.AddFacts.ToList();
+            tmpList.Add(risiaFeatureList);
+            risia_neutral.AddFacts = tmpList.ToArray();
+            var tmpList2 = risia_companion.AddFacts.ToList();
+            tmpList2.Add(risiaFeatureList);
+            risia_companion.AddFacts = tmpList2.ToArray();
+            var tmpList3 = risia_boss.AddFacts.ToList();
+            tmpList3.Add(risiaBossFeatureList);
+            risia_boss.AddFacts = tmpList3.ToArray();
+            loaded = true;
         }
     }
 }
