@@ -36,6 +36,7 @@ using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.ResourceLinks;
 using Kingmaker.UnitLogic.Abilities;
 using static UnityModManagerNet.UnityModManager.ModEntry;
+using ArcaneTide.Arcanist.Archetypes;
 
 namespace ArcaneTide.Arcanist {
     static class ArcanistClass {
@@ -309,6 +310,11 @@ namespace ArcaneTide.Arcanist {
             List<BlueprintFeature> featsList = new List<BlueprintFeature>();
             featsList.Add(ArcaneExploits.extraExploitFeat);
             library.AddFeats(featsList.ToArray());
+        }
+        static internal void LoadArchetypes() {
+            arcanist.Archetypes = new BlueprintArchetype[] {
+                SchoolSavant.Create()
+            };
         }
         
     }

@@ -8,6 +8,18 @@
     "6d338078b1a8cdc41bf3a39f65247161", //div diviners fortune buff
     "9e4c4799735ae9c45964e9113107ef02", //ench main feat
     "2acf05a8cb573744db69f65ea6b60619", //ench dazing touch abl
+    "1e418794638cf95409f6e33c8c3dbe1a", //evo 8 elemental wall (acid, cold, electric, fire) abl*4
+    "e377feb2ecec95e478e0565da621ea55",
+    "8ba05ef69b06ea04c9430427a95685f6",
+    "77d255c06e4c6a745b807400793cf7b1",
+    "2a9cebe780b6130428f3bf4b18270021", //evo 8 elemental wall (acid, cold, electric, fire) area * 4
+    "608d84e25f42d6044ba9b96d9f60722a",
+    "2175d68215aa61644ad1d877d4915ece",
+    "ac8737ccddaf2f948adf796b5e74eee7",
+    "9b4d07751dd104243a94b495c571c9dd", //illu blinding ray abl
+    "39af648796b7b9b4ab6321898ebb5fff", //necro grave touch abl
+    "71b8898b1d26d654b9a3eeac87e3e2f8", //necro turn undead abl
+    "810992c76efdde84db707a0444cf9a1c" //trans telekinetic fist abl
   ],
   "SchoolSpecializationProgressionsIds": [
     "c451fde0aec46454091b70384ea91989",
@@ -26,6 +38,9 @@
     "54d21b3221ea82a4d90d5a91b7872f3d", //divination
     "9e4c4799735ae9c45964e9113107ef02", //enchantment
     "c46512b796216b64899f26301241e4e6", //evocation
+    "9be5e050244352d43a1cb50aad8d548f", //illusion
+    "927707dce06627d4f880c90b5575125f", //necromancy
+    "c459c8200e666ef4c990873d3e501b91"  //transmutation
   ],
   "SchoolOppositionFeatureIds": [
     "a9bb3dcb2e8d44a49ac36c393c114bd9",
@@ -48,6 +63,16 @@
     "cfcbfc3a05bd41f43af7b5121e918ecd", //enchantment base
     "8b3e3b9126ba1734fb7b52bdfa4aa05a", //enchantment 8
     "f58f284c1d357a4449ce408cdfe6776a", //evocation force missile
+    "88f0ef09ac10fd9478d632a41d3c244f", //evocation 8 elemental wall
+    "be7f82229e15ac94db39dbac5ec3f07d", //illusion base
+    "ccd9239740802bd4eab4cb751467205d", //illusion 8
+    "16394ff73175b5745957750040a2c99e", //necromancy turn undead
+    "d3c8231b4ab43d248944b6da83776522", //necromancy base
+    "1f8d0149a43e01242bd7a7351bd1d3e9", //necromancy 8
+    "438920d3a99d02146ac1b5e1fb3c6055", //transmutation telekinetic fist
+    "bf214cd0561aebb43a789ff83f12928b", //transmutation 8
+    "934e9b0901789a54db1e49041328f4d1", //universal base
+    "42fd5b455f986f94293b15b13f38d6a5" //universal  8
   ],
   "AbjurationResistanceBuffs": [
     "b87a0e8a961c63a44a952822fe975edb",
@@ -55,5 +80,10 @@
     "453201f110f49714fb1d713c1f7bc06d",
     "b9ce1623447547946b8c58efd069f7c4",
     "63e2a6323c2bbff40a87fcd522778032"
+  ],
+  "TransmutationPhysicalEnhanceBuffs": [
+    "b649a3d906a6ff44a9bb01f939ef1a6f",
+    "c0b7d46ebdd51784cb313b5c7e928f8a",
+    "b3aa1696207777b48922255c99afec37"
   ]
 }

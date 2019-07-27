@@ -544,6 +544,14 @@
     {
       "Key": "ArcaneTide.AbilityRequirementClassSpellLevel.Reason",
       "Value": "需要释放{0}环法术的能力"
+    },
+    {
+      "Key": "ArcanistClass.Archetype.SchoolSavant.Name",
+      "Value": "学派家"
+    },
+    {
+      "Key": "ArcanistClass.Archetype.SchoolSavant.Desc",
+      "Value": "Some arcanists specialize in a school of magic and trade flexibility for focus. School savants are able to prepare more spells per day than typical arcanists, but their selection is more limited."
     }
   ]
 }

@@ -2,14 +2,18 @@
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Prerequisites;
+using Kingmaker.Blueprints.Classes.Selection;
 using Kingmaker.Blueprints.Classes.Spells;
 using Kingmaker.Blueprints.Facts;
 using Kingmaker.Designers.Mechanics.Buffs;
 using Kingmaker.Designers.Mechanics.Facts;
+using Kingmaker.EntitySystem.Stats;
+using Kingmaker.Enums;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
+using Kingmaker.UnitLogic.Buffs.Components;
 using Kingmaker.UnitLogic.FactLogic;
 using Kingmaker.UnitLogic.Mechanics.Components;
 using Kingmaker.Utility;
@@ -23,7 +27,8 @@ using System.Threading.Tasks;
 
 namespace ArcaneTide.Arcanist.Archetypes {
     
-    class SchoolSavant {
+    public static class SchoolSavant {
+        static public BlueprintArchetype archetype;
         static private SchoolSavantConfig config;
         static internal GlobalConstants consts => Main.constsManager;
         static internal LibraryScriptableObject library => Main.library;
@@ -72,6 +77,25 @@ namespace ArcaneTide.Arcanist.Archetypes {
             IntenseSpellsNeu compNeu3 = Helpers.Create<IntenseSpellsNeu>();
             compNeu3.Wizards = new BlueprintCharacterClass[] { wizard, ArcanistClass.arcanist };
             evo1_feat.AddComponent(compNeu3);
+            //fix necromancy turn undead cl
+            var necro1_feat = library.Get<BlueprintFeature>("927707dce06627d4f880c90b5575125f");
+            ReplaceCasterLevelOfAbility compOld4 = necro1_feat.GetComponent<ReplaceCasterLevelOfAbility>();
+            compOld4.AdditionalClasses = new BlueprintCharacterClass[] { ArcanistClass.arcanist };
+            //fix transmutation physical enhance
+            foreach(string buffId in config.TransmutationPhysicalEnhanceBuffs) {
+                var buff = library.Get<BlueprintBuff>(buffId);
+                AddStatBonusScaled compOld5 = buff.GetComponent<AddStatBonusScaled>();
+                AddStatBonusScaledTransmutationSpecialized compNeu5 = Helpers.Create<AddStatBonusScaledTransmutationSpecialized>();
+                compNeu5.classes = new BlueprintCharacterClass[] { wizard, ArcanistClass.arcanist };
+                compNeu5.Descriptor = compOld5.Descriptor;
+                compNeu5.Stat = compOld5.Stat;
+                compNeu5.Value = compOld5.Value;
+                buff.RemoveComponent(buff.GetComponent<AddStatBonusScaled>());
+            }
+            //fix transmutation polymorphy
+            var trans8_feat = library.Get<BlueprintFeature>("aeb56418768235640a3ee858d5ee05e8");
+            AddFeatureOnClassLevel compOld6 = trans8_feat.GetComponent<AddFeatureOnClassLevel>();
+            compOld6.AdditionalClasses = new BlueprintCharacterClass[] { ArcanistClass.arcanist };
         }
         static private void FixSpecializationProgressions() {
             //take such situation into consideration: SchoolSavant Arcanist + Specialization Wizard. Thus 
@@ -83,6 +107,7 @@ namespace ArcaneTide.Arcanist.Archetypes {
             //get progressions
             foreach (string progressionId in config.SchoolSpecializationProgressionsIds) {
                 var prog = library.Get<BlueprintProgression>(progressionId);
+                prog.Classes = new BlueprintCharacterClass[] { ArcanistClass.arcanist, wizard };
                 progs[progressionId] = prog;
             }
             //create prerequisites
@@ -119,7 +144,18 @@ namespace ArcaneTide.Arcanist.Archetypes {
                 mainFeat.AddComponent(compArc);
             }
         }
-        static public void Load() {
+        static private void FixResources() {
+            FastGetter Amount_Getter = Helpers.CreateFieldGetter<BlueprintAbilityResource>("m_Amount");
+            FastSetter Amount_Setter = Helpers.CreateFieldSetter<BlueprintAbilityResource>("m_Amount");
+            foreach(string resId in config.ResourcesIds) {
+                var res = library.Get<BlueprintAbilityResource>(resId);
+                var amount = Amount_Getter(res);
+                Helpers.SetField(amount, "Class", new BlueprintCharacterClass[] { wizard, ArcanistClass.arcanist });
+                Amount_Setter(res, amount);
+            }
+        }
+        static public BlueprintArchetype Create() {
+            if (archetype != null) return archetype;
             StreamReader fin = new StreamReader(Path.Combine(Main.ModPath, consts.SchoolSavantConfigFile));
             string fileData = fin.ReadToEnd();
             fin.Close();
@@ -128,6 +164,49 @@ namespace ArcaneTide.Arcanist.Archetypes {
             FixSpecializationProgressions();
             FixOppositionSchoolFeats();
             FixSpecializationSchoolMainFeats();
+            FixSpecialComponents();
+            FixResources();
+
+            archetype = Helpers.Create<BlueprintArchetype>();
+            library.AddAsset(archetype, "f4e14b7e792cfb93a5b6a07cd6bb342c");//MD5-32[ArcanistClass.Archetype.SchoolSavant]
+
+            archetype.name = "ArcanistClassArchetypeSchoolSavant";
+            archetype.LocalizedName = Helpers.CreateString("ArcanistClass.Archetype.SchoolSavant.Name");
+            archetype.LocalizedDescription = Helpers.CreateString("ArcanistClass.Archetype.SchoolSavant.Desc");
+
+            archetype.ChangeCasterType = false;
+            archetype.BaseAttackBonus = ArcanistClass.arcanist.BaseAttackBonus;
+            archetype.FortitudeSave = ArcanistClass.arcanist.FortitudeSave;
+            archetype.ReflexSave = ArcanistClass.arcanist.ReflexSave;
+            archetype.WillSave = ArcanistClass.arcanist.WillSave;
+            archetype.StartingGold = 411;
+            archetype.ReplaceClassSkills = false;
+            archetype.ReplaceStartingEquipment = false;
+            archetype.ReplaceSpellbook = null;
+            archetype.RemoveSpellbook = false;
+            archetype.IsArcaneCaster = true;
+            archetype.IsDivineCaster = false;
+
+            BlueprintFeatureSelection savantSchoolSelection = library.CopyAndAdd<BlueprintFeatureSelection>(
+                "5f838049069f1ac4d804ce0862ab5110",
+                "ArcanistClassArchetypeSchoolSavantSchoolSelection",
+                "681d02d26bcdb784041d05dd77a79a70"//MD5-32[ArcanistClass.Archetype.SchoolSavant.SchoolSelection]
+                );
+            //School savant must choose a specialization school, that is, she can't choose universalist.
+            List<BlueprintFeature> tmpList = savantSchoolSelection.AllFeatures.ToList();
+            tmpList.Remove(library.Get<BlueprintProgression>("0933849149cfc9244ac05d6a5b57fd80"));//universal progression
+            savantSchoolSelection.AllFeatures = tmpList.ToArray();
+            archetype.AddFeatures = new LevelEntry[] {
+                Helpers.LevelEntry(1, savantSchoolSelection)
+            };
+
+            var exploit = ArcaneExploits.exploitSelection;
+            archetype.RemoveFeatures = new LevelEntry[] {
+                Helpers.LevelEntry(1, exploit),
+                Helpers.LevelEntry(3, exploit),
+                Helpers.LevelEntry(7, exploit)
+            };
+            return archetype;
         }
         static public void Test() {
             BlueprintFeature abjurationFeat = library.Get<BlueprintFeature>("30f20e6f850519b48aa59e8c0ff66ae9");
@@ -145,6 +224,8 @@ namespace ArcaneTide.Arcanist.Archetypes {
         public List<string> SchoolSpecializationMainFeatIds { get; set; }
 
         public List<string> AbjurationResistanceBuffs { get; set; }
+        public List<string> TransmutationPhysicalEnhanceBuffs { get; set; }
+        public List<string> ResourcesIds { get; set; }
     }
 
     public class WizardAbjurationResistanceNeu : WizardAbjurationResistance {
@@ -222,5 +303,44 @@ namespace ArcaneTide.Arcanist.Archetypes {
 
         // Token: 0x040016EE RID: 5870
         public BlueprintCharacterClass[] Wizards;
+    }
+
+    public class AddStatBonusScaledTransmutationSpecialized : BuffLogic {
+        // Token: 0x060017AE RID: 6062 RVA: 0x0009E1E8 File Offset: 0x0009C3E8
+        public override void OnTurnOn() {
+            base.OnTurnOn();
+            int classLevels = 0;
+            foreach(var thisClass in this.classes) {
+                classLevels += base.Owner.Progression.GetClassLevel(thisClass);
+            }
+            int value = 1 + classLevels / 5;
+            ModifiableValue stat = base.Owner.Stats.GetStat(this.Stat);
+            if (stat != null) {
+                this.m_Modifier = stat.AddModifier(value, this, this.Descriptor);
+            }
+        }
+
+        // Token: 0x060017AF RID: 6063 RVA: 0x000118C7 File Offset: 0x0000FAC7
+        public override void OnTurnOff() {
+            base.OnTurnOff();
+            if (this.m_Modifier != null) {
+                this.m_Modifier.Remove();
+            }
+            this.m_Modifier = null;
+        }
+
+        // Token: 0x04001624 RID: 5668
+        public ModifierDescriptor Descriptor;
+
+        // Token: 0x04001625 RID: 5669
+        public StatType Stat;
+
+        // Token: 0x04001626 RID: 5670
+        public int Value;
+
+        // Token: 0x04001627 RID: 5671
+        public BlueprintCharacterClass[] classes;
+        // Token: 0x04001628 RID: 5672
+        private ModifiableValue.Modifier m_Modifier;
     }
 }
