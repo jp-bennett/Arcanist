@@ -25,50 +25,50 @@
       "Key": "risia-dialogue-neutral-cue1-answer2",
       "Value": "打一架8"
     },
-	  {
-	    "Key": "risia-dialogue-boss-cue1",
-	    "Value": "面前的是一位身材娇小的精灵少女，正整理着她那雪白的披肩长发。轻飘飘的面纱之下她的容貌看不真切，只有那双如宝石一般纯净的红绿双色瞳吸引了你。她身穿长可及地的红色无袖连衣裙，裙身绕着数圈蕾丝花边，精致的裁剪搭配上同样由繁复蕾丝花纹修饰的颈套和袖套，华丽之外更为她增添一份遗世独立的气质。"
-	  },
-	  {
-	    "Key": "risia-dialogue-boss-cue2",
-	    "Value": "然而，仔细观察的话就不难发现，袖套与裙子连接的部分绑着几根细细的皮带，这使得她的上臂只能做出细微的动作。颈套也不是什么柔软的材料制作的，恐怕她想要低头也不是一件容易的事情。透过半透明的裙摆看去，靴子的鞋跟至少有七英寸高，靴子顶端处似乎也有一条短链相连。这样美观而高度限制了行动自由的装束，很难想像她是出于什么理由穿着它外出旅行的。"
-	  },
-	  {
-	    "Key": "risia-dialogue-boss-cue3",
-	    "Value": "少女似乎并没有注意到你，仍是自顾自地梳理着头发。"
-	  },
+    {
+      "Key": "risia-dialogue-boss-cue1",
+      "Value": "面前的是一位身材娇小的精灵少女，正整理着她那雪白的披肩长发。轻飘飘的面纱之下她的容貌看不真切，只有那双如宝石一般纯净的红绿双色瞳吸引了你。她身穿长可及地的红色无袖连衣裙，裙身绕着数圈蕾丝花边，精致的裁剪搭配上同样由繁复蕾丝花纹修饰的颈套和袖套，华丽之外更为她增添一份遗世独立的气质。"
+    },
+    {
+      "Key": "risia-dialogue-boss-cue2",
+      "Value": "然而，仔细观察的话就不难发现，袖套与裙子连接的部分绑着几根细细的皮带，这使得她的上臂只能做出细微的动作。颈套也不是什么柔软的材料制作的，恐怕她想要低头也不是一件容易的事情。透过半透明的裙摆看去，靴子的鞋跟至少有七英寸高，靴子顶端处似乎也有一条短链相连。这样美观而高度限制了行动自由的装束，很难想像她是出于什么理由穿着它外出旅行的。"
+    },
+    {
+      "Key": "risia-dialogue-boss-cue3",
+      "Value": "少女似乎并没有注意到你，仍是自顾自地梳理着头发。"
+    },
     {
       "Key": "risia-dialogue-boss-cue3-answer01",
       "Value": "biatch，来战!"
     },
-	{
+    {
       "Key": "risia-dialogue-boss-cue3-answer02",
       "Value": "邀为同道！"
     },
-	{
+    {
       "Key": "risia-dialogue-boss-cue3-answer03",
       "Value": "没什么事了"
     },
-	{
-	  "Key": "risia-gaze-feature-name",
-	  "Value": "魅惑凝视"
-	},
+    {
+      "Key": "risia-gaze-feature-name",
+      "Value": "魅惑凝视"
+    },
     {
       "Key": "risia-gaze-feature-desc",
       "Value": "魅惑凝视的说明"
     },
-	{
-	  "Key": "risia-template-name",
-	  "Value": "莉雪模板名称"
-	},
-	{
-	  "Key": "risia-template-desc",
-	  "Value": "莉雪模板说明"
-	},
-	{
-	  "Key": "risia-template-wish-name",
-	  "Value": "祈愿术"
-	},
+    {
+      "Key": "risia-template-name",
+      "Value": "卡莉丝翠的注目"
+    },
+    {
+      "Key": "risia-template-desc",
+      "Value": "卡莉丝翠的注目"
+    },
+    {
+      "Key": "risia-template-wish-name",
+      "Value": "祈愿术"
+    },
     {
       "Key": "risia-template-wish-desc",
       "Value": "莉雪使用祈愿术为自己的敏捷、体质、魅力、智力提供+4内在加值。"
@@ -83,11 +83,43 @@
     },
     {
       "Key": "risia-offset-flavor",
-      "Value": "pianyiliangdeflavor"
+      "Value": "击败红桃Q获得"
+    },
+    {
+      "Key": "risia-amulet-name",
+      "Value": "龙鳞符记"
+    },
+    {
+      "Key": "risia-amulet-desc",
+      "Value": "红桃Q装备的护符，可以为AC提供+5天生防御增强加值，并使佩戴者免疫毒素。"
+    },
+    {
+      "Key": "risia-amulet-flavor",
+      "Value": "击败红桃Q获得"
+    },
+    {
+      "Key": "risia-dress-name",
+      "Value": "妩媚佳人"
+    },
+    {
+      "Key": "risia-dress-desc",
+      "Value": "要穿戴这件裙子，穿戴者必须是人类、精灵或半精灵，且必须为女性。\n这件裙子为穿戴者的魅力和智力提供+8增强加值。穿戴者在释放惑控系和幻术系法术时，DC+4。释放具有魅惑描述符的法术时，DC+4。释放具有影响心灵描述符的法术时，DC+2。释放具有胁迫描述符的法术时，DC+2。"
+    },
+    {
+      "Key": "risia-dress-flavor",
+      "Value": "红桃Q穿的红色无袖长裙，需要和臂套搭配着穿。它的名称很好地反映了这件裙子的特性：容貌出众的女性穿着这件裙子时会显得更加婀娜多姿。这个影响十分强烈，以至于她们施展的针对他人心智的法术也得到了增强。然而，为这件裙子附魔时红桃Q设置了一些防护魔法，并且特意将裙子设计成了妨碍双手动作的样式，或许是出于她的特殊爱好吧。"
+    },
+    {
+      "Key": "risia-dress-curse-name",
+      "Value": "紧束诅咒"
+    },
+    {
+      "Key": "risia-dress-curse-desc",
+      "Value": "对于红桃Q以外的生物，这件裙子如同一件诅咒物品般运作，需要解除诅咒方能脱下。裙子的特殊结构令穿戴者很难灵活运用自己的双臂，从而穿戴者的敏捷受到-6减值，且释放法术时有50%几率失败。解除诅咒的DC为30。"
     },
     {
       "Key": "Risia.AddSpecialSpell.Feat.Name",
-      "Value": "莉雪-添加独特法术"
+      "Value": "红桃Q-添加独特法术"
     },
     {
       "Key": "Risia.AddSpecialSpell.Feat.Desc",

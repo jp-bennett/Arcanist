@@ -96,6 +96,7 @@
     <Compile Include="Arcanist\ArcaneExploits.cs" />
     <Compile Include="Arcanist\Arcanist.cs" />
     <Compile Include="Arcanist\ArcanistWizardSchool.cs" />
+    <Compile Include="Arcanist\Archetypes\BloodArcanist.cs" />
     <Compile Include="Arcanist\Archetypes\SchoolSavant.cs" />
     <Compile Include="BlueprintManifest.cs" />
     <Compile Include="Components\AbilityRangeComponent.cs" />
@@ -138,19 +139,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ArcaneTide\ArcaneTide.json" />
+    <None Include="ArcaneTide\config\archetype1.json" />
+    <None Include="ArcaneTide\config\archetype2.json" />
     <None Include="ArcaneTide\Info.json" />
     <None Include="ArcaneTide\localization\enGB.json" />
     <None Include="ArcaneTide\localization\zhCN\Arcanist.json" />
     <None Include="ArcaneTide\localization\zhCN\Risia.json" />
-    <None Include="Arcanist\Archetypes\archetype1.json" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="新建文本文档.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ArcaneTide\config\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
 </Project>

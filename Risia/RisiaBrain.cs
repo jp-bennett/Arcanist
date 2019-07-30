@@ -29,6 +29,7 @@ namespace ArcaneTide.Risia {
     static public class RisiaAddBrain {
         static internal BlueprintCharacterClass arcanist => ArcanistClass.arcanist;
         static internal LibraryScriptableObject library => Main.library;
+        static internal GlobalConstants consts => Main.constsManager;
         static internal BlueprintUnit risiaBoss;
         static private BlueprintAiCastSpell CreateCastSpell(string actionName, string actionId, BlueprintAbility spell, double baseScore = 20.0, int actorConsiderationCnt = 0, int targetConsiderationCnt = 0, int CombatCnt = 10, DiceFormula CooldownRoundsDice = new DiceFormula(), int StartCooldownRounds = 0, BlueprintAbility spellVariant = null, params Consideration[] considerations) {
             if (actorConsiderationCnt + targetConsiderationCnt > considerations.Length) {
@@ -109,7 +110,21 @@ namespace ArcaneTide.Risia {
             BlueprintAbility summon7_1d3 = getSpell("43f763d347eb2744caed9c656ba89531");
             BlueprintAbility summon8Base = getSpell("d3ac756a229830243a72e84f3ab050d0");
             BlueprintAbility summon8Single = getSpell("eb6df7ddfc0669d4fb3fc9af4bd34bca");
+
+            BlueprintAbility seamantle_preBuff = getSpell(consts.GUIDs["RisiaSeamantleFree_N"]);
+            BlueprintAbility angelicAspectGreater_preBuff = getSpell(consts.GUIDs["RisiaAngelicAspectFree_N"]);
             List<BlueprintAiAction> actions = new List<BlueprintAiAction>();
+            //Free Action Prebuffs
+            //create seamantle
+            var castPrebuffSeamantle = CreateCastSpell(
+                "RisiaCastPrebuffSeamantle", OtherUtils.GetMd5("Risia.Brain.CastPrebuffSeamantle_1001"),
+                seamantle_preBuff, 1001, 0, 0, 1, getConstant(0), 0, null
+                );
+            var castPrebuffAngelic = CreateCastSpell(
+                "RisiaCastPrebuffAngelic", OtherUtils.GetMd5("Risia.Brain.CastPrebuffAngelic_1000"),
+                angelicAspectGreater_preBuff, 1000, 0, 0, 1, getConstant(0), 0, null
+                );
+            actions.AddRange(new BlueprintAiCastSpell[] { castPrebuffSeamantle, castPrebuffAngelic });
             //Buffs
             //create cast swift shield
             var castSwiftShield = CreateCastSpell(

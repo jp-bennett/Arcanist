@@ -209,6 +209,7 @@ namespace ArcaneTide.Arcanist {
             }
             arcanist.Progression.LevelEntries = entries.ToArray();
             RegisterOtherAssets();
+            LoadArchetypes();
         }
         static internal void FixPrestigeSpellbookSelection(string prestigeSpellbookSelectionId, string prestigeSpellbookSelectionWizardItemId, FeatureGroup group){
             BlueprintFeatureSelection spellbookSelection = library.Get<BlueprintFeatureSelection>(prestigeSpellbookSelectionId);
@@ -313,7 +314,8 @@ namespace ArcaneTide.Arcanist {
         }
         static internal void LoadArchetypes() {
             arcanist.Archetypes = new BlueprintArchetype[] {
-                SchoolSavant.Create()
+                SchoolSavant.Create(),
+                BloodArcanist.Create()
             };
         }
         

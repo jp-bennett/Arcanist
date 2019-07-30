@@ -9,6 +9,7 @@ using Kingmaker.Designers.Mechanics.Buffs;
 using Kingmaker.Designers.Mechanics.Facts;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
+using Kingmaker.Enums.Damage;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UnitLogic.Abilities;
@@ -55,15 +56,24 @@ namespace ArcaneTide.Arcanist.Archetypes {
             }
         }
         static private void FixSpecialComponents() {
+            
             //fix abjuration resistance buffs
             foreach(string buffId in config.AbjurationResistanceBuffs) {
                 var buff = library.Get<BlueprintBuff>(buffId);
+                
                 WizardAbjurationResistance compOld = buff.GetComponent<WizardAbjurationResistance>();
-                WizardAbjurationResistanceNeu compNeu = UnityEngine.Object.Instantiate<WizardAbjurationResistance>(compOld) as WizardAbjurationResistanceNeu;
+                WizardAbjurationResistanceNeu compNeu = Helpers.Create<WizardAbjurationResistanceNeu>();
+                compNeu.Type = compOld.Type;
+                compNeu.Pool = compOld.Pool;
+                compNeu.Value = compOld.Value;
+                compNeu.ValueMultiplier = compOld.ValueMultiplier;
+                compNeu.UseValueMultiplier = true;
+                compNeu.UsePool = true;
                 compNeu.Wizards = new BlueprintCharacterClass[] { wizard, ArcanistClass.arcanist };
                 buff.RemoveComponent(compOld);
                 buff.AddComponent(compNeu);
             }
+            
             //fix conjuration enhance summoning
             var conj1_feat = library.Get<BlueprintFeature>("cee0f7edbd874a042952ee150f878b84");
             conj1_feat.RemoveComponent(conj1_feat.GetComponent<AddClassLevelToSummonDuration>());
@@ -71,19 +81,23 @@ namespace ArcaneTide.Arcanist.Archetypes {
             compNeu2.CharacterClasses = new BlueprintCharacterClass[] { wizard, ArcanistClass.arcanist };
             compNeu2.Half = true;
             conj1_feat.AddComponent(compNeu2);
+            
             //fix evocation intense spell
             var evo1_feat = library.Get<BlueprintFeature>("c46512b796216b64899f26301241e4e6");
             evo1_feat.RemoveComponent(evo1_feat.GetComponent<IntenseSpells>());
             IntenseSpellsNeu compNeu3 = Helpers.Create<IntenseSpellsNeu>();
             compNeu3.Wizards = new BlueprintCharacterClass[] { wizard, ArcanistClass.arcanist };
             evo1_feat.AddComponent(compNeu3);
+           
             //fix necromancy turn undead cl
             var necro1_feat = library.Get<BlueprintFeature>("927707dce06627d4f880c90b5575125f");
             ReplaceCasterLevelOfAbility compOld4 = necro1_feat.GetComponent<ReplaceCasterLevelOfAbility>();
             compOld4.AdditionalClasses = new BlueprintCharacterClass[] { ArcanistClass.arcanist };
+            
             //fix transmutation physical enhance
-            foreach(string buffId in config.TransmutationPhysicalEnhanceBuffs) {
+            foreach (string buffId in config.TransmutationPhysicalEnhanceBuffs) {
                 var buff = library.Get<BlueprintBuff>(buffId);
+                
                 AddStatBonusScaled compOld5 = buff.GetComponent<AddStatBonusScaled>();
                 AddStatBonusScaledTransmutationSpecialized compNeu5 = Helpers.Create<AddStatBonusScaledTransmutationSpecialized>();
                 compNeu5.classes = new BlueprintCharacterClass[] { wizard, ArcanistClass.arcanist };
@@ -92,6 +106,7 @@ namespace ArcaneTide.Arcanist.Archetypes {
                 compNeu5.Value = compOld5.Value;
                 buff.RemoveComponent(buff.GetComponent<AddStatBonusScaled>());
             }
+            
             //fix transmutation polymorphy
             var trans8_feat = library.Get<BlueprintFeature>("aeb56418768235640a3ee858d5ee05e8");
             AddFeatureOnClassLevel compOld6 = trans8_feat.GetComponent<AddFeatureOnClassLevel>();
@@ -107,7 +122,9 @@ namespace ArcaneTide.Arcanist.Archetypes {
             //get progressions
             foreach (string progressionId in config.SchoolSpecializationProgressionsIds) {
                 var prog = library.Get<BlueprintProgression>(progressionId);
+                
                 prog.Classes = new BlueprintCharacterClass[] { ArcanistClass.arcanist, wizard };
+                prog.Archetypes = new BlueprintArchetype[] { archetype };
                 progs[progressionId] = prog;
             }
             //create prerequisites
@@ -126,9 +143,13 @@ namespace ArcaneTide.Arcanist.Archetypes {
         }
         static private void FixOppositionSchoolFeats() {
             //fix opposition school feats so that they can function on arcanist class
-            foreach(string featId in config.SchoolOppositionFeatureIds) {
+            foreach (string featId in config.SchoolOppositionFeatureIds) {
                 BlueprintFeature feat = library.Get<BlueprintFeature>(featId);
-                feat.AddComponent(Helpers.Create<AddOppositionSchool>(a => a.CharacterClass = ArcanistClass.arcanist));
+                SpellSchool school = feat.GetComponent<AddOppositionSchool>().School;
+                feat.AddComponent(Helpers.Create<AddOppositionSchool>(a => { 
+                    a.CharacterClass = ArcanistClass.arcanist;
+                    a.School = school;
+                }));
             }
         }
         static private void FixSpecializationSchoolMainFeats() {
@@ -145,8 +166,8 @@ namespace ArcaneTide.Arcanist.Archetypes {
             }
         }
         static private void FixResources() {
-            FastGetter Amount_Getter = Helpers.CreateFieldGetter<BlueprintAbilityResource>("m_Amount");
-            FastSetter Amount_Setter = Helpers.CreateFieldSetter<BlueprintAbilityResource>("m_Amount");
+            FastGetter Amount_Getter = Helpers.CreateFieldGetter<BlueprintAbilityResource>("m_MaxAmount");
+            FastSetter Amount_Setter = Helpers.CreateFieldSetter<BlueprintAbilityResource>("m_MaxAmount");
             foreach(string resId in config.ResourcesIds) {
                 var res = library.Get<BlueprintAbilityResource>(resId);
                 var amount = Amount_Getter(res);
@@ -160,6 +181,8 @@ namespace ArcaneTide.Arcanist.Archetypes {
             string fileData = fin.ReadToEnd();
             fin.Close();
             config = JsonConvert.DeserializeObject<SchoolSavantConfig>(fileData);
+            archetype = Helpers.Create<BlueprintArchetype>();
+            library.AddAsset(archetype, "f4e14b7e792cfb93a5b6a07cd6bb342c");//MD5-32[ArcanistClass.Archetype.SchoolSavant]
 
             FixSpecializationProgressions();
             FixOppositionSchoolFeats();
@@ -167,8 +190,7 @@ namespace ArcaneTide.Arcanist.Archetypes {
             FixSpecialComponents();
             FixResources();
 
-            archetype = Helpers.Create<BlueprintArchetype>();
-            library.AddAsset(archetype, "f4e14b7e792cfb93a5b6a07cd6bb342c");//MD5-32[ArcanistClass.Archetype.SchoolSavant]
+            
 
             archetype.name = "ArcanistClassArchetypeSchoolSavant";
             archetype.LocalizedName = Helpers.CreateString("ArcanistClass.Archetype.SchoolSavant.Name");
@@ -218,14 +240,20 @@ namespace ArcaneTide.Arcanist.Archetypes {
         }
     }
     public class SchoolSavantConfig {
+        [JsonProperty(PropertyName = "FactsWithContextRankConfig")]
         public List<string> FactsWithContextRankConfig { get; set; }
+        [JsonProperty(PropertyName = "SchoolSpecializationProgressionsIds")]
         public List<string> SchoolSpecializationProgressionsIds { get; set; }
-        public List<string> SchoolOppositionFeatureIds { get; set; }
+        [JsonProperty(PropertyName = "SchoolSpecializationMainFeatIds")]
         public List<string> SchoolSpecializationMainFeatIds { get; set; }
-
-        public List<string> AbjurationResistanceBuffs { get; set; }
-        public List<string> TransmutationPhysicalEnhanceBuffs { get; set; }
+        [JsonProperty(PropertyName = "SchoolOppositionFeatureIds")]
+        public List<string> SchoolOppositionFeatureIds { get; set; }
+        [JsonProperty(PropertyName = "ResourcesIds")]
         public List<string> ResourcesIds { get; set; }
+        [JsonProperty(PropertyName = "AbjurationResistanceBuffs")]
+        public List<string> AbjurationResistanceBuffs { get; set; }
+        [JsonProperty(PropertyName = "TransmutationPhysicalEnhanceBuffs")]
+        public List<string> TransmutationPhysicalEnhanceBuffs { get; set; }
     }
 
     public class WizardAbjurationResistanceNeu : WizardAbjurationResistance {

@@ -7,17 +7,20 @@
   "MainAssetBundleFilename": "risiablue.assetblue",
   "GUIDs": {
     "RisiaElkTempleSpawner_D": "37d9b04a-43e4-4f1a-a84e-623e0ec4ac9b",
-    "RisiaBossElkTempleSpawner_D": "2d28392f-1606-4642-aa14-ad55fe4edfec"
+    "RisiaBossElkTempleSpawner_D": "2d28392f-1606-4642-aa14-ad55fe4edfec",
+    "RisiaAngelicAspectFree_N": "d9c13adc3c784ad38e4561189701c448",
+    "RisiaSeamantleFree_N": "70488454ea764a4c8af3fdafbd5d2316"
   },
   "LocalizationFiles": [
     "Arcanist.json",
     "Risia.json"
   ],
   "ImgFiles": {
-    "RisiaL": "bundles/imgs/Risia1_L.png",
-    "RisiaM": "bundles/imgs/Risia1_M.png",
-    "RisiaS": "bundles/imgs/Risia1_S.png"
+    "RisiaL": "bundles/imgs/Risia2_L.png",
+    "RisiaM": "bundles/imgs/Risia2_M.png",
+    "RisiaS": "bundles/imgs/Risia2_S.png"
   },
-  "SchoolSavantConfigFile":  "config/archetype1.json",
+  "SchoolSavantConfigFile": "config/archetype1.json",
+  "BloodArcanistConfigFile": "config/archetype2.json",
   "VoiceOverColor": "0x38302C"
 }

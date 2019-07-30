@@ -66,12 +66,12 @@ namespace ArcaneTide {
                 if (Main.library != null) return;
                 Main.library = self;
 
-                logger.Log("Dua 1!?!");
+                /*logger.Log("Dua 1!?!");
                 foreach (string bundle in constsManager.assetBundleFiles) {
                     string absolutePath = Path.Combine(ModPath, "bundles", bundle);
                     LoadBundle(absolutePath);
                 }
-                logger.Log("Dua 2!?!");
+                logger.Log("Dua 2!?!");*/
 
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
@@ -92,10 +92,10 @@ namespace ArcaneTide {
             static public void Postfix(LibraryScriptableObject __instance) {
                 SafeLoad(MetaFeats.Load, "MetaFeatSet");
                 SafeLoad(ArcanistClass.LoadAfterwards, "Arcanist Loading after EA");
-                SafeLoad(RisiaMainLoad.LoadOnLibraryLoaded, "Risia");
+                /*SafeLoad(RisiaMainLoad.LoadOnLibraryLoaded, "Risia");
                 SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
                 SafeLoad(TestCopyScene.Load, "");
-                SafeLoad(SchoolSavant.Test, "");
+                SafeLoad(SchoolSavant.Test, "");*/
             }
         }
 

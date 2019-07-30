@@ -12,7 +12,7 @@ using UnityEngine;
 using static UnityModManagerNet.UnityModManager.ModEntry;
 
 namespace ArcaneTide {
-    static class HelpersNeu {
+    public static class HelpersNeu {
         static LibraryScriptableObject library => Main.library;
         static ModLogger logger => Main.logger;
         static GameObject exampleGameObject;
@@ -53,6 +53,13 @@ namespace ArcaneTide {
             logger.Log("rua rua 7");
             return ans;
         }
+        static public void Add<T>(ref T[] array, T element) {
+            List<T> tmpList = array.ToList<T>();
+            tmpList.Add(element);
+            array = tmpList.ToArray();
+        }
 
     }
+
+
 }

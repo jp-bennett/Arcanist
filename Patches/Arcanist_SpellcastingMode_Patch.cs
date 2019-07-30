@@ -45,6 +45,15 @@ namespace ArcaneTide.Patches {
             if (spellLevel < 0 || spellLevel > spellBook.MaxSpellLevel) return 0;
             return spellBookBlueprint.SpellsKnown.GetCount(spellBook.CasterLevel+20, spellLevel).Value;
         }
+        static public int getArcanistMemorizeSlotCnt(int spellLevel, Spellbook spellBook) {
+            
+            BlueprintSpellbook spellBookBlueprint = spellBook.Blueprint;
+            ModifiableValueAttributeStat castingStat = spellBook.Owner.Stats.GetStat<ModifiableValueAttributeStat>(spellBookBlueprint.CastingAttribute);
+            if (castingStat == null) return 0;
+            if (castingStat < 10 + spellLevel) return 0;
+            if (spellLevel < 0 || spellLevel > spellBook.MaxSpellLevel) return 0;
+            return spellBookBlueprint.SpellsKnown.GetCount(spellBook.CasterLevel + 20, spellLevel).Value;
+        }
     }
     //[HarmonyPatch(typeof(UnitUseAbility), "OnAction")]
     class Debug_UnitUseAbility {
@@ -224,26 +233,46 @@ namespace ArcaneTide.Patches {
         static public bool Prefix(Spellbook __instance, SpellSlot spell) {
             if (__instance.Blueprint.CharacterClass == Main.arcanist) {
                 __instance.Blueprint.Spontaneous = false;
+                Main.logger.Log($"Arcanist Try to forget spellslot {spell.Index}, spellslot is now available {spell.Available}");
+                if (spell.Available) {
+                    Main.logger.Log($"Spellslot contains {spell.Spell}");
+                }
             }
             return true;
         }
         static public void Postfix(Spellbook __instance) {
             if (__instance.Blueprint.CharacterClass == Main.arcanist) {
                 __instance.Blueprint.Spontaneous = true;
+                Main.logger.Log("Forget success");
             }
         }
     }
     
     [HarmonyPatch(typeof(Spellbook), "Memorize", new Type[] {typeof(AbilityData), typeof(SpellSlot) })]
     class Spellbook_Memorize_Patch {
-        static public bool Prefix(Spellbook __instance) {
+        static public bool Prefix(Spellbook __instance, AbilityData data, SpellSlot slot) {
             if(__instance.Blueprint.CharacterClass == Main.arcanist) {
                 __instance.Blueprint.Spontaneous = false;
             }
+            Main.logger.Log($"On memory spell {data.Name}, slot index {((slot == null) ? -666 : slot.Index)}");
             return true;
         }
         static public void Postfix(Spellbook __instance) {
             if(__instance.Blueprint.CharacterClass == Main.arcanist) {
+                for(int i = 1; i <= __instance.MaxSpellLevel; i++) {
+                    var memorizedSlots = __instance.GetMemorizedSpellSlots(i);
+                    int j = 0;
+                    foreach(SpellSlot slot in memorizedSlots) {
+                        int ind = slot.Index;
+                        if(slot.Type == SpellSlotType.Common && ind >= ArcanistPatch_Helpers.getArcanistMemorizeSlotCnt(i, __instance)) {
+                            slot.Available = false;
+                            slot.Spell = null;
+                            slot.LinkedSlots = null;
+                            slot.IsOpposition = false;
+                        }
+                        j++;
+                    }
+                }
                 __instance.Blueprint.Spontaneous = true;
             }
         }
@@ -443,6 +472,14 @@ namespace ArcaneTide.Patches {
                             IEnumerable<SpellSlot> memorizedSpells = spellbook.GetMemorizedSpells(i);
                             foreach(SpellSlot spellSlot in memorizedSpells) {
                                 if (!spellSlot.Available) continue;
+                                //the following 2 lines shouldn't be removed.
+                                //these are for dealing with the bug appearing at new game:
+                                //on new game, the system would automatically memorize (spellperday[1]) spells.
+                                //however, arcanist's spell slot cnt on level 1 is fewer than her spell per day.
+                                //so the spells memorized in an invalid spellslot would never be forgotten with normal means.
+                                int ind = spellSlot.Index;
+                                if (ind >= ArcanistPatch_Helpers.getArcanistMemorizeSlotCnt(spellSlot.SpellLevel, spellbook)) continue;
+
                                 AbilityData abilityData = spellSlot.Spell;
                                 abilityData.ParamSpellSlot = spellSlot;
                                 if (!list.Contains(abilityData)) {
