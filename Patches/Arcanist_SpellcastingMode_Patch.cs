@@ -55,7 +55,7 @@ namespace ArcaneTide.Patches {
             return spellBookBlueprint.SpellsKnown.GetCount(spellBook.CasterLevel + 20, spellLevel).Value;
         }
     }
-    //[HarmonyPatch(typeof(UnitUseAbility), "OnAction")]
+    [HarmonyPatch(typeof(UnitUseAbility), "OnAction")]
     class Debug_UnitUseAbility {
         static public void Prefix(UnitUseAbility __instance) {
             Main.logger.Log($"DUA, use ability {__instance.Spell.Name}");
@@ -121,18 +121,19 @@ namespace ArcaneTide.Patches {
             
             for (int i = list.Count - 1; i >= 0; i--) {
                 SpellSlot spellSlot = list[i];
-                
+                //Main.logger.Log($"In spellslot {i}, named {(spellSlot.Spell == null ? "null" : spellSlot.Spell.Name)}"); ;
                 int num3 = ___m_SpontaneousSlots[num];
                 
                 if (spellSlot.Available && (num3 > 0 ||(num3 == 0 && !doSpend))) {
-           
+                    //Main.logger.Log("DUA 1");
                     if (spellSlot.Type != SpellSlotType.Favorite || !excludeSpecial) {
- 
+                       // Main.logger.Log("DUA 2");
                         if (spell != null && spellSlot.Spell != null) {
-
+                            //Main.logger.Log("Rua !");
                             int spellMeta = spell.MetamagicData == null ? 0 : (int)spell.MetamagicData.MetamagicMask;
-                            int slotSpellMeta = spellSlot.Spell.MetamagicData == null ? 0 : (int)spell.MetamagicData.MetamagicMask;
-                           
+                            //Main.logger.Log($"spellMeta is {spellMeta}");
+                            int slotSpellMeta = spellSlot.Spell.MetamagicData == null ? 0 : (int)spellSlot.Spell.MetamagicData.MetamagicMask;
+                            //Main.logger.Log($"slotspellMeta is {slotSpellMeta}");
                             bool flag = ((spellMeta | slotSpellMeta) == spellMeta);//metamagic of spellSlot.Spell is a subset of metamagic of spell.
                             if (spell.Blueprint.Equals(spellSlot.Spell.Blueprint) && flag) {
 

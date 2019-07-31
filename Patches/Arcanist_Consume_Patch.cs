@@ -55,6 +55,10 @@ namespace ArcaneTide.Patches {
             }
             return true;
         }
+        public static void Postfix(AbilityData __instance, ref UnitCommand.CommandType __result) {
+           // Main.logger.Log($"Ability {__instance.Name} has action type of {__result}");
+            //Main.logger.Log($"Ability {__instance.Name} has metamagic {(__instance.MetamagicData == null ? 0 : (int)__instance.MetamagicData.MetamagicMask)}");
+        }
     }
     [HarmonyPatch(typeof(ActionBarGroupSlot),"SetSpontaneousControls")]
     class ActionBarGroupSlot_SetSpontaneousControls_Patch {

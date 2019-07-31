@@ -15,7 +15,9 @@ using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.UnitLogic.Buffs.Components;
+using Kingmaker.UnitLogic.FactLogic;
 using Kingmaker.UnitLogic.Mechanics;
+using Kingmaker.UnitLogic.Parts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +53,36 @@ namespace ArcaneTide.Components {
     }
 
     class BuffChangeSingleSelectedFeature : BuffLogic{
+        private void RemoveMetamagicFeatInSpellSlots(BlueprintFeature metafeatOld) {
+            Metamagic metaOld = metafeatOld.GetComponent<AddMetamagicFeat>().Metamagic;
+            List<AbilityData> spellsToRemove = new List<AbilityData>();
+            List<SpellSlot> slotsToForget = new List<SpellSlot>();
+            var unit = base.Owner;
+            foreach(Spellbook spellbook in unit.Spellbooks) {
+                int maxSplLevel = spellbook.MaxSpellLevel;
+                for (int i = 1; i <= maxSplLevel; i++) {
+                    foreach (AbilityData spell in spellbook.GetCustomSpells(i)) {
+                        if (spell.HasMetamagic(metaOld)) {
+                            spellsToRemove.Add(spell);
+                        }
+                    }
+                    foreach (SpellSlot slot in spellbook.GetMemorizedSpellSlots(i)) {
+                        if(slot.Spell != null && !slot.IsOpposition) {
+                            if (slot.Spell.HasMetamagic(metaOld)) {
+                                slotsToForget.Add(slot);
+                            }
+                        }
+                    }
+                }
+                foreach (SpellSlot slot in slotsToForget) {
+                    spellbook.ForgetMemorized(slot);
+                }
+                foreach (AbilityData spell in spellsToRemove) {
+                    spellbook.RemoveCustomSpell(spell);
+                }
+                
+            }
+        }
         public override void OnTurnOn() {
             base.OnTurnOn();
 
@@ -59,8 +91,7 @@ namespace ArcaneTide.Components {
             foreach (var subBuff in GreaterMetamagicKnowledge.subBuffs) {
                 if (subBuff == this.Buff.Blueprint) continue;
                 if (unit.Buffs.HasFact(subBuff)) {
-                    this.Buff.Remove();
-                    return;
+                    unit.Buffs.RemoveFact(subBuff);
                 }
             }
             if(spellMixer == null) {
@@ -83,13 +114,14 @@ namespace ArcaneTide.Components {
             foreach (var feat in this.replacedOriginalFeats) {
                 //UnityModManager.Logger.Log($"Remove Feat {feat.Name}");
                 unit.Progression.Features.RemoveFact(feat);
-                //selectionData.RemoveSelection(level, feat);
+                RemoveMetamagicFeatInSpellSlots(feat); 
+                selectionData.RemoveSelection(level, feat);
                 //UnityModManager.Logger.Log($"Remove Feat {feat.Name} Finish.");
             }
             //UnityModManager.Logger.Log($"Start to add Feat.");
-            //selectionData.AddSelection(level, newFeatBlue);
+            selectionData.AddSelection(level, newFeatBlue);
             unit.AddFact(newFeatBlue);
-            spellMixer.Setup();
+            builder_setter(spellMixer, null);
             //UnityModManager.Logger.Log($"Added feat {newFeatBlue.Name}");
         }
         public override void OnTurnOff() {
@@ -97,14 +129,18 @@ namespace ArcaneTide.Components {
                 var unit = base.Owner;
                 FeatureSelectionData selectionData = unit.Progression.GetSelectionData(selectionBlue);
                 unit.Progression.Features.RemoveFact(newFeatBlue);
+                RemoveMetamagicFeatInSpellSlots(newFeatBlue);
+                selectionData.RemoveSelection(level, newFeatBlue);
                 foreach (var feat in this.replacedOriginalFeats) {
                     unit.AddFact(feat);
+                    selectionData.AddSelection(level, feat);
                 }
-                spellMixer.Setup();
+                builder_setter(spellMixer, null);
             }
             
             base.OnTurnOff();
         }
+        private FastSetter builder_setter = Helpers.CreateFieldSetter<SpellBookMetamagicMixer>("m_MetamagicBuilder");
         public BlueprintFeatureSelection selectionBlue;
         public BlueprintFeature newFeatBlue;
         private List<BlueprintFeature> replacedOriginalFeats = null;
@@ -112,7 +148,8 @@ namespace ArcaneTide.Components {
         private FastGetter spellMixerGetter = Helpers.CreateFieldGetter<SpellBookController>("m_SpellBookMetamagicMixer");
         private SpellBookMetamagicMixer spellMixer = null;
     }
-    class BuffSpecialGreaterMetamagic : BuffLogic, IInitiatorRulebookHandler<RuleCalculateAbilityParams>, IRulebookHandler<RuleCalculateAbilityParams> {
+    class BuffSpecialGreaterMetamagic : BuffLogic, IInitiatorRulebookHandler<RuleCalculateAbilityParams>, IRulebookHandler<RuleCalculateAbilityParams>, IInitiatorRulebookSubscriber {
+
         public void OnEventAboutToTrigger(RuleCalculateAbilityParams evt) {
             UnitDescriptor unit = evt.AbilityData != null ? evt.AbilityData.Caster : null;
             if (unit != null && evt.Spell != null && evt.Spellbook != null && evt.Spell.Type == AbilityType.Spell) {
@@ -122,18 +159,14 @@ namespace ArcaneTide.Components {
                         metamagicCost += (HeightenTarget - evt.SpellLevel);
                     }
                     if(unit.Resources.GetResourceAmount(ArcaneReservoir.resource) < metamagicCost) {
-                        if (this.ShallRemove) {
-                            base.Buff.Remove();
-                        }
+                        this.AboutToRemove = true;
                     }
                     unit.Resources.Spend(ArcaneReservoir.resource, metamagicCost);
 
                     evt.AddMetamagic(this.metamagic);
                     MetamagicData md = metamagicData_Getter(evt) as MetamagicData;
                     md.HeightenLevel = (HeightenTarget - evt.SpellLevel >= md.HeightenLevel ? HeightenTarget - evt.SpellLevel : md.HeightenLevel);
-                    if (this.ShallRemove) {
-                        base.Buff.Remove();
-                    }
+                    this.AboutToRemove = true;
                 }
                 else if(metamagic != Metamagic.Heighten) {
                     int metamagicCost = MetamagicHelper.DefaultCost(metamagic);
@@ -145,19 +178,20 @@ namespace ArcaneTide.Components {
                     unit.Resources.Spend(ArcaneReservoir.resource, metamagicCost);
 
                     evt.AddMetamagic(this.metamagic);
-                    if (this.ShallRemove) {
-                        base.Buff.Remove();
-                    }
+                    this.AboutToRemove = true;
                 }
             }
         }
 
         public void OnEventDidTrigger(RuleCalculateAbilityParams evt) {
-            
+            if(this.ShallRemove && this.AboutToRemove) {
+                base.Buff.Remove();
+            }
         }
         public Metamagic metamagic;
         public int HeightenTarget = 9;
         public bool ShallRemove = true;
+        private bool AboutToRemove = false;
         private FastGetter metamagicData_Getter = Helpers.CreateFieldGetter<RuleCalculateAbilityParams>("m_MetamagicData");
     }
     class BuffAcidBurst : BuffLogic, ITickEachRound {
