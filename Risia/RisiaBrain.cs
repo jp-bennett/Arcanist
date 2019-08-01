@@ -8,17 +8,21 @@ using Kingmaker.Blueprints.Classes.Spells;
 using Kingmaker.Controllers.Brain;
 using Kingmaker.Controllers.Brain.Blueprints;
 using Kingmaker.Controllers.Brain.Blueprints.Considerations;
+using Kingmaker.ElementsSystem;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.RuleSystem;
+using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.UnitLogic.ActivatableAbilities;
+using Kingmaker.UnitLogic.Buffs;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.FactLogic;
 using Kingmaker.UnitLogic.Mechanics;
+using Kingmaker.UnitLogic.Mechanics.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,20 +78,40 @@ namespace ArcaneTide.Risia {
             });
             return ans;
         }
-        static private BuffConsideration considerNoBuff(BlueprintBuff[] buffs, float hasBuff = 0f, float noBuff = 1f) {
+        static private BuffConsideration considerNoBuff(string name, BlueprintBuff[] buffs, float hasBuff = 0f, float noBuff = 1f) {
             var ans = Helpers.Create<BuffConsideration>();
             ans.BaseScoreModifier = 1.0f;
             ans.HasBuffScore = hasBuff ;
             ans.NoBuffScore = noBuff;
             ans.Buffs = buffs;
+            library.AddAsset(ans, OtherUtils.GetMd5(name));
             return ans;
         }
-        static private BuffConsideration considerNoBuff(BlueprintBuff buff, float hasBuff = 0f, float noBuff = 1f) {
-            return considerNoBuff(new BlueprintBuff[] { buff }, hasBuff, noBuff);
+        
+        static private BuffConsideration considerNoBuff(string name, BlueprintBuff buff, float hasBuff = 0f, float noBuff = 1f) {
+            return considerNoBuff(name, new BlueprintBuff[] { buff }, hasBuff, noBuff);
+        }
+        static private BuffConsideration considerHasBuff(string name, BlueprintBuff buff, float hasBuff = 1f, float noBuff = 0f) {
+            return considerNoBuff(name, new BlueprintBuff[] { buff }, hasBuff, noBuff);
+        }
+        static private BuffsAroundConsideration considerBuffsAround(string name, TargetType filter, BlueprintBuff[] buffs, int maxCount = 4, float maxScore = 1f, int minCount = 1, float minScore = 0f) {
+            var ans = Helpers.Create<BuffsAroundConsideration>();
+            ans.Buffs = buffs;
+            ans.Filter = filter;
+            ans.MaxCount = maxCount;
+            ans.MaxScore = maxScore;
+            ans.MinCount = minCount;
+            ans.MinScore = minScore;
+            ans.BelowMinScore = minScore;
+            library.AddAsset(ans, OtherUtils.GetMd5(name));
+            return ans;
         }
         static public void Load() {
             risiaBoss = library.Get<BlueprintUnit>("95fb27a5b8ae40099bd727ea93de5b9b");
             BlueprintBrain brain = Helpers.Create<BlueprintBrain>();
+
+            BlueprintBuff holyAuraBuff = library.Get<BlueprintBuff>("a33bf327207a5904d9e38d6a80eb09e2");
+            BlueprintBuff unholyAuraBuff = library.Get<BlueprintBuff>("9eda82a1f78558747a03c17e0e9a1a68");
 
             Consideration hasSwift = getConsideration("c2b7d2f9a5cb8d04d9e1aa4bf3d3c598");
             Consideration hasStandard = getConsideration("a82d061edd18ce748a1a7f97e7e6d9d2");
@@ -99,17 +123,33 @@ namespace ArcaneTide.Risia {
             Consideration noShieldBuff = getConsideration("a3ffff7b93017744ea88433311569cec");
             Consideration noMirrorBuff = getConsideration("db074912aa8072c469b527f6c111e82c");
             Consideration noInvisibilityGreaterBuff = getConsideration("2fc05579e43f56146a1cdaaa82e5119c");
-            Consideration noFieryBodyBuff = considerNoBuff(library.Get<BlueprintBuff>("b574e1583768798468335d8cdb77e94c"));
-
+            Consideration noFieryBodyBuff = considerNoBuff("RisiaNoFieryBodyBuffConsideration", library.Get<BlueprintBuff>("b574e1583768798468335d8cdb77e94c"));
+            Consideration aroundHasHolyAuraBuff = considerBuffsAround(
+                "RisiaEnemyHasHolyAuraBuffConsideration", TargetType.Enemy,
+                new BlueprintBuff[] { holyAuraBuff }
+                );
+            Consideration aroundHasUnholyAuraBuff = considerBuffsAround(
+                "RisiaEnemyHasUnholyAuraBuffConsideration", TargetType.Enemy,
+                new BlueprintBuff[] { unholyAuraBuff }
+                );
+            Consideration selfHasARBoostDCBuff = considerHasBuff(
+                "RisiaHasARBoostDCBuff", ArcaneReservoir.AR_AddDCBuff
+                );
+            Consideration selfHasNoARBoostDCBuff = considerNoBuff(
+                "RisiaHasNoARBoostDCBuff", ArcaneReservoir.AR_AddDCBuff
+                );
             BlueprintAbility shield_swift = getSpell("3c1b92a0a3ce0754a889fb0d7b2c23a4");
             BlueprintAbility mirror_swift = getSpell(OtherUtils.GetMd5("Risia.MirrorImageSwift"));
             BlueprintAbility invisiblity_greater_swift = getSpell(OtherUtils.GetMd5("Risia.GreaterInvisibility.Swift"));
             BlueprintAbility fiery_body = getSpell("08ccad78cac525040919d51963f9ac39");
             BlueprintAbility overwhelmingPresence = getSpell("41cf93453b027b94886901dbfc680cb9");
+            BlueprintAbility weird = getSpell("870af83be6572594d84d276d7fc583e0");
             BlueprintAbility summon7Base = getSpell("ab167fd8203c1314bac6568932f1752f");
             BlueprintAbility summon7_1d3 = getSpell("43f763d347eb2744caed9c656ba89531");
             BlueprintAbility summon8Base = getSpell("d3ac756a229830243a72e84f3ab050d0");
             BlueprintAbility summon8Single = getSpell("eb6df7ddfc0669d4fb3fc9af4bd34bca");
+            BlueprintAbility DMHolyAura = getSpell(OtherUtils.GetMd5("Risia.DispelMagicArea.HolyAura"));
+            BlueprintAbility DMUnholyAura = getSpell(OtherUtils.GetMd5("Risia.DispelMagicArea.UnholyAura"));
 
             BlueprintAbility seamantle_preBuff = getSpell(consts.GUIDs["RisiaSeamantleFree_N"]);
             BlueprintAbility angelicAspectGreater_preBuff = getSpell(consts.GUIDs["RisiaAngelicAspectFree_N"]);
@@ -128,31 +168,54 @@ namespace ArcaneTide.Risia {
             //Buffs
             //create cast swift shield
             var castSwiftShield = CreateCastSpell(
-                "RisiaCastShieldSwift", OtherUtils.GetMd5("Risia.Brain.CastShieldSwift_31.5"),
-                shield_swift, 31.5, 1, 2, 3, getConstant(4), 0, null, hasSwift, targetSelf, noShieldBuff);
+                "RisiaCastShieldSwift", OtherUtils.GetMd5("Risia.Brain.CastShieldSwift_51.5"),
+                shield_swift, 51.5, 1, 2, 3, getConstant(4), 0, null, hasSwift, targetSelf, noShieldBuff);
             //create cast swift mirror
             var castMirror = CreateCastSpell(
-                "RisiaCastMirrorSwift", OtherUtils.GetMd5("Risia.Brain.CastMirrorSwift_33.5"),
-                mirror_swift, 33.5, 1, 2, 5, getConstant(2), 0, null, hasSwift, targetSelf, noMirrorBuff);
+                "RisiaCastMirrorSwift", OtherUtils.GetMd5("Risia.Brain.CastMirrorSwift_53.5"),
+                mirror_swift, 53.5, 1, 2, 5, getConstant(2), 0, null, hasSwift, targetSelf, noMirrorBuff);
             //create cast swift invisibility greater
             var castInvisibilityGreater = CreateCastSpell(
-                "RisiaCastIGSwift", OtherUtils.GetMd5("Risia.Brain.CastInvisibilityGreaterSwift_32.5"),
-                invisiblity_greater_swift, 32.5, 1, 2, 2, getConstant(4), 0, null, hasSwift, targetSelf, noInvisibilityGreaterBuff);
+                "RisiaCastIGSwift", OtherUtils.GetMd5("Risia.Brain.CastInvisibilityGreaterSwift_52.5"),
+                invisiblity_greater_swift, 52.5, 1, 2, 2, getConstant(4), 0, null, hasSwift, targetSelf, noInvisibilityGreaterBuff);
             //create cast fiery body
             var castFieryBody = CreateCastSpell(
-                "RisiaCastFieryBody", OtherUtils.GetMd5("Risia.Brain.CastFieryBody_afterShield_31.0"),
-                fiery_body, 31.0, 1, 2, 1, getConstant(0), 0, null, hasStandard, targetSelf, noFieryBodyBuff);
+                "RisiaCastFieryBody", OtherUtils.GetMd5("Risia.Brain.CastFieryBody_afterShield_51.0"),
+                fiery_body, 51.0, 1, 2, 1, getConstant(0), 0, null, hasStandard, targetSelf, noFieryBodyBuff);
             
             actions.AddRange(new BlueprintAiCastSpell[] { castSwiftShield, castMirror, castInvisibilityGreater, castFieryBody });
 
             // Control spells
-            var castOverwhelmingPresence = CreateCastSpell(
-                "RisiaCastOverwhelming", OtherUtils.GetMd5("Risia.Brain.CastOverwhelming_20.0"),
-                overwhelmingPresence, 20.0, 2, 1, 2, getConstant(4), 0, null,
-                considerSpellSlot(9), hasStandard, attackTargetPriority
+            
+            var castDMHolyAura = CreateCastSpell(
+                "RisiaCastDMHolyAura", OtherUtils.GetMd5("Risia.Brain.CastDMHolyAuraOnly_40.0"),
+                DMHolyAura, 40.0, 1, 1, 2, getConstant(3), 0, null,
+                hasStandard, aroundHasHolyAuraBuff
                 );
-            actions.AddRange(new BlueprintAiCastSpell[] { castOverwhelmingPresence });
-
+            var castDMUnholyAura = CreateCastSpell(
+                "RisiaCastDMUnholyAura", OtherUtils.GetMd5("Risia.Brain.CastDMUnholyAuraOnly_40.0"),
+                DMUnholyAura, 40.0, 1, 1, 2, getConstant(3), 0, null,
+                hasStandard, aroundHasUnholyAuraBuff
+                );
+            var castArcaneReserviorBoostDC = CreateCastSpell(
+                "RisiaCastArcaneReservoirBoostDC", OtherUtils.GetMd5("Risia.Brain.ArcaneReservoirBoostDC_19.9"),
+                ArcaneReservoir.AR_AddDCAbl, 19.9, 2, 0, 10, getConstant(1), 0, null,
+                hasStandard, selfHasNoARBoostDCBuff);
+                
+            var castOverwhelmingPresence = CreateCastSpell(
+                "RisiaCastOverwhelming", OtherUtils.GetMd5("Risia.Brain.CastOverwhelming_19.0"),
+                overwhelmingPresence, 19.0, 3, 1, 2, getConstant(4), 0, null,
+                considerSpellSlot(9), hasStandard, selfHasARBoostDCBuff, attackTargetPriority
+                );
+            var castWeird = CreateCastSpell(
+                "RisiaCastWeird", OtherUtils.GetMd5("Risia.Brain.CastWeird_20.0"),
+                weird, 19.0, 3, 1, 2, getDice(2, DiceType.D3), 0, null,
+                considerSpellSlot(9), hasStandard, selfHasARBoostDCBuff, attackTargetPriority
+                );
+            //var castPowerWordStun = CreateCastSpell(
+                //)
+            actions.AddRange(new BlueprintAiCastSpell[] { castDMHolyAura, castDMUnholyAura, castOverwhelmingPresence });
+            
             // Summon spells
             var castSummon7 = CreateCastSpell(
                 "RisiaCastSummonVII1d3", OtherUtils.GetMd5("Risia.Brain.CastSummonVII1d3_Consecute_25.0"),
@@ -186,4 +249,5 @@ namespace ArcaneTide.Risia {
     }
 
     
+
 }

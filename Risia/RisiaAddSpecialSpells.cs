@@ -4,18 +4,92 @@ using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Spells;
 using Kingmaker.Blueprints.Facts;
+using Kingmaker.ElementsSystem;
+using Kingmaker.EntitySystem.Entities;
+using Kingmaker.EntitySystem.Stats;
+using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
+using Kingmaker.UnitLogic.Abilities.Components;
+using Kingmaker.UnitLogic.Buffs;
+using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.FactLogic;
+using Kingmaker.UnitLogic.Mechanics.Actions;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static UnityModManagerNet.UnityModManager.ModEntry;
 
 namespace ArcaneTide.Risia {
+    public class ContextActionDispelCertainMagic : ContextAction {
+        public override string GetCaption() {
+            return string.Empty;
+        }
+
+        public override void RunAction() {
+            List<Buff> list = base.Target.Unit.Buffs.Enumerable.ToList<Buff>();
+            Buff buff = list.Find((Buff a) => a.Blueprint == buffBlue);
+
+            UnitEntityData unit = base.Target.Unit;
+
+            RuleDispelMagic ruleDispelMagic = new RuleDispelMagic(base.Context.MaybeCaster, unit, buff, RuleDispelMagic.CheckType.CasterLevel, StatType.Charisma);
+            bool success = base.Context.TriggerRule<RuleDispelMagic>(ruleDispelMagic).Success;
+        }
+        public BlueprintBuff buffBlue;
+    }
+    static class RisiaAddDispelAura {
+        static internal LibraryScriptableObject library => Main.library;
+        static internal ModLogger logger => Main.logger;
+        static private BlueprintAbility dispelHoly, dispelUnholy;
+        static private void CreateDispelAura() {
+            if(dispelHoly != null || dispelUnholy != null) {
+                return;
+            }
+            BlueprintAbility greaterDMArea = library.Get<BlueprintAbility>("b9be852b03568064b8d2275a6cf9e2de");
+            BlueprintBuff holyAuraBuff = library.Get<BlueprintBuff>("a33bf327207a5904d9e38d6a80eb09e2");
+            BlueprintBuff unholyAuraBuff = library.Get<BlueprintBuff>("9eda82a1f78558747a03c17e0e9a1a68");
+
+            dispelHoly = library.CopyAndAdd<BlueprintAbility>(
+                greaterDMArea,
+                "RisiaDispelAreaHolyAura",
+                OtherUtils.GetMd5("Risia.DispelMagicArea.HolyAura")
+                );
+            dispelUnholy = library.CopyAndAdd<BlueprintAbility>(
+                greaterDMArea,
+                "RisiaDispelAreaUnholyAura",
+                OtherUtils.GetMd5("Risia.DispelMagicArea.UnholyAura")
+                );
+            dispelHoly.Parent = null;
+            dispelUnholy.Parent = null;
+            var compRunActionDMArea = greaterDMArea.GetComponent<AbilityEffectRunAction>();
+            dispelHoly.RemoveComponent(compRunActionDMArea);
+            dispelHoly.RemoveComponent(compRunActionDMArea);
+
+            var compRunActionDMHoly = UnityEngine.Object.Instantiate<AbilityEffectRunAction>(compRunActionDMArea);
+            var compRunActionDMUnholy = UnityEngine.Object.Instantiate<AbilityEffectRunAction>(compRunActionDMArea);
+            compRunActionDMHoly.Actions = new ActionList {
+                Actions = new GameAction[] {
+                    Helpers.Create<ContextActionDispelCertainMagic>(a => a.buffBlue = holyAuraBuff)
+                }
+            };
+            compRunActionDMUnholy.Actions = new ActionList {
+                Actions = new GameAction[] {
+                    Helpers.Create<ContextActionDispelCertainMagic>(a => a.buffBlue = unholyAuraBuff)
+                }
+            };
+
+        }
+        static public void AddToRisia(ref BlueprintUnit risia) {
+
+            CreateDispelAura();
+            HelpersNeu.Add<BlueprintUnitFact>(ref risia.AddFacts, dispelHoly);
+            HelpersNeu.Add<BlueprintUnitFact>(ref risia.AddFacts, dispelUnholy);
+        }
+    }
     static class RisiaAddSpecialSpells {
         static internal LibraryScriptableObject library => Main.library;
         static public List<BlueprintAbility> specialSpells = new List<BlueprintAbility>();
@@ -86,6 +160,13 @@ namespace ArcaneTide.Risia {
                 );
             FormatAndStoreSpecialSpell(stinkCloudHeighten4, 4);
             FormatAndStoreSpecialSpell(cloakOfDream7, 7);
+            FormatAndStoreSpecialSpell(tarPool7, 7);
+            var mindFogQuicken = library.CopyAndAdd<BlueprintAbility>(
+                "eabf94e4edc6e714cabd96aa69f8b207",
+                "MindFogSwift",
+                OtherUtils.GetMd5("Risia.MindFog.Swift")
+                );
+            FormatAndStoreSpecialSpell(mindFogQuicken, 5);
             prepared = true;
         }
         static public void CreateFeats() {

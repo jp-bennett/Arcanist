@@ -95,6 +95,8 @@ namespace ArcaneTide.Risia {
             var tmpList3 = risia_boss.AddFacts.ToList();
             tmpList3.Add(risiaBossFeatureList);
             risia_boss.AddFacts = tmpList3.ToArray();
+
+            RisiaAddDispelAura.AddToRisia(ref risia_boss);
             loaded = true;
         }
     }
