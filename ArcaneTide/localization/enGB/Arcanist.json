@@ -1,0 +1,573 @@
+ {
+  "id": "1",
+  "strings": [
+    {
+      "Key": "ArcaneTide.HoursPerLevel",
+      "Value": "1 Hour Per Level"
+    },
+    {
+      "Key": "ArcaneTide.MinutesPerLevel",
+      "Value": "1Minute Per Level"
+    },
+    {
+      "Key": "ArcaneTide.ThreeRounds",
+      "Value": "3 Rounds"
+    },
+    {
+      "Key": "ArcaneTide.OneRound",
+      "Value": "1 Round"
+    },
+    {
+      "Key": "ArcaneTide.RoundPerChaModifier",
+      "Value": "1 Round Per Cha Mod"
+    },
+    {
+      "Key": "ArcaneTide.Instant",
+      "Value": "Instantaneous"
+    },
+    {
+      "Key": "ArcaneTide.WillSave.CanAbandon",
+      "Value": "Will(D)"
+    },
+    {
+      "Key": "ArcaneTide.WillSave.NoHarm",
+      "Value": "Will Save (Harmless)"
+    },
+    {
+      "Key": "ArcaneTide.FortSave.Part",
+      "Value": "Fortitude, Partial"
+    },
+    {
+      "Key": "ArcaneTide.NoSave",
+      "Value": "No Save"
+    },
+    {
+      "Key": "ArcanistClass.ClassName",
+      "Value": "Arcanist"
+    },
+    {
+      "Key": "ArcanistClass.ClassDesc",
+      "Value": "Arcanists are scholars of all things magical. They constantly seek out new forms of magic to discover how they work, and in many cases, to collect the energy of such magic for their own uses. Many arcanists are seen as reckless, more concerned with the potency of magic than the ramifications of unleashing such power."
+    },
+    {
+      "Key": "ArcanistClass.ProgressionName",
+      "Value": "Arcanist"
+    },
+    {
+      "Key": "ArcanistClass.ProgressionDesc",
+      "Value": "Arcanists are scholars of all things magical. They constantly seek out new forms of magic to discover how they work, and in many cases, to collect the energy of such magic for their own uses. Many arcanists are seen as reckless, more concerned with the potency of magic than the ramifications of unleashing such power."
+    },
+    {
+      "Key": "ArcanistClass.Cantrip.Name",
+      "Value": "Cantrip"
+    },
+    {
+      "Key": "ArcanistClass.Cantrip.Desc",
+      "Value": "Arcanist Cantrip"
+    },
+    {
+      "Key": "ArcanistClass.Profiencies.Name",
+      "Value": "Arcanist Class Proficiencies"
+    },
+    {
+      "Key": "ArcanistClass.Profiencies.Desc",
+      "Value": "Arcanists are proficient with all simple weapons. They are not proficient with any type of armor or shield. Armor interferes with an arcanist’s gestures, which can cause her spells with somatic components to fail (see Arcane Spells and Armor)."
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.Name",
+      "Value": "Arcane Reservoir"
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.Desc",
+      "Value": "An arcanist has an innate pool of magical energy that she can draw upon to fuel her arcanist exploits and enhance her spells. \nThe arcanist’s arcane reservoir can hold a maximum amount of magical energy equal to 3 + the arcanist’s level. \nEach day, when preparing spells, the arcanist’s arcane reservoir fills with raw magical energy, gaining a number of points equal to 3 + 1/2 her arcanist level. Any points she had from the previous day are lost. \nShe can also regain these points through the consume spells class feature and some arcanist exploits. The arcane reservoir can never hold more points than the maximum amount noted above; points gained in excess of this total are lost."
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddCLBuff.Name",
+      "Value": "AddCLBuff"
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddCLBuff.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddCLAbl.Name",
+      "Value": "Reservoir - Caster Level"
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddCLAbl.Desc",
+      "Value": "Spend 1 Arcane Point to increase a spell's CL by 1."
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCBuff.Name",
+      "Value": "AddDCBuff"
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCBuff.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCAbl.Name",
+      "Value": "Spend ARcane Point - DC"
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCAbl.Desc",
+      "Value": "Spend 1 Arcane Point to increase a spell's DC by 1."
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCCLFeat.Name",
+      "Value": "Add DC CL"
+    },
+    {
+      "Key": "ArcanistClass.Reservoir.AddDCCLFeat.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpells.Name",
+      "Value": "Consume Spells"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpells.Desc",
+      "Value": "At 1st level, an arcanist can expend an available arcanist spell slot as a move action, making it unavailable for the rest of the day, just as if she had used it to cast a spell. She can use this ability a number of times per day equal to her Charisma modifier (minimum 1). Doing this adds a number of points to her arcane reservoir equal to the level of the spell slot consumed. She cannot consume cantrips (0 level spells) in this way. Points gained in excess of the reservoir’s maximum are lost."
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpells.Abl.Name",
+      "Value": "Consume Spells"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpells.Abl.Desc",
+      "Value": "At 1st level, an arcanist can expend an available arcanist spell slot as a move action, making it unavailable for the rest of the day, just as if she had used it to cast a spell. She can use this ability a number of times per day equal to her Charisma modifier (minimum 1). Doing this adds a number of points to her arcane reservoir equal to the level of the spell slot consumed. She cannot consume cantrips (0 level spells) in this way. Points gained in excess of the reservoir’s maximum are lost."
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level1.Abl.Name",
+      "Value": "Consume 1st lvl."
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level1.Abl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level2.Abl.Name",
+      "Value": "Consume 2nd Level"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level2.Abl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level3.Abl.Name",
+      "Value": "Consume 3rd Level"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level3.Abl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level4.Abl.Name",
+      "Value": "Consume 4th Level"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level4.Abl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level5.Abl.Name",
+      "Value": "Consume 5th Level"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level5.Abl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level6.Abl.Name",
+      "Value": "Consume 6th Level"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level6.Abl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level7.Abl.Name",
+      "Value": "Consume 7th Level"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level7.Abl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level8.Abl.Name",
+      "Value": "Consume 8th Level"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level8.Abl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level9.Abl.Name",
+      "Value": "Consume 9th Level"
+    },
+    {
+      "Key": "ArcanistClass.ConsumeSpell.Level9.Abl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.GreaterExploits.Feat.Name",
+      "Value": "Greater Exploit"
+    },
+    {
+      "Key": "ArcanistClass.GreaterExploits.Feat.Desc",
+      "Value": "At 11th level and every 2 levels thereafter, an arcanist can choose one of the following greater exploits in place of an arcanist exploit."
+    },
+    {
+      "Key": "ArcanistClass.MagaicSupremancy.Buff.Name",
+      "Value": "MSBN"
+    },
+    {
+      "Key": "ArcanistClass.MagaicSupremancy.Buff.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.MagicSupremancy.Abl.Name",
+      "Value": "Magical Supremacy"
+    },
+    {
+      "Key": "ArcanistClass.MagicSupremancy.Abl.Desc",
+      "Value": "At 20th level, the arcanist learns how to convert her arcane reservoir into spells and back again. She can cast any spell she has prepared by expending a number of points from her arcane reservoir equal to 1 + the level of the spell to be cast instead of expending a spell slot. When she casts a spell in this fashion, she treats her caster level as 2 higher than normal, and the DCs of any saving throws associated with the spell increase by 2. She cannot further expend points from her arcane reservoir to enhance a spell cast in this way."
+    },
+    {
+      "Key": "ArcanistClass.MagicSupremancy.Feat.Name",
+      "Value": "Magical Supremacy"
+    },
+    {
+      "Key": "ArcanistClass.MagicSupremancy.Feat.Desc",
+      "Value": "At 20th level, the arcanist learns how to convert her arcane reservoir into spells and back again. She can cast any spell she has prepared by expending a number of points from her arcane reservoir equal to 1 + the level of the spell to be cast instead of expending a spell slot. When she casts a spell in this fashion, she treats her caster level as 2 higher than normal, and the DCs of any saving throws associated with the spell increase by 2. She cannot further expend points from her arcane reservoir to enhance a spell cast in this way."
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Abl.Name",
+      "Value": "Spontaneous Metamagic"
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Abl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Heighten1.Name",
+      "Value": "Heighten 1"
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Heighten2.Name",
+      "Value": "Heighten 2"
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Heighten3.Name",
+      "Value": "Heighten 3"
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Heighten4.Name",
+      "Value": "Heighten 4"
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Heighten5.Name",
+      "Value": "Heighten 5"
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Heighten6.Name",
+      "Value": "Heighten 6"
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Heighten7.Name",
+      "Value": "Heighten 7"
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Heighten8.Name",
+      "Value": "Heighten 8"
+    },
+    {
+      "Key": "ArcanistClass.SponMetamagic.Heighten9.Name",
+      "Value": "Heighten 9"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ExtraExploit.Name",
+      "Value": "Extra Arcanist Exploit"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ExtraExploit.Desc",
+      "Value": "You gain one additional arcanist exploit. You must meet the prerequisites for this arcanist exploit."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FeatureSelection.Name",
+      "Value": "Arcanist Exploit"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FeatureSelection.Desc",
+      "Value": "By bending and sometimes even breaking the rules of magic, the arcanist learns to exploit gaps and exceptions in the laws of magic. Some of these exploits allow her to break down various forms of magic, adding their essence to her arcane reservoir. At 1st level and every 2 levels thereafter, the arcanist learns a new arcane exploit selected from the following list. An arcanist exploit cannot be selected more than once. Once an arcanist exploit has been selected, it cannot be changed. Most arcanist exploits require the arcanist to expend points from her arcane reservoir to function. Unless otherwise noted, the saving throw DC for an arcanist exploit is equal to 10 + 1/2 the arcanist’s level + the arcanist’s Charisma modifier."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.PotentMagic.Name",
+      "Value": "Potent Magic"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.PotentMagic.Desc",
+      "Value": "Whenever the arcanist expends 1 point from her arcane reservoir to increase the caster level of a spell, the caster level increases by 2 instead of 1. Whenever she expends 1 point from her arcane reservoir to increase the spell’s DC, it increases by 2 instead of 1."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.Metamixing.Name",
+      "Value": "Metamixing"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.Metamixing.Desc",
+      "Value": "The arcanist can expend 1 point from her arcane reservoir to add a metamagic feat that she knows to a spell as she casts it without affecting the casting time (though using a higher-level spell slot as normal). She can use this ability to add a metamagic feat to a spell that she prepared using a metamagic feat, although she cannot add the same metamagic feat to a given spell more than once."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.Name",
+      "Value": "Quick Study"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.Desc",
+      "Value": "The arcanist can prepare a spell in place of an existing spell by expending 1 point from her arcane reservoir. Using this ability is a full-round action that provokes an attack of opportunity. The arcanist must be able to reference her spellbook when using this ability. The spell prepared must be of the same level as the spell being replaced."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.AbjurationMasterAbl.Name",
+      "Value": "Abjuration"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.ConjurationMasterAbl.Name",
+      "Value": "Conjuration"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.DivinationMasterAbl.Name",
+      "Value": "Divination"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.EnchantmentMasterAbl.Name",
+      "Value": "Enchmantment"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.EvocationMasterAbl.Name",
+      "Value": "Evocation"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.IllusionMasterAbl.Name",
+      "Value": "Illusion"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.NecromancyMasterAbl.Name",
+      "Value": "Necromancy"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.TransmutationMasterAbl.Name",
+      "Value": "Transmutation"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.FastStudy.UniversalMasterAbl.Name",
+      "Value": "Universal"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.Familiar.FeatSelection.Name",
+      "Value": "Familiar"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.Familiar.FeatSelection.Desc",
+      "Value": "An arcanist with this exploit can acquire a familiar as the arcane bond wizard class feature, using her arcanist level as her wizard level to determine any of the statistics and abilities of the familiar. If the arcanist receives a familiar from another class, her levels of arcanist stack with the levels from that class when determining the familiar’s statistics and abilities (this ability does not stack with a familiar gained through the bloodline development exploit; she must choose one or the other)."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ArmoredMask.MAAbl.Name",
+      "Value": "Armored Mask"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ArmoredMask.MAAbl.Desc",
+      "Value": "Benefit(s): By expending 1 point from her arcane reservoir as a standard action, the arcanist grants herself an effective illusion of armor. \nShe gains the benefits of mage armor with a caster level that’s equal to her arcanist level and appears to be wearing light or medium armor of whatever design she chooses when activating this ability. At any time while this effect is active, she can expend 1 additional point from her arcane reservoir as an immediate action to also gain the benefits of shield of faith with a caster level equal to her arcanist level."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.FireBuff.Name",
+      "Value": "Energy Shield - Fire"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.FireBuff.Desc",
+      "Value": "The arcanist can protect herself from energy damage as a standard action by expending 1 point from her arcane reservoir. She must pick one energy type and gains resistance 10 against that energy type for 1 minute per arcanist level. This protection increases by 5 for every 5 levels the arcanist possesses (up to a maximum of 30 at 20th level)."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.ColdBuff.Name",
+      "Value": "Energy Shield - Cold"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.ColdBuff.Desc",
+      "Value": "The arcanist can protect herself from energy damage as a standard action by expending 1 point from her arcane reservoir. She must pick one energy type and gains resistance 10 against that energy type for 1 minute per arcanist level. This protection increases by 5 for every 5 levels the arcanist possesses (up to a maximum of 30 at 20th level)."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.ElectricityBuff.Name",
+      "Value": "Energy Shield - Electricity"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.ElectricityBuff.Desc",
+      "Value": "The arcanist can protect herself from energy damage as a standard action by expending 1 point from her arcane reservoir. She must pick one energy type and gains resistance 10 against that energy type for 1 minute per arcanist level. This protection increases by 5 for every 5 levels the arcanist possesses (up to a maximum of 30 at 20th level)."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.AcidBuff.Name",
+      "Value": "Energy Shield - Acid"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.AcidBuff.Desc",
+      "Value": "The arcanist can protect herself from energy damage as a standard action by expending 1 point from her arcane reservoir. She must pick one energy type and gains resistance 10 against that energy type for 1 minute per arcanist level. This protection increases by 5 for every 5 levels the arcanist possesses (up to a maximum of 30 at 20th level)."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.SonicBuff.Name",
+      "Value": "Energy Shield - Sonic"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.SonicBuff.Desc",
+      "Value": "The arcanist can protect herself from energy damage as a standard action by expending 1 point from her arcane reservoir. She must pick one energy type and gains resistance 10 against that energy type for 1 minute per arcanist level. This protection increases by 5 for every 5 levels the arcanist possesses (up to a maximum of 30 at 20th level)."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.Name",
+      "Value": "Energy Shield"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.EnergyShield.Desc",
+      "Value": "The arcanist can protect herself from energy damage as a standard action by expending 1 point from her arcane reservoir. She must pick one energy type and gains resistance 10 against that energy type for 1 minute per arcanist level. This protection increases by 5 for every 5 levels the arcanist possesses (up to a maximum of 30 at 20th level)."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.MetamagicKnowledge.Name",
+      "Value": "Metamagic Knowledge"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.MetamagicKnowledge.Desc",
+      "Value": "The arcanist can select one metamagic feat as a bonus feat. She must meet the prerequisites of this feat."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SchoolUnderstanding.FeatSelect.Name",
+      "Value": "School UNderstanding"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SchoolUnderstanding.FeatSelect.Desc",
+      "Value": "The arcanist can select one arcane school from any of the schools available to a character with the arcane school wizard class feature, but does not have to select any opposition schools. The arcanist gains one ability of that arcane school as though she were a 1st-level wizard, using her Charisma modifier in place of her Intelligence modifier for this ability. The ability must be one gained at 1st level and is limited in its use per day to 3 + the arcanist’s Charisma modifier. As a swift action, the arcanist can expend 1 point from her arcane reservoir to bolster her understanding, allowing her to treat her arcanist level as her wizard level for the purpose of using this ability for a number of rounds equal to her Charisma modifier (minimum 1). During this time, she also gains use of the other ability gained at 1st level for her selected school. She does not gain any other abilities when using this exploit in this way, such as those gained at 8th level. If the arcanist already has an arcane school (or gains one later), taking this exploit instead allows her arcanist levels to stack with the levels of the class that granted the arcane school when determining the powers and abilities of her arcane school."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SchoolUnderstanding.ActivateBuff.Name",
+      "Value": "School Understanding"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SchoolUnderstanding.ActivateBuff.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SwiftConsume.Name",
+      "Value": "Swift Consume"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SwiftConsume.Desc",
+      "Value": "The arcanist can use the consume spells class feature or the consume magic items exploit as swift actions instead of as move actions."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ConsumeItem.Name",
+      "Value": "Consume Magic Items"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ConsumeItem.Desc",
+      "Value": "The arcanist can consume the power of potions, scrolls, staves, and wands, using them to fill her arcane reservoir. She can use this ability a number of times per day equal to her Charisma modifier (minimum 1). Using this ability is a move action that provokes an attack of opportunity. When using this exploit, the arcanist adds a number of points to her arcane reservoir equal to 1/2 the level of the spell contained in the item (o-level and 1st-level spells do not recharge the arcanist’s arcane reservoir). If used on a potion or scroll, the item is destroyed. If used on a wand, the wand loses 5 charges; if it has fewer than 5 charges, the wand is destroyed and the arcanist gains no benefit. If used on a staff, it loses 1 charge and the arcanist gains a number of points to his arcane reservoir equal to the level of the highest-level spell the staff can cast using only 1 charge; if the staff has no spells that require only 1 charge, the arcanist cannot consume that staff ‘s magic. No more than 1 charge can be drawn from a staff each day in this way. Points gained in excess of the arcanist’s reservoir’s maximum are lost. This exploit has no effect on magic armor, weapons, rings, rods, wondrous items, or other magic items besides those noted above."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.DimensionSlide.Name",
+      "Value": "Dimension Slide"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.DimensionSlide.Desc",
+      "Value": "The arcanist can expend 1 point from her arcane reservoir to create a dimensional crack that she can step through to reach another location. This ability is used as a swift action, allowing her to move up to 10 feet per arcanist level to any location she can see. She does not provoke attacks of opportunity when moving in this way, but any other movement she attempts as part of her move action provokes as normal."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SR.Name",
+      "Value": "Spell Resistance"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SR.RemoveSRAbl.Name",
+      "Value": "Disable Spell Resistance"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SR.RemoveSRAbl.Desc",
+      "Value": ""
+    },
+    {
+      "Key": "ArcanistClass.Exploit.SR.Desc",
+      "Value": "The arcanist can grant herself spell resistance for a number of rounds equal to her Charisma modifier (minimum 1) as a standard action by expending 1 point from her arcane reservoir. This spell resistance is equal to 6 + her arcanist level and cannot be suppressed, but it can be ended as a free action on her turn."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.GreaterSR.Name",
+      "Value": "Greater Spell Resistance"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.GreaterSR.Desc",
+      "Value": "Whenever the arcanist uses the spell resistance exploit, the spell resistance is equal to 11 + the arcanist’s level. The arcanist must have the spell resistance exploit to select this exploit."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ResistanceDrain.Name",
+      "Value": "Resistance Drain"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.ResistanceDrain.Desc",
+      "Value": "Whenever the arcanist is using the spell resistance exploit, she can end the effect as an immediate action whenever her spell resistance successfully protects her from a spell cast by a foe. If she does so, she adds a number of points to her arcane reservoir equal to 1/2 the level of the spell. These points are temporary and are lost after 1 minute unless used. Points gained in excess of her arcane reservoir’s maximum are lost. The arcanist must have the greater spell resistance exploit to select this exploit."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.GreaterMetamagicKnowledge.Name",
+      "Value": "Greater Metamagic Knowledge"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.GreaterMetamagicKnowledge.Desc",
+      "Value": "The arcanist can select a metamagic feat as a bonus feat. She must meet the prerequisites of this feat. Each morning, when she prepares her spells, the arcanist can expend 1 point from her arcane reservoir to exchange this bonus feat for another metamagic feat, as long as she meets the prerequisites of the new feat. The arcanist must have the metamagic knowledge exploit to select this exploit."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.TempGreaterMetamagicKnowledge.Desc",
+      "Value": "The arcanist can select a metamagic feat as a bonus feat. She must meet the prerequisites of this feat. Each morning, when she prepares her spells, the arcanist can expend 1 point from her arcane reservoir to exchange this bonus feat for another metamagic feat, as long as she meets the prerequisites of the new feat. The arcanist must have the metamagic knowledge exploit to select this exploit."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.AcidJet.Name",
+      "Value": "Acid Jet"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.AcidJet.Desc",
+      "Value": "The arcanist can unleash a jet of acid by expending 1 point from her arcane reservoir and making a ranged touch attack against any one target within 30 feet. If the attack hits, it deals 1d6 points of acid damage + the arcanist’s Charisma modifier, plus an additional 1d6 points of acid damage for every 2 levels beyond 1st (to a maximum of 10d6 at 19th level). The target is also sickened for 1d4 rounds. It can attempt a Fortitude saving throw to negate the sickened condition."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.IceMissile.Name",
+      "Value": "Ice Missiles"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.IceMissile.Desc",
+      "Value": "The arcanist can unleash a freezing projectile by expending 1 point from her arcane reservoir and making a ranged touch attack against any one target within 30 feet. If the attack hits, it deals 1d6 points of cold damage + the arcanist’s Charisma modifier, plus an additional 1d6 points of cold damage for every 2 levels beyond 1st (to a maximum of 10d6 at 19th level). In addition, the target is staggered for 1 round. It can attempt a Fortitude saving throw to negate the staggered condition."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.LingeringAcid.Name",
+      "Value": "Lingering Acid"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.LingeringAcid.Desc",
+      "Value": "Whenever the arcanist uses the acid jet exploit, she can expend 2 points from her arcane reservoir instead of one. If she does, the target takes additional damage on the following rounds if it fails its saving throw. The target takes 1d6 points of acid damage on the following round for every 2d6 points of acid damage dealt by the initial attack. On subsequent rounds, the target continues to take 1d6 points of acid damage for every 2d6 points of acid damage dealt on the previous round. The damage continues until the amount of acid damage dealt on the previous round by this effect is 1d6. For example, a 9th level arcanist would deal 5d6 points of acid damage + the arcanist’s Charisma modifier, 2d6 points of acid damage on the following round, and 1d6 points of acid damage on the third and final round. The arcanist must have the acid jet exploit to select this exploit."
+    },
+    {
+      "Key": "ArcanistClass.Exploit.IcyTomb.Name",
+      "Value": "Icy Tomb"
+    },
+    {
+      "Key": "ArcanistClass.Exploit.IcyTomb.Desc",
+      "Value": "Whenever the arcanist uses the ice missile exploit, she can expend 2 points from her arcane reservoir instead of one. If she does, the target is coated in rime if it fails its saving throw. As long as the ice remains (typically 1 minute per level in a warm area), the target is entangled (although not anchored) and takes 1 point of Dexterity damage at the start of each of its turns. The target can break free from the ice as a standard action by making a Strength check with a DC equal to 10 + the arcanist’s Charisma modifier. If the target takes more than 10 points of fire damage from a single attack, the ice melts and the effect ends. The arcanist must have the ice missile arcanist exploit to select this exploit."
+    },
+    {
+      "Key": "ArcaneTide.AbilityRequirementClassSpellLevel.Reason",
+      "Value": "Requires the ability to cast {0} level spells."
+    },
+    {
+      "Key": "ArcanistClass.Archetype.SchoolSavant.Name",
+      "Value": "School Savant"
+    },
+    {
+      "Key": "ArcanistClass.Archetype.SchoolSavant.Desc",
+      "Value": "Some arcanists specialize in a school of magic and trade flexibility for focus. School savants are able to prepare more spells per day than typical arcanists, but their selection is more limited."
+    },
+    {
+      "Key": "ArcanistClass.Archetype.BloodArcanist.Name",
+      "Value": "Blood Arcanist"
+    },
+    {
+      "Key": "ArcanistClass.Archetype.BloodArcanist.Desc",
+      "Value": "Though most arcanists possess only a rudimentary innate arcane gift, the blood arcanist has the full power of a bloodline to draw upon."
+    }
+  ]
+}
