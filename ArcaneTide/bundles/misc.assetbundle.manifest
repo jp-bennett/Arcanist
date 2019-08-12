@@ -1,0 +1,25 @@
+ManifestFileVersion: 0
+CRC: 4168631018
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 597ab109304889d1e51a31e21c79b66a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 6975f1f62ebfb073d557ada8f521c83c
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: ab47935f1c84661418e60940fb993aef, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Risia/Portrait/Risia1_M.png
+- Assets/Risia/Portrait/Risia1_L.png
+- Assets/Risia/BlueprintManifests/Misc.asset
+- Assets/Risia/Portrait/Risia1_S.png
+Dependencies: []

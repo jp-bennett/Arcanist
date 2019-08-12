@@ -25,6 +25,13 @@ using Kingmaker.Blueprints.Items.Equipment;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.Parts;
 using ArcaneTide.Arcanist;
+using Kingmaker.UnitLogic.Class.LevelUp.Actions;
+using Kingmaker.UnitLogic.Class.LevelUp;
+using Kingmaker.Blueprints;
+using Kingmaker.UnitLogic.Abilities.Blueprints;
+using Kingmaker.UnitLogic.Buffs.Blueprints;
+using Kingmaker.RuleSystem.Rules.Abilities;
+using Kingmaker.UnitLogic.Commands;
 
 namespace ArcaneTide.Patches {
     
@@ -38,12 +45,124 @@ namespace ArcaneTide.Patches {
             if (spellLevel < 0 || spellLevel > spellBook.MaxSpellLevel) return 0;
             return spellBookBlueprint.SpellsKnown.GetCount(spellBook.CasterLevel+20, spellLevel).Value;
         }
+        static public int getArcanistMemorizeSlotCnt(int spellLevel, Spellbook spellBook) {
+            
+            BlueprintSpellbook spellBookBlueprint = spellBook.Blueprint;
+            ModifiableValueAttributeStat castingStat = spellBook.Owner.Stats.GetStat<ModifiableValueAttributeStat>(spellBookBlueprint.CastingAttribute);
+            if (castingStat == null) return 0;
+            if (castingStat < 10 + spellLevel) return 0;
+            if (spellLevel < 0 || spellLevel > spellBook.MaxSpellLevel) return 0;
+            return spellBookBlueprint.SpellsKnown.GetCount(spellBook.CasterLevel + 20, spellLevel).Value;
+        }
+    }
+    [HarmonyPatch(typeof(UnitUseAbility), "OnAction")]
+    class Debug_UnitUseAbility {
+        static public void Prefix(UnitUseAbility __instance) {
+            Main.logger.Log($"DUA, use ability {__instance.Spell.Name}");
+        }
+    }
+    //[HarmonyPatch(typeof(RuleCastSpell), "OnTrigger")]
+    class Debug_RuleCastSpell {
+        static public void Prefix(RuleCastSpell __instance) {
+            Main.logger.Log($"rule cast spell");
+        }
+        static public void Postfix(RuleCastSpell __instance) {
+            Main.logger.Log($"rule cast return success is {__instance.Success}");
+        }
+    }
+
+
+    
+    [HarmonyPatch(typeof(Spellbook), "SpendInternal")]
+    static class Spellbook_SpendInternal_Patch {
+        static public FastInvoke sureMemorizedSpells_Invoker = Helpers.CreateInvoker<Spellbook>("SureMemorizedSpells");
+        static public List<SpellSlot> SureMemorizedSpellsBelowAndK(this Spellbook spellbook, int K) {
+            List<SpellSlot> ans = new List<SpellSlot>();
+            for(int i = 1; i <= K; i++) {
+                List<SpellSlot> tmp = sureMemorizedSpells_Invoker(spellbook, i) as List<SpellSlot>;
+                if (tmp == null) return null;
+                ans.AddRange(tmp);
+            }
+            return ans;
+        }
+        static public bool Prefix(Spellbook __instance, ref bool __result, BlueprintAbility blueprint,  AbilityData spell, bool doSpend, bool excludeSpecial, ref int[] ___m_SpontaneousSlots, ref int? ___m_MaxSpellLevel) {
+            
+            if(__instance.Blueprint.CharacterClass != ArcanistClass.arcanist) {
+                return true;
+            }
+            UnitDescriptor unit = __instance.Owner;
+
+            if (doSpend && spell == null) {
+                UberDebug.LogError("Trying to spend ability without specfying instance", Array.Empty<object>());
+                __result = false;
+                return false;
+            }
+            int num = (!(spell != null)) ? __instance.GetSpellLevel(blueprint) : __instance.GetSpellLevel(spell);
+            //Main.logger.Log($"spell={spell.Name},num={num}");
+            if (num < 0) {
+                //Main.logger.Log("Return FALSE");
+                __result = false;
+                return false;
+            }
+            int? maxSpellLevel = ___m_MaxSpellLevel;
+            if (maxSpellLevel != null && num >= ___m_MaxSpellLevel) {
+                __result = false;
+                return false;
+            }
+            int num2 = __instance.Owner.Stats.GetStat(__instance.Blueprint.CastingAttribute);
+            if (num2 < 10 + num) {
+                __result = false;
+                return false;
+            }
+            
+            
+
+            List<SpellSlot> list = SureMemorizedSpellsBelowAndK(__instance, num);
+            
+            for (int i = list.Count - 1; i >= 0; i--) {
+                SpellSlot spellSlot = list[i];
+                //Main.logger.Log($"In spellslot {i}, named {(spellSlot.Spell == null ? "null" : spellSlot.Spell.Name)}"); ;
+                int num3 = ___m_SpontaneousSlots[num];
+                
+                if (spellSlot.Available && (num3 > 0 ||(num3 == 0 && !doSpend))) {
+                    //Main.logger.Log("DUA 1");
+                    if (spellSlot.Type != SpellSlotType.Favorite || !excludeSpecial) {
+                       // Main.logger.Log("DUA 2");
+                        if (spell != null && spellSlot.Spell != null) {
+                            //Main.logger.Log("Rua !");
+                            int spellMeta = spell.MetamagicData == null ? 0 : (int)spell.MetamagicData.MetamagicMask;
+                            //Main.logger.Log($"spellMeta is {spellMeta}");
+                            int slotSpellMeta = spellSlot.Spell.MetamagicData == null ? 0 : (int)spellSlot.Spell.MetamagicData.MetamagicMask;
+                            //Main.logger.Log($"slotspellMeta is {slotSpellMeta}");
+                            bool flag = ((spellMeta | slotSpellMeta) == spellMeta);//metamagic of spellSlot.Spell is a subset of metamagic of spell.
+                            if (spell.Blueprint.Equals(spellSlot.Spell.Blueprint) && flag) {
+
+                                if (doSpend) {
+                                    ___m_SpontaneousSlots[num] = num3 - 1;
+                                }
+                                //Main.logger.Log($"RUA");
+                                __result = true;
+                                return false;
+                            }
+                        }
+                        else if(spell == null){
+                            AbilityData spell2 = spellSlot.Spell;
+                            //Main.logger.Log($"RUA1");
+                            if (blueprint == ((spell2 != null) ? spell2.Blueprint : null)) {
+                                //Main.logger.Log($"RUA1.2");
+                                __result = true;
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            //Main.logger.Log("Dua???");
+            __result = false;
+            return false;
+        }
     }
     /*
-    [HarmonyPatch(typeof(Spellbook), "SpendInternal")]
-    class Spellbook_SpendInternal_Patch {
-
-    }
     [HarmonyPatch(typeof(Spellbook), "GetAvailableForCastSpellCount", new Type[] { typeof(AbilityData)})]
     class Spellbook_GetAvailableForCastSpellCount_Patch {
         static public bool Prefix(Spellbook __instance, AbilityData spell, int __result) {
@@ -115,26 +234,46 @@ namespace ArcaneTide.Patches {
         static public bool Prefix(Spellbook __instance, SpellSlot spell) {
             if (__instance.Blueprint.CharacterClass == Main.arcanist) {
                 __instance.Blueprint.Spontaneous = false;
+                Main.logger.Log($"Arcanist Try to forget spellslot {spell.Index}, spellslot is now available {spell.Available}");
+                if (spell.Available) {
+                    Main.logger.Log($"Spellslot contains {spell.Spell}");
+                }
             }
             return true;
         }
         static public void Postfix(Spellbook __instance) {
             if (__instance.Blueprint.CharacterClass == Main.arcanist) {
                 __instance.Blueprint.Spontaneous = true;
+                Main.logger.Log("Forget success");
             }
         }
     }
     
     [HarmonyPatch(typeof(Spellbook), "Memorize", new Type[] {typeof(AbilityData), typeof(SpellSlot) })]
     class Spellbook_Memorize_Patch {
-        static public bool Prefix(Spellbook __instance) {
+        static public bool Prefix(Spellbook __instance, AbilityData data, SpellSlot slot) {
             if(__instance.Blueprint.CharacterClass == Main.arcanist) {
                 __instance.Blueprint.Spontaneous = false;
             }
+            Main.logger.Log($"On memory spell {data.Name}, slot index {((slot == null) ? -666 : slot.Index)}");
             return true;
         }
         static public void Postfix(Spellbook __instance) {
             if(__instance.Blueprint.CharacterClass == Main.arcanist) {
+                for(int i = 1; i <= __instance.MaxSpellLevel; i++) {
+                    var memorizedSlots = __instance.GetMemorizedSpellSlots(i);
+                    int j = 0;
+                    foreach(SpellSlot slot in memorizedSlots) {
+                        int ind = slot.Index;
+                        if(slot.Type == SpellSlotType.Common && ind >= ArcanistPatch_Helpers.getArcanistMemorizeSlotCnt(i, __instance)) {
+                            slot.Available = false;
+                            slot.Spell = null;
+                            slot.LinkedSlots = null;
+                            slot.IsOpposition = false;
+                        }
+                        j++;
+                    }
+                }
                 __instance.Blueprint.Spontaneous = true;
             }
         }
@@ -334,6 +473,14 @@ namespace ArcaneTide.Patches {
                             IEnumerable<SpellSlot> memorizedSpells = spellbook.GetMemorizedSpells(i);
                             foreach(SpellSlot spellSlot in memorizedSpells) {
                                 if (!spellSlot.Available) continue;
+                                //the following 2 lines shouldn't be removed.
+                                //these are for dealing with the bug appearing at new game:
+                                //on new game, the system would automatically memorize (spellperday[1]) spells.
+                                //however, arcanist's spell slot cnt on level 1 is fewer than her spell per day.
+                                //so the spells memorized in an invalid spellslot would never be forgotten with normal means.
+                                int ind = spellSlot.Index;
+                                if (ind >= ArcanistPatch_Helpers.getArcanistMemorizeSlotCnt(spellSlot.SpellLevel, spellbook)) continue;
+
                                 AbilityData abilityData = spellSlot.Spell;
                                 abilityData.ParamSpellSlot = spellSlot;
                                 if (!list.Contains(abilityData)) {
@@ -411,6 +558,71 @@ namespace ArcaneTide.Patches {
             }
             if (___m_Levels != null) {
                 ___m_Levels.SetType(__instance.SlotType);
+            }
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(ApplySpellbook), "Apply", new Type[] { typeof(LevelUpState), typeof(UnitDescriptor)})]
+    class ApplySpellbook_Apply_Patch {
+        static private FastInvoke ApplySpellbook_TryApplyCustomSpells = Helpers.CreateInvoker<ApplySpellbook>("TryApplyCustomSpells");
+        static public bool Prefix(ApplySpellbook __instance, LevelUpState state, UnitDescriptor unit) {
+            if(state.SelectedClass != ArcanistClass.arcanist) {
+                return true;
+            }
+
+            if (state.SelectedClass == null) {
+                return false;
+            }
+            SkipLevelsForSpellProgression component = state.SelectedClass.GetComponent<SkipLevelsForSpellProgression>();
+            if (component != null && component.Levels.Contains(state.NextClassLevel)) {
+                return false;
+            }
+            ClassData classData = unit.Progression.GetClassData(state.SelectedClass);
+            if (classData == null) {
+                return false;
+            }
+            if (classData.Spellbook != null) {
+                Spellbook spellbook = unit.DemandSpellbook(classData.Spellbook);
+                if (state.SelectedClass.Spellbook && state.SelectedClass.Spellbook != classData.Spellbook) {
+                    Spellbook spellbook2 = unit.Spellbooks.FirstOrDefault((Spellbook s) => s.Blueprint == state.SelectedClass.Spellbook);
+                    if (spellbook2 != null) {
+                        foreach (AbilityData abilityData in spellbook2.GetAllKnownSpells()) {
+                            spellbook.AddKnown(abilityData.SpellLevel, abilityData.Blueprint, false);
+                        }
+                        unit.DeleteSpellbook(state.SelectedClass.Spellbook);
+                    }
+                }
+                int casterLevel = spellbook.CasterLevel;
+                spellbook.AddCasterLevel();
+                int casterLevel2 = spellbook.CasterLevel;
+                SpellSelectionData spellSelectionData = state.DemandSpellSelection(spellbook.Blueprint, spellbook.Blueprint.SpellList);
+                if (spellbook.Blueprint.SpellsKnown != null && 1 == 0) {
+                    // SelectedClass must be arcanist, arcanist requires wizard-like spell selection, 
+                    // while its SpellsKnown is not null
+                    for (int i = 0; i <= 9; i++) {
+                        int? count = spellbook.Blueprint.SpellsKnown.GetCount(casterLevel, i);
+                        int num = (count == null) ? 0 : count.Value;
+                        int? count2 = spellbook.Blueprint.SpellsKnown.GetCount(casterLevel2, i);
+                        int num2 = (count2 == null) ? 0 : count2.Value;
+                        spellSelectionData.SetLevelSpells(i, num2 - num);
+                    }
+                }
+                int maxSpellLevel = spellbook.MaxSpellLevel;
+                if (spellbook.Blueprint.SpellsPerLevel > 0) {
+                    if (casterLevel == 0) {
+                        spellSelectionData.SetExtraSpells(0, maxSpellLevel);
+                        spellSelectionData.ExtraByStat = true;
+                        spellSelectionData.UpdateMaxLevelSpells(unit);
+                    }
+                    else {
+                        spellSelectionData.SetExtraSpells(spellbook.Blueprint.SpellsPerLevel, maxSpellLevel);
+                    }
+                }
+                foreach (AddCustomSpells customSpells in spellbook.Blueprint.GetComponents<AddCustomSpells>()) {
+                    ApplySpellbook_TryApplyCustomSpells(__instance, spellbook, customSpells, state, unit);
+                }
+                
             }
             return false;
         }

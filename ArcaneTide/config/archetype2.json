@@ -1,0 +1,85 @@
+{
+  "BloodlineProgressions": [
+    "d3a4cb7be97a6694290f0dcfbd147113",
+    "4d491cf9631f7e9429444f4aed629791",
+    "aa79c65fa0e11464d9d100b038c50796",
+    "7bd143ead2d6c3a409aad6ee22effe34",
+    "8a7f100c02d0b254d8f5f3affc8ef386",
+    "5f9ecbee67db8364985e9d0500eb25f1",
+    "7e0f57d8d00464441974e303b84238ac",
+    "b522759a265897b4f8f7a1a180a692e4",
+    "6c67ef823db8d7d45bb0ef82f959743d",
+    "7181be57d1cc3bc40bc4b552e4e4ce24",
+    "8c6e5b3cf12f71e43949f52c41ae70a8",
+    "c7d2f393e6574874bb3fc728a69cc73a",
+    "b0f79497a0d1f4f4b8293e82c8f8fa0c",
+    "cd788df497c6f10439c7025e87864ee4",
+    "32393034410fb2f4d9c8beaa5c8c8ab7",
+    "17cc794d47408bc4986c55265475c06f",
+    "7c692e90592257a4e901d12ae6ec1e41",
+    "e8445256abbdc45488c2d90373f7dae8",
+    "e76a774cacfb092498177e6ca706064d",
+    "739c1e842bf77994baf963f4ad964379",
+    "a1a8bf61cadaa4143b2d4966f2d1142e"
+  ],
+  "ResourcesIds": [
+    "87a6e2bfcf3a33d4e9ec4d8b612f5358", //abyssal claw
+    "f43c7ca866d53d740acf2652dea0145e", //celestial heavenly fire
+    "577cd318f93b9d748a5c1b5902536e43", //celestial aura of heaven
+    "bebe2a97cc091934189fd8255e903b1f", //draconic breath weapon
+    "ebbb59cea666c1249ba7da55addccfa2", //element elemental ray
+    "4c415d8268a451843a52d3a43fe2e4d2", //element elemental blast
+    "0ba4929a3d2642147ab1f96da4f0290f", //fey 1
+    "cb4518f1e176db44cbab819bb29c9b49", //fey 9
+    "f86d5dfa889f0ad4db62f41b543ad0ec", //fey 20
+    "1c55aba4475e93440ade11d7076703d4", //infernal 1
+    "752a879ba1c77f04c87ea35fc4e142d8", //infernal 9
+    "8580ff486cdfa8e42ae16ad4de2cb3a2", //serpentine 15
+    "1d202784027a1df4c9d232a3e0d446c6", //undead 1
+    "036289444750509408fc27ff21b62772", //undead 9
+    "7640face1bb861e458efe067048288e8" //undead 15
+
+  ],
+  "FactWithAddFeatureOnLevel": [
+    "e17698ef77dc3174cbd0a42422c22441",
+    "8cbf303d479cf0d42a8e36092c76fa7c",
+    "15580bb04dc95be4798d64d931eb8f1a",
+    "5ca520a8e3e712240812e1500b4e20f0",
+    "489c8c4a53a111d4094d239054b26e32",
+    "48d81d94ddf0cc84abbde97718cb25f2",
+    "7aa83ee3526a946419561d8d1aa09e75",
+    "3d7b19c8a1d03464aafeb306342be000",
+    "b46ef711b4825e04a9380bd0b88d5b06",
+    "c8b51c7112077384da68c48359419046", //infernal 3
+    "a26c62f50bec9fa4ab8ea7cd98fed19a",
+    "d401aca4712aa38489c9afeab9c3f08e",
+    "ef4a1ca413a58cf4eae3e138457a4a74",
+    "eea5698f942ea2c45b4e0f58c5240038",
+    "19d2ea3d212681946920c7b70bb44492",
+    "dc3f843c9c9e5564080d35f102c84eed"
+  ],
+  "FactWithContextRankConfig": [
+    "64aca51981fc11346a20b723d7667e47", //celestial heavenly fire abl
+    "befc48b88995ea941a9b3ae196b2d5ea", //celestial conviction abl
+    "ec78fc025b797b1459786f012b92e1ad", //infernal 1 abl
+    "87e837a180a12db448a6d78e58e1b0a6", //infernal 9 abl
+    "69488585b3720f74babe61e5eb91cb6a", //serpentine 15 abl
+    "346ee42948fb1d44582d8dc531470eee", //undead 1 abl
+    "a5c9f06155d772849be82e8965837813", //undead 9 abl
+    "853b5266404060f4f8afd9cf7859ef1f", //undead 15 abl
+    "269c69572a2b4e6479ec5c2eb823e41f", //celestial arcana buff
+    "63ebf78c354718947843c9a8ced75641"  //abyssal arcana buff
+  ],
+  "FactWithReplaceCL": [
+    "6dba3a0ba5a32c645ba07bcc17873682", //fey 20 feat
+    "791ca90317229ec4b9b4dc355cc2fe01", //infernal 9 feat
+    "ba799554aff764243adcc03c5714d88e", //undead 1 feat
+    "3c0e7252c058f324482e320755898d7a" //undead 9 feat
+  ],
+  "FactWithBindClass": [
+    "791ca90317229ec4b9b4dc355cc2fe01", //infernal 9 feat
+    "fe56277224a2f5248bbfd9e692c78857", //serpentine 15 feat
+    "fece5844ef1290944b02213d5a94d1d2", //serpentine 20 buff
+    "3c0e7252c058f324482e320755898d7a" //undead 9 feat
+  ]
+}

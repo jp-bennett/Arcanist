@@ -1,0 +1,360 @@
+ManifestFileVersion: 0
+CRC: 1289303261
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b3633cf9ca349bfd9897c954f29c4f9d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: bf7a246f06872aa476c64c0d63e763bf
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 420f43307f2c5cae4bde128ff450c6b6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 492bdb40372e0daf4561574f71424b23, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 08042c70cd036cb149ffc702169fd927, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d3a5e9b0f52cd5aa4dc67052c50a4911, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 066e11d05f316e954dd3b5b6b08c2b89, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4096d4e073488aa24b29cdd02c87bc92, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 18db08e0f029acb94a753597ae915844, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 02f4a6512b68078241c166e0fd8b966b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2709ff51a194beb4413f44bde8127fa7, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a7d59f71fecc1ea84cde4855e343d205, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5a1ce881f3858e8d45606061320f31cb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 541fcfc1f4e598ae48a0df12be15ce5e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a0812522d3c20204eaf2e405e874f26e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d41f1632d8db588f4e28e816423cd41d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 79de704238b4c49c4cd15db2f035dcab, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e6677a728dd1f9844233cdf787441364, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7fd6ef923c7496ad4e38cddc8dbf6718, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d70a40a276f25a924d97b8bc46ccf894, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 16746aa26ff8de8c4b45458d4301f188, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 435d8ea2a2b026ba4775b1f21964aad8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5100c803897e9aa1438461c6175bd906, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5560a9036f7d48854dd4e40d5ec6116b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 49d84463934737aa4b3939a0c3fcbff1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 83fc196369dc16854fab4af10e335e22, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2d03f4a30104f4884f7b0d5ce6c85187, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: cc4021c36e0ba5b1484105e3ff72aec9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0b9246e3c14a71854952e8f6e39cd293, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c2396ce3d41ceda94e5f35bc57f86aed, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0f1186f31a940e9a4d8d9fb72cebd12c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6f2204046dbe44b34ea2aa72e4ff309f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 436202242bc19b8749ced99a7ef99bf5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ce98ca4427c9dfb447afac3b95f914e2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: dda18c84a7a43fa347239ed5f74cee91, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6eff16b44cdbdf834ccd82b6f88d226f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a5d610e482cd0b88423cf0ef5ff2c218, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 96a21e155498b79d497f317769071e78, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4cd894e5006aeaa24133a4799827ebe6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 55c451f58c425cbc4e408884da9d180d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ef0f2926c32e03914cff3fcfe1f79049, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 72ad9256e7280dad4f09037dfef9060a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 55b0f8a684d433a6481ba944b1b51df5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4beb47376629c9bb4b2a8b62fd544e71, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 09b20067f855e18a45d8fc5596082267, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f00a32c7114727a94ee55e4618a742a6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3ece08c79e15479f4b761ebe31d81328, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a52d5bf71389baae4d8a3f7ad42cf54c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: da620148cb7dda904e8604ad5358bcee, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2cc83648d908e0984d3a5a97624cb785, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 639fbe881be48fab454fcf16e28b5bca, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c9c9d098f4f72fb74d2492945fc1a75e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9534eba8c088c4994c7a2e558f67360e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b153eef856989ea74a04be7846fd657b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 40cd5a198e346c9e4d2144a3cfd14329, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a4acca79f30d9d904655f48354ae62de, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d16a291ada15d68247789de66d23791e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 37a2235a8ab4e1a7439815a5f15b524a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ba34e8baef295e95477ff00e10b06c2c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ab33991b0313f6a24e21b9e2e65b5685, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ed9e386b6f7313ad43fc86810576cf39, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: eab2cc7bbcf17e954113007414a5f0b5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ede2d0db68150fab4054b031a6c5cb41, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1c01770cd9742ab94b62a3f72de78c5d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b7707f0cfc5f06bd4ae4f17a65490e6c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: eb8a232cd3ac9fa2434ed65271b8e356, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6502794c662a839a4582b822ab93338e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f3bc2b4cdc1d88b94840c12e752abda3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 463cfa1d13a354be4f66e8657f957786, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: af4b093d1658a99b4416264c0c1f4bc6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 99657f3dd2a1d8ad41b297dfa1db5fc1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c68937fda7a897854dbffde58110c883, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 60f01f6ee61dce8f46a1f72a69d32cf5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: a120b6aee6c82f934431707c7702d38e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 34717cbe9a8a5f9143eed4114f06ba62, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 87e5d9ee64914dac44c0c7a4965c72c4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9f70ec3f342cd7bb459565cd2b6bd0ec, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ab47935f1c84661418e60940fb993aef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 45bbb85f2947b2aa41a69cda30d3a0c0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7749af8f4b3fee9a4ae37fa19c2c3255, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 66f14a9f2b80dabe4cf3a6b06b32fc85, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4067ff9fc706a7954baea0482ae398e8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 93dbf5bfb65179be4605c751b3d15a44, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 3c40d8cfce7ff3bc47d88c811c7b52d1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 422e8fdfa8ab7096466876178a4439c7, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Risia/Template/Features/__AddStatBonus_SaveFort.asset
+- Assets/Risia/Dialog/DialogueNeutral/__RisiaDialogueAnswer2-Cue1.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/BuffComps/__AddStatBonus_DressCurseDexPenalty.asset
+- Assets/Risia/Existing/Existing.Existing.Character_Brain.asset
+- Assets/Risia/Template/Features/__AddDR_10Lawful.asset
+- Assets/Risia/Template/Existing.Existing.ImmunityToCharm.asset
+- Assets/Risia/ResourceListDict.asset
+- Assets/Risia/Template/Features/__AddStatBonus_Con_Inherit4.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.HalfElfRace.asset
+- Assets/Risia/Template/__RisiaTemplateFeatStat.asset
+- Assets/Risia/Existing/Existing.HeadbandOfPerfection8.asset
+- Assets/Risia/Ability/Gaze/Comps/__Conditional__RandomAction_RisiaGazeAreaEffect_1_Round_1_True_1_Action_1__Core.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__AddUnitFeatureEquipment_RisiaDress.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__IncreaseSpellDescriptorDC_MindAffect.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__AddStatBonus_Cha_Enhance8.asset
+- Assets/Risia/Ability/Gaze/Comps/__ContextCalculateAbilityParams_RisiaGazeBuff_3.asset
+- Assets/Risia/Ability/Gaze/Comps/__AbilityAreaEffectRunAction_RisiaGazeAreaEffect_1.asset
+- Assets/Risia/Dialog/DialogRecruitComp/__Recruit_MarkUnitEssential.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/DressBoundCondition/__ContextActionApplyBuff_CurseBuff.asset
+- Assets/Risia/Item/RisiaEquipment/Weapon/Existing.ArcaneProtectorEnchant.asset
+- Assets/Risia/Existing/Existing.Existing.RapierAgilePlus2.asset
+- Assets/Risia/Item/RisiaEquipment/Weapon/__Offset.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__RisiaDressCurseBuff.asset
+- Assets/Risia/Ability/ItemAbilities/AngelicAspect/Existing/Existing.AngelicAspectGreaterBuff.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__AddStatBonusEquipment_Cha_Enhance8.asset
+- Assets/Risia/Ability/Gaze/Comps/__Conditional_AbilityAreaEffectRunAction_RisiaGazeAreaEffect_1_Round_1.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextActionConditionalSaved_GazeCore.asset
+- Assets/Risia/Existing/Existing.Existing.Bosses.asset
+- Assets/Risia/Dialog/__RisiaDialogueCue1.asset
+- Assets/Risia/Template/Features/__AddStatBonus_Cha_Inherit4.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.ReptilianSubtype.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.HalflingRace.asset
+- Assets/Risia/Existing/Existing.BeltOfDexterityConstitution6.asset
+- Assets/Risia/Existing/Existing.Existing.RobeOfTheArchmagi.asset
+- Assets/Risia/Portrait/__Risia_Portrait.asset
+- Assets/Risia/Dialog/__RisiaDialogueAnswer1-Cue1.asset
+- Assets/Risia/Item/RisiaEquipment/Amulet/__AddUnitFeatureEquipment_ImmuneToPoison.asset
+- Assets/Risia/Dialog/__DialogOnClick_RisiaBoss.asset
+- Assets/Risia/Template/__RisiaTemplateFeatStatInherit.asset
+- Assets/Risia/Dialog/DialogueBoss/Cues/__DlgBoss_Cue_2.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.DwarfRace.asset
+- Assets/Risia/Template/Existing.Existing.ImmunityToMindAffecting.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextConditionHasFact_AffectType_MonstrousHumanoid.asset
+- Assets/Risia/Item/RisiaEquipment/Weapon/__AddStatBonusEquipment_AC_Dodge5.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextConditionHasFact_AffectType_Elf.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextConditionHasFact_AffectType_HalfElf.asset
+- Assets/Risia/Dialog/__RisiaRootDialogNeutral.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextActionApplyBuff_OnSuccess_GazeCore.asset
+- Assets/Risia/Ability/Gaze/__RisiaGazeImmunity.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__IncreaseSpellSchoolDC_Illusion.asset
+- Assets/Risia/Dialog/DialogueBoss/Check/__DlgCheck_AfterCue1.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__IncreaseSpellDescriptorDC_Compulsion.asset
+- Assets/Risia/Ability/Gaze/Comps/__AddFactContextActions_RisiaGazeBuff_2.asset
+- Assets/Risia/Dialog/DialogFightComp/__StartCombat_RisisaNeutral.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.ElfRace.asset
+- Assets/Risia/Dialog/DialogueBoss/Answers/__DlgBoss_Answer01_Cue3.asset
+- Assets/Risia/Existing/Existing.BracersOfArmor8.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__ContextSetAbilityParams_DressCurse.asset
+- Assets/Risia/Template/__RisiaTemplate.asset
+- Assets/Risia/Template/Existing.Existing.ImmunityToCompulsion.asset
+- Assets/Risia/Dialog/DialogRecruitComp/__Recruit_CompanionInParty_Risia.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__IncreaseSpellSchoolDC_Enchanting.asset
+- Assets/Risia/Dialog/__DialogOnClick_RisiaNeutral.asset
+- Assets/Risia/Ability/ItemAbilities/SeamantleCL17/__AbilityRankConfig_SeamantleCL17.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/DressBoundCondition/__ContextConditionHasFact_GetUsedToRestraints.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/Existing/Existing.KEE_Robe_RobeArcane2.asset
+- Assets/Risia/Ability/Gaze/__RisiaGazeFeature_DisplayName.asset
+- Assets/Risia/Existing/Existing.Existing.ElfRace.asset
+- Assets/Risia/Ability/ItemAbilities/AngelicAspect/__ContextRankConfig_AngelicAspectFreeAction.asset
+- Assets/Risia/Template/Features/__AddStatBonus_SaveRefl.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.GiantSubtype.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__IncreaseSpellDescriptorDC_Charm.asset
+- Assets/Risia/Ability/Gaze/Comps/__AddBuffOnCombatStart_RisiaGazeBuff.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/DressBoundCondition/__Conditional_IfGetUsedToRestraints.asset
+- Assets/Risia/Existing/Existing.Existing.Neutrals.asset
+- Assets/Risia/Dialog/DialogFightComp/__SwitchToEnemy_RisiaNeutral.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.GnomeRace.asset
+- Assets/Risia/Existing/Existing.Existing.Octavia_Brain.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextConditionHasFact_AffectType_Giant.asset
+- Assets/Risia/Ability/Gaze/Comps/__AddAreaEffect_RisiaGazeBuff_1.asset
+- Assets/Risia/Item/RisiaEquipment/Amulet/__BlueprintEquipmentEnchantment_ImmunePoison.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextConditionHasFact_AffectType_HalfOrc.asset
+- Assets/Risia/Dialog/DialogFightComp/__StartCombat_RisiaBoss.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__AddStatBonus_Persuasion_Competence10.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__RisiaDressBlue.asset
+- Assets/Risia/__Risia_Capital.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextConditionHasFact_AffectType_Reptilian.asset
+- Assets/Risia/Ability/ItemAbilities/AngelicAspect/__AngelicAspectFreeAction.asset
+- Assets/Risia/Ability/Gaze/__RisiaGazeBuffasset.asset
+- Assets/Risia/Item/RisiaEquipment/Weapon/Existing/Existing.Frost2d8.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextConditionHasFact_AffectType_Gnome.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextConditionHasFact_AffectType_Halfling.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__RisiaDressCurseFeature.asset
+- Assets/Risia/Dialog/DialogueBoss/Cues/__DlgBoss_Cue_3.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextActionSavingThrow_GazeCore.asset
+- Assets/Risia/Existing/Existing.Existing.WeaponEmptyHand.asset
+- Assets/Risia/Template/Features/__AddStatBonus_AC.asset
+- Assets/Risia/Dialog/DialogRecruitComp/__Recruit_Risia_Boss.asset
+- Assets/Risia/Ability/ItemAbilities/AngelicAspect/__AbilityActionApplyBuff_AngelicAspectFree.asset
+- Assets/Risia/Item/RisiaEquipment/Weapon/__OffsetEnchantment.asset
+- Assets/Risia/Dialog/DialogueBoss/Cues/__DlgBoss_Cue_1.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__DominatePersonBuff_WithName.asset
+- Assets/Risia/Item/RisiaEquipment/Weapon/Existing/Existing.Rapier.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__RisiaDressFeature.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__RisiaDressEnchantment.asset
+- Assets/Risia/Item/RisiaEquipment/Weapon/Existing/Existing.Enhancement2.asset
+- Assets/Risia/__Risia_Boss.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/BuffComps/__LockEquipmentSlot_Armor.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/BuffComps/__AddSpellFailure_50.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextConditionHasFact_AffectType_Human.asset
+- Assets/Risia/Ability/Gaze/Comps/__ContextActionApplyBuff_RisiaGazeBuff_2_Ac_1.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/Existing/Existing.ClothType.asset
+- Assets/Risia/Ability/ItemAbilities/SeamantleCL17/__AbilityEffectRunAction_SemantleCL17.asset
+- Assets/Risia/Ability/Gaze/Comps/__ContextConditionIsEnemy_Conditional_RisiaGazeAreaEffect_1_Round_1_Conditions_1.asset
+- Assets/Risia/__Risia_GetUsedToRestraints.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__AddUnitFeatureEquipment_RisiaDressCurse.asset
+- Assets/Risia/Ability/Gaze/__RisiaGazeFeature.asset
+- Assets/Risia/Template/Features/__AddStatBonus_Int_Inherit5.asset
+- Assets/Risia/Item/RisiaEquipment/Weapon/Existing/Existing.Agile.asset
+- Assets/Risia/Ability/Gaze/__RisiaGazeFeature_DisplayDesc.asset
+- Assets/Risia/Existing/Existing.Existing.Player.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__RisiaDressEnchantmentCurse.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.MonstrousHumanoidType.asset
+- Assets/Risia/Ability/Gaze/__RisiaGazeAreaEffect.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.HumanRace.asset
+- Assets/Risia/Ability/Gaze/Comps/__AbilityDifficultyLimitDC_RisiaGazeBuff_4.asset
+- Assets/Risia/Dialog/DialogFightComp/__SwitchToEnemy_RisiaBoss.asset
+- Assets/Risia/Ability/ItemAbilities/SeamantleCL17/__SeamantleCL17FreeAction.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextConditionHasFact_AffectType_Dwarf.asset
+- Assets/Risia/Item/RisiaEquipment/Amulet/Existing/Existing.ImmunityToPoison.asset
+- Assets/Risia/Dialog/__RisiaRootDialog.asset
+- Assets/Risia/Dialog/DialogueBoss/Answers/__DlgBoss_Answer02_Cue3.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__AddFactContextAction_Curse.asset
+- Assets/Risia/Ability/ItemAbilities/SeamantleCL17/__SeamantleCL17.asset
+- Assets/Risia/Dialog/__RisiaRootDialogBossasset.asset
+- Assets/Risia/Existing/Existing.Existing.Player Character.asset
+- Assets/Risia/Dialog/DialogueBoss/Answers/__DlgBoss_Answer03_Cue3.asset
+- Assets/Risia/__Risia_Companion.asset
+- Assets/Risia/BlueprintManifests/RisiaBlue.asset
+- Assets/Risia/Ability/ItemAbilities/SeamantleCL17/Existing/Existing.SeamantleBuff.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.HalfOrcRace.asset
+- Assets/Risia/Ability/ItemAbilities/AngelicAspect/__AbilityEffectRunAction_AngelicAspectFree.asset
+- Assets/Risia/Dialog/DialogRecruitComp/__Recruit_Risia_Dlg1.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__AddStatBonus_Int_Enhance8.asset
+- Assets/Risia/Item/RisiaEquipment/Amulet/__RisiaAmulet.asset
+- Assets/Risia/Template/Features/__AddStatBonus_Dex_Inherit4.asset
+- Assets/Risia/Template/Features/__AddStatBonus_SaveWill.asset
+- Assets/Risia/Item/RisiaEquipment/Dress/__AddStatBonusEquipment_Int_Enhance8.asset
+- Assets/Risia/Ability/Gaze/Comps/__SpellDescriptorComponent_RisiaGazeAreaEffect_2.asset
+- Assets/Risia/Ability/ItemAbilities/SeamantleCL17/__AbilityActionApplyBuff_SeamantleCL17_AbilityEffectRunAction.asset
+- Assets/Risia/Existing/Existing.Existing.PC_Female_Pious_Barks.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/Existing/Existing.DominatePersonBuff.asset
+- Assets/Risia/Item/RisiaEquipment/Amulet/Existing/Existing.NaturalArmorEnhancement5.asset
+- Assets/Risia/Ability/Gaze/Comps/CoreComp/__ContextActionApplyBuff_OnFail_GazeCore.asset
+- Assets/Risia/Ability/Gaze/Comps/__RandomAction_Conditional_RisiaGazeAreaEffect_1_Round_1_True_1.asset
+- Assets/Risia/__Risia_Neutral.asset
+Dependencies:
+- F:/UnityProjects/Risia/AssetBundles/risiascene1.assetbundle

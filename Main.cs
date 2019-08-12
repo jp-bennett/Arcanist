@@ -27,51 +27,90 @@ using Kingmaker.UnitLogic;
 using Kingmaker.Designers;
 using Kingmaker.Blueprints.Items.Weapons;
 using ArcaneTide.Risia;
+using static UnityModManagerNet.UnityModManager.ModEntry;
+using Kingmaker.EntitySystem.Entities;
+using Kingmaker.View;
+using Kingmaker.Visual.CharacterSystem;
+using Kingmaker.Items.Slots;
+using Newtonsoft.Json;
+using ArcaneTide.Arcanist.Archetypes;
 
 namespace ArcaneTide {
+    public class ModStorage {
+        public static Dictionary<string, DollData> dolls = new Dictionary<string, DollData>();
+    }
     public class Main {
         internal static LibraryScriptableObject library;
         public static bool enabled;
         public static UnityModManager.ModEntry.ModLogger logger;
         public static string ModPath;
-        public static string bundleName = "risia";
+        //public static string bundleName = "risia";
         public static AssetBundle Bundle;
         public static Dictionary<string, string> BundleLookup = new Dictionary<string, string>();
         static Harmony12.HarmonyInstance harmonyInstance;
         public static BlueprintCharacterClass arcanist;
         public static bool loaded = false;
+
+        public static GlobalConstants constsManager;
+
         static class UIData {
             static public string posX = "0", posY = "0", posZ = "0";
         }
+
+        [Harmony12.HarmonyBefore("EldritchArcana")]
         [Harmony12.HarmonyPatch(typeof(LibraryScriptableObject), "LoadDictionary", new Type[0])]
-        
-        static class LibraryScriptableObject_LoadDictionary_Patch {
-            
+        static class LibraryScriptableObject_LoadDictionary_Patch_BeforeEA {
+
             static void Postfix(LibraryScriptableObject __instance) {
                 var self = __instance;
                 if (Main.library != null) return;
                 Main.library = self;
-                logger.Log("Dua 1!?!");
-                LoadBundle($"{ModPath}/bundles/{bundleName}.assetbundle");
-                logger.Log("Dua 2!?!");
-                
+
+                /*logger.Log("Dua 1!?!");
+                foreach (string bundle in constsManager.assetBundleFiles) {
+                    string absolutePath = Path.Combine(ModPath, "bundles", bundle);
+                    LoadBundle(absolutePath);
+                }
+                logger.Log("Dua 2!?!");*/
+
                 //use sorcerer to temporarily simulate arcanist
                 //use sorcerer to temporarily simulate arcanist
                 SafeLoad(Helpers.Load, "Helpers");
                 SafeLoad(IconSet.Load, "Icons");
-                SafeLoad(MetaFeats.Load, "MetaFeatSet");
+                
                 SafeLoad(ArcanistClass.Load, "Arcanist");
-                //SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
-                SafeLoad(TestCopyScene.Load, "");
+                
                 Main.arcanist = ArcanistClass.arcanist;
+
                 Main.loaded = true;
             }
         }
+        [Harmony12.HarmonyAfter("EldritchArcana")]
+        [Harmony12.HarmonyPatch(typeof(LibraryScriptableObject), "LoadDictionary", new Type[0])]
+        static class LibraryScriptableObject_LoadDictionary_Patch_AfterEA {
+            static public void Postfix(LibraryScriptableObject __instance) {
+                SafeLoad(MetaFeats.Load, "MetaFeatSet");
+                SafeLoad(ArcanistClass.LoadAfterwards, "Arcanist Loading after EA");
+                /*SafeLoad(RisiaMainLoad.LoadOnLibraryLoaded, "Risia");
+                SafeLoad(TestSpawner.TestSpawner.Load, "TestSpawner");
+                SafeLoad(TestCopyScene.Load, "");
+                SafeLoad(SchoolSavant.Test, "");*/
+            }
+        }
+
         [Harmony12.HarmonyPatch(typeof(Player), "PostLoad", new Type[] {  })]
         static class Player_PostLoad_Patch {
             static void Postfix(Player __instance) {
                 var self = __instance;
                 
+            }
+        }
+        static void CopyResourceBundles() {
+            string resBundleDir = Path.Combine(ModPath, "bundles", "resource");
+            string gameResDir = Path.Combine(ModPath, "..", "..", "Kingmaker_Data", "StreamingAssets", "Bundles");
+            DirectoryInfo dirInfo = new DirectoryInfo(resBundleDir);
+            foreach(FileInfo fl in dirInfo.GetFiles()) {
+                fl.CopyTo(Path.Combine(gameResDir, fl.Name), true);
             }
         }
         static bool Load(UnityModManager.ModEntry modEntry) {
@@ -80,25 +119,43 @@ namespace ArcaneTide {
             modEntry.OnToggle = OnToggle;
             modEntry.OnGUI = OnGUI;
             modEntry.OnSaveGUI = OnSaveGUI;
+
+            StreamReader fin = new StreamReader(Path.Combine(ModPath, "ArcaneTide.json"));
+            string fileData = fin.ReadToEnd();
+            fin.Close();
+            constsManager = JsonConvert.DeserializeObject<GlobalConstants>(fileData);
+
+            Main.CopyResourceBundles();
             harmonyInstance = Harmony12.HarmonyInstance.Create(modEntry.Info.Id);
             harmonyInstance.PatchAll(Assembly.GetExecutingAssembly());
             arcanist = ArcanistClass.arcanist;
-
+            /*
             foreach (var file in Directory.GetFiles(Path.Combine(ModPath, "bundles"))) {
 
                 if (!file.EndsWith("manifest") && Path.GetFileName(file) != bundleName) {
                     BundleLookup[Path.GetFileName(file).Replace("resource_", "")] = file;
                 }
             }
+            */
             return true;
         }
         static void LoadBundle(string path) {
+            logger.Log($"Path is {path}");
             var bundle = AssetBundle.LoadFromFile(path);
             if (bundle.isStreamedSceneAssetBundle) {
                 /*string[] scenePaths = bundle.GetAllScenePaths();
                 string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePaths[0]);
                 SceneManager.LoadScene(sceneName);*/
                 return;
+            }
+            if(Path.GetFileName(path) == constsManager.MainAssetBundleFilename) {
+                ResourceList resListDict = bundle.LoadAllAssets<ResourceList>()[0];
+                foreach(var kv in resListDict.nameDict) {
+
+                    if (!ResourcesLibrary.LibraryObject.ResourceNamesByAssetId.ContainsKey(kv.Key)) {
+                        ResourcesLibrary.LibraryObject.ResourceNamesByAssetId[kv.Key] = kv.Value;
+                    }
+                }
             }
             var blueprints = bundle.LoadAllAssets<BlueprintScriptableObject>();
             /*Main.DebugLog("Verifying blueprint ----------------------");
@@ -107,18 +164,22 @@ namespace ArcaneTide {
                 VerifyBundles.VerifyBlueprint(blueprint);
             }
             Main.DebugLog("Finished vefiying blueprint ----------------------");*/
+            List<BlueprintScriptableObject> blueprintsToUnload = new List<BlueprintScriptableObject>();
             foreach (var blueprint in blueprints) {
                 if (blueprint.name.StartsWith("Existing.")) {
+                    blueprintsToUnload.Add(blueprint);
                     continue;
                 }
                 logger.Log($"Loaded Blueprint {blueprint.name}");
                 if (ResourcesLibrary.LibraryObject.BlueprintsByAssetId.ContainsKey(blueprint.AssetGuid)) {
                     logger.Log($"Fuck, Id {blueprint.AssetGuid}, name {blueprint.name} is duplicated!");
-                    //throw new Exception($"ResourceLibrary already contains blueprint {blueprint.AssetGuid}");
+                    throw new Exception($"ResourceLibrary already contains blueprint {blueprint.AssetGuid}");
                     continue;
                 }
+
                 ResourcesLibrary.LibraryObject.BlueprintsByAssetId[blueprint.AssetGuid] = blueprint;
                 ResourcesLibrary.LibraryObject.GetAllBlueprints().Add(blueprint);
+                /*
                 if (blueprint is BlueprintRace race) {
                     logger.Log($"Registering Race {blueprint.name}");
                     ref var races = ref Game.Instance.BlueprintRoot.Progression.CharacterRaces;
@@ -138,12 +199,17 @@ namespace ArcaneTide {
                 if (blueprint is BlueprintItemWeapon _weapon) {
                     logger.Log($"Registering Weapon {blueprint.name}");
                 }
+                */
             }
+            /*
             foreach (var kv in BundleLookup) {
                 ResourcesLibrary.LibraryObject.ResourceNamesByAssetId[kv.Key] = kv.Key;
-            }
+            }*/
             logger.Log("Do Load Bundle Finish!!!");
-            //FixBlueprint.Fix();
+            FixBlueprint.Fix(bundle);
+            foreach(var blueprint in blueprintsToUnload) {
+                Resources.UnloadAsset(blueprint);
+            }
         }
         static bool OnToggle(UnityModManager.ModEntry modEntry, bool value) {
             enabled = value;
@@ -161,6 +227,15 @@ namespace ArcaneTide {
             if (Main.loaded) {
                 
                 GUILayout.BeginVertical(new GUILayoutOption[] { });
+                GUILayout.BeginHorizontal(new GUILayoutOption[] { });
+                bool button4 = GUILayout.Button("Strip");
+                if (button4) {
+                    Bala.StripMainCharacter();
+                    logger.Log($"Game.NewGamePreset = {Game.NewGamePreset.AssetGuid}");
+                    
+                }
+                GUILayout.EndHorizontal();
+                /*
                 GUILayout.Label(new GUIContent("All companions:\n"), new GUILayoutOption[] { });
                 GUILayout.BeginHorizontal(new GUILayoutOption[] { });
                 int followers_cnt = Game.Instance.Player.AllCharacters.Count;
@@ -193,6 +268,15 @@ namespace ArcaneTide {
                     Game.Instance.UI.GetCameraRig().ScrollTo(position);
                     GameHelper.GetPlayerCharacter().Position = position;
                 }
+                GUILayout.BeginHorizontal(new GUILayoutOption[] { });
+                bool button3 = GUILayout.Button(new GUIContent("Export MainChar Prefab"), new GUILayoutOption[] {
+                    GUILayout.ExpandWidth(false)
+                });
+                if (button3) {
+                    Bala.ExportMainCharPrefab();
+                }
+                GUILayout.EndHorizonal();
+                */
                 GUILayout.EndVertical();
                 
             }
@@ -211,6 +295,32 @@ namespace ArcaneTide {
             }
             catch (Exception e) {
                 Log.Error(e);
+            }
+        }
+    }
+    public class Bala {
+        static public LibraryScriptableObject library => Main.library;
+        static public ModLogger logger => Main.logger;
+        static public string Risia_ElkTemple_SpawnerId = "1d96bf5c-0d3d-4f3e-a76d-9366725249de";
+        static public void StripMainCharacter() {
+            UnitEntityData mainUnit = Game.Instance.Player.MainCharacter;
+            mainUnit.View.UpdateClassEquipment();
+            var mainGender = mainUnit.Gender;
+            var mainRace = mainUnit.Descriptor.Progression.Race;
+            var mainUnitClothes = mainUnit.Descriptor.Progression.GetEquipmentClass().LoadClothes(mainGender, mainRace);
+            foreach(EquipmentEntity ee in mainUnitClothes) {
+                mainUnit.View.CharacterAvatar.RemoveEquipmentEntity(ee, false);
+            }
+            if (mainUnit.IsPlayerFaction && BlueprintRoot.Instance.Cheats.SillyShirt) {
+                mainUnit.View.CharacterAvatar.RemoveEquipmentEntities(BlueprintRoot.Instance.Cheats.SillyShirt.Load(mainGender, mainRace.RaceId), false);
+            }
+            
+            if (mainUnit != null) {
+                foreach (ItemSlot itemSlot in mainUnit.Body.AllSlots) {
+                    if (itemSlot.HasItem && itemSlot.CanRemoveItem()) {
+                        itemSlot.RemoveItem();
+                    }
+                }
             }
         }
     }

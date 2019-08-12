@@ -66,6 +66,10 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\pathfinder-mods\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\Unity\2018.1.0f2\Editor\Data\Managed\UnityEngine\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>..\..\..\pathfinder-mods\Managed\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
@@ -92,9 +96,13 @@
     <Compile Include="Arcanist\ArcaneExploits.cs" />
     <Compile Include="Arcanist\Arcanist.cs" />
     <Compile Include="Arcanist\ArcanistWizardSchool.cs" />
+    <Compile Include="Arcanist\Archetypes\BloodArcanist.cs" />
+    <Compile Include="Arcanist\Archetypes\SchoolSavant.cs" />
+    <Compile Include="BlueprintManifest.cs" />
     <Compile Include="Components\AbilityRangeComponent.cs" />
     <Compile Include="Components\AbilityRequirements.cs" />
     <Compile Include="Components\ConsumeItemComponents.cs" />
+    <Compile Include="Components\NewSceneEventActions.cs" />
     <Compile Include="Components\SchoolUnderstanding.cs" />
     <Compile Include="Components\AddCLDCOnNextSpell.cs" />
     <Compile Include="Components\ConsumeSpellForReservoir.cs" />
@@ -103,6 +111,7 @@
     <Compile Include="Components\RealAddMetamagic.cs" />
     <Compile Include="Components\SpellDisruptionComponent.cs" />
     <Compile Include="Components\SRExploitsBuff.cs" />
+    <Compile Include="FixBlueprint.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="HelpersNeu.cs" />
     <Compile Include="LocalizationPatch.cs" />
@@ -113,26 +122,35 @@
     <Compile Include="Patches\Arcanist_SponMetamagic_Patch.cs" />
     <Compile Include="Patches\Arcanist_Supremancy_Patch.cs" />
     <Compile Include="Patches\Arcanist_Consume_Patch.cs" />
+    <Compile Include="PathUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceList.cs" />
+    <Compile Include="Risia\RisiaAddLevels.cs" />
+    <Compile Include="Risia\RisiaAddSpecialSpells.cs" />
+    <Compile Include="Risia\RisiaBrain.cs" />
+    <Compile Include="Risia\RisiaMainLoad.cs" />
     <Compile Include="Risia\TestCopyScene.cs" />
     <Compile Include="Spells\Non-PF.cs" />
     <Compile Include="Spells\SpellsMonitor.cs" />
     <Compile Include="TestSpawner\TestSpawner.cs" />
     <Compile Include="Utils\FeatBuffUtils.cs" />
+    <Compile Include="Utils\GlobalConstants.cs" />
     <Compile Include="Utils\OtherUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ArcaneTide\ArcaneTide.json" />
+    <None Include="ArcaneTide\config\archetype1.json" />
+    <None Include="ArcaneTide\config\archetype2.json" />
     <None Include="ArcaneTide\Info.json" />
     <None Include="ArcaneTide\localization\enGB.json" />
-    <None Include="ArcaneTide\localization\zhCN.json" />
+    <None Include="ArcaneTide\localization\zhCN\Arcanist.json" />
+    <None Include="ArcaneTide\localization\zhCN\Risia.json" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="新建文本文档.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties ArcaneTide_4localization_4zhCN_1json__JSONSchema="http://json.schemastore.org/ansible-stable-2.5" />
-    </VisualStudio>
-  </ProjectExtensions>
+  <ProjectExtensions />
 </Project>

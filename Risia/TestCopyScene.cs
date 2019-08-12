@@ -16,7 +16,7 @@ namespace ArcaneTide.Risia {
         static public void Load() {
             BlueprintArea templeElk = library.Get<BlueprintArea>("340a310b850e1ed469a60388012734f9");
             BlueprintAreaPart.AdditionalDynamicEntry newDynamicSceneEntry = new BlueprintAreaPart.AdditionalDynamicEntry {
-                Scene = new SceneReference("RisiaElkScene"),
+                Scene = new SceneReference("TempleOfTheElk_Risia"),
                 Condition = new ConditionsChecker {
                     Conditions = new Condition[] {
                         /*new FlagUnlocked {
