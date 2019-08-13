@@ -5,11 +5,6 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcaneTide", "ArcaneTide.csproj", "{F1A0139A-F67F-4764-9E9F-E406B7A70FD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\Test\Test.csproj", "{8789B871-0251-4076-8FBC-8C02EDE4A78E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F1A0139A-F67F-4764-9E9F-E406B7A70FD8} = {F1A0139A-F67F-4764-9E9F-E406B7A70FD8}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

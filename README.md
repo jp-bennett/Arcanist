@@ -31,3 +31,11 @@ Because of the limitation PF:KM's game mechanics, some abilities are not impleme
 **高等超魔学识：** (new in 0.92)因为拥王者的游戏机能限制，几乎无法实现原版的高等超魔学识。现将高等超魔学识改为：
 
 选择一个不具备的超魔专长，奥能师学会此专长，并可以在施法时以一个移动动作消耗等同于超魔专长费用的奥能点数，为法术附着此专长且不需要更高级别的法术位、也不需要延长施法时间。这样的行动每日最多三次。奥能师选择超魔专长时必须满足前置条件。
+
+
+I've made some changes to the release branch and pushed it into master on my fork of this project. Since I'm building on Linux using Mono, there are a few other things I've fixed up.
+
+To build, I'm running:
+xbuild ArcaneTide.csproj /p:KingmakerPath=/home/jbennett/.steam/steam/steamapps/common /p:Configuration=Release
+
+This automatically copies the release DLL to the ArcaneTide directory, which is the directory that gets copied into Kingmaker's mod directory. That directory can alternatively be zipped and used with the UnityModManager.
